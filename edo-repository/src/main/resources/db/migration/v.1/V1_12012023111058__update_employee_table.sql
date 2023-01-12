@@ -1,0 +1,16 @@
+ALTER TABLE IF EXISTS employee
+    ADD COLUMN IF NOT EXISTS first_name VARCHAR(20),
+    ADD COLUMN last_name VARCHAR(20),
+    ADD COLUMN middle_name VARCHAR(20),
+    ADD COLUMN address VARCHAR(200),
+    ADD COLUMN photo_url VARCHAR(300),
+    ADD COLUMN fio_dative VARCHAR(60),
+    ADD COLUMN fio_nominative VARCHAR(60),
+    ADD COLUMN fio_genitive VARCHAR(60),
+    ADD COLUMN external_id VARCHAR(20),
+    ADD COLUMN phone VARCHAR(20),
+    ADD COLUMN work_phone VARCHAR(20),
+    ADD COLUMN birth_date DATE,
+    ADD COLUMN username VARCHAR(20),
+    ADD COLUMN creation_date DATE,
+    ADD COLUMN archived_date DATE
