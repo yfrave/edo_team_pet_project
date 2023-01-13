@@ -16,7 +16,6 @@ import java.sql.Date;
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder
 @Table(name = "question")
 public class Question extends BaseEntity{
     /**
