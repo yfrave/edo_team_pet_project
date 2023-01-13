@@ -1,6 +1,7 @@
 package com.education.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.List;
 import java.sql.Date;
@@ -9,6 +10,12 @@ import java.sql.Date;
  * POJO класс, содержащий информацию о датах и работниках.
  * @author Dmitrii Ermolenko
  */
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
 @Table(name = "resolution")
 public class Resolution extends BaseEntity {
 
@@ -49,24 +56,28 @@ public class Resolution extends BaseEntity {
     /**
      * Работник создавший резолюцию
      */
-    @Column(name = "creator")
+    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "creator_id")
     private Employee creator;
 
     /**
      * Работник подписывающий документ
      */
-    @Column(name = "signer")
+    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "signer_id")
     private Employee signer;
 
     /**
      * Работники выполняющие решение
      */
-    @Column(name = "executor")
+    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "executor_id")
     private List<Employee> executor;
 
     /**
      * Работник курирующий работу
      */
-    @Column(name = "curator")
+    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "curator_id")
     private Employee curator;
 }
