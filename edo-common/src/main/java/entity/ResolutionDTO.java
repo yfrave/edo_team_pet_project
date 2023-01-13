@@ -45,7 +45,6 @@ public class ResolutionDTO extends BaseEntityDTO {
     /**
      * Переменная отражающая тип решения
      */
-
     private resolutionEnum resolutionEnum;
 
     /**
