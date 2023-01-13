@@ -1,18 +1,27 @@
 package entity;
 
+import lombok.*;
+
 import java.sql.Date;
 import java.util.List;
 
 /**
  * POJO класс, содержащий информацию о датах и работниках.
+ *
  * @author Dmitrii Ermolenko
  */
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
 public class ResolutionDTO extends BaseEntityDTO {
+
 
     /**
      * Возможные типы решения
      */
-    private enum resolutionEnum{
+    private enum resolutionEnum {
         Резолюция,
         направление,
         запрос
