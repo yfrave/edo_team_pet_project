@@ -2,6 +2,7 @@ package com.education.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 /**
@@ -27,6 +28,7 @@ public class Address extends BaseEntity {
     /**
      * Улица
      */
+    @NotNull(message = "Street cannot be null")
     private String street;
 
     /**
