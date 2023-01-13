@@ -1,14 +1,20 @@
-package DTO;
+package com.education.model.dto;
 
+import com.education.model.enumEntity.EnumEmployment;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+@ApiModel("Класс DTO для сущности Author(автор)")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
 public class AuthorDto {
+
+    @ApiModelProperty("id автора")
+    private Long id;
 
     @ApiModelProperty("Имя автора")
     private String firstName;
@@ -32,7 +38,7 @@ public class AuthorDto {
     private String email;
 
     @ApiModelProperty("Рабочий статус автора")
-    private String employment;
+    private EnumEmployment employment;
 
     @ApiModelProperty("ФИО автора в дательном падеже")
     private String fioDative;
