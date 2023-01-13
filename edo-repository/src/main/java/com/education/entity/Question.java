@@ -11,11 +11,6 @@ import java.sql.Date;
  * Класс Question.
  * Хранит краткое содержание обращений.
  */
-@Entity
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
 @Table(name = "question")
 public class Question extends BaseEntity{
     /**
@@ -25,7 +20,7 @@ public class Question extends BaseEntity{
     private Date creationDate;
 
     /**
-     * Дата отклика на обращение.
+     * Дата архивирования обращения.
      */
     @Column(name = "archived_date", nullable = false)
     private Date archivedDate;
