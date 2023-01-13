@@ -1,4 +1,4 @@
-package entity;
+package com.education.model;
 
 /**
  * Представляет DTO сущности Address.
