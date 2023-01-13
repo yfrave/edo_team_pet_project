@@ -2,10 +2,7 @@ package com.education.entity;
 
 import com.education.entity.enumAuthor.EnumEmployment;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * Класс сущности автора
@@ -15,6 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 @Table(name = "author")
 public class Author extends BaseEntity {
 
