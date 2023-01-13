@@ -8,9 +8,16 @@ import lombok.*;
 import java.sql.Date;
 
 /**
+ * @author Anton Latyshev.
+ *
  * Класс Question.
  * Хранит краткое содержание обращений.
  */
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @Table(name = "question")
 public class Question extends BaseEntity{
     /**
