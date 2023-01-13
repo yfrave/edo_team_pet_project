@@ -1,61 +1,33 @@
 package com.education.model;
 
-/**
- * Представляет DTO сущности Address.
- *
- * @author Сергей Иваненко
- * @version 1.0
- * @since 1.0
- */
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+
+@Schema(description = "Address DTO")
+@Data
 public class AddressDTO {
+    private Long id;
 
-    /**
-     * Адрес, полностью.
-     */
+    @JsonProperty
     private String fullAddress;
-
-    /**
-     * Улица
-     */
+    @JsonProperty
     private String street;
-
-    /**
-     * Номер дома
-     */
+    @JsonProperty
     private String house;
-
-    /**
-     * Индекс
-     */
+    @JsonProperty
     private String index;
-
-    /**
-     * Корпус
-     */
+    @JsonProperty
     private String housing;
-
-    /**
-     * Строение
-     */
+    @JsonProperty
     private String building;
-
-    /**
-     * Город
-     */
+    @JsonProperty
     private String city;
-
-    /**
-     * Регион
-     */
+    @JsonProperty
     private String region;
-
-    /**
-     * Страна
-     */
+    @JsonProperty
     private String country;
-
-    /**
-     * Номер квартиры, или этаж
-     */
+    @JsonProperty
     private String flat;
 }
