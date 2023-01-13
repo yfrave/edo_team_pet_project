@@ -13,10 +13,11 @@ import lombok.*;
  * @since 1.0
  */
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
+@ToString
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class Address extends BaseEntity {
 
     /**
@@ -78,4 +79,19 @@ public class Address extends BaseEntity {
      */
     @NotNull(message = "flat cannot be null")
     private String flat;
+
+    public Address(String country, String region, String city, String street, String house,
+                   String building, String flat, String housing, String index) {
+        this.street = street;
+        this.house = house;
+        this.index = index;
+        this.housing = housing;
+        this.building = building;
+        this.city = city;
+        this.region = region;
+        this.country = country;
+        this.flat = flat;
+        this. fullAddress = String.join(", ", country, region, city, street, housing, building, flat,
+                house, index);
+    }
 }
