@@ -10,10 +10,10 @@ ALTER TABLE IF EXISTS employee
     ADD COLUMN external_id VARCHAR(20),
     ADD COLUMN phone VARCHAR(20),
     ADD COLUMN work_phone VARCHAR(20),
-    ADD COLUMN birth_date DATE,
+    ADD COLUMN birth_date TIMESTAMPTZ,
     ADD COLUMN username VARCHAR(20),
-    ADD COLUMN creation_date DATE,
-    ADD COLUMN archived_date DATE;
+    ADD COLUMN creation_date TIMESTAMPTZ,
+    ADD COLUMN archived_date TIMESTAMPTZ;
 
 COMMENT ON COLUMN edo.employee.id IS 'Id работника';
 COMMENT ON COLUMN edo.employee.first_name IS 'имя работника';

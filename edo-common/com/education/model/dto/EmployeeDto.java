@@ -1,8 +1,10 @@
+package com.education.model.dto;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.sql.Date;
+import java.time.ZonedDateTime;
 
 /**
  * @author Степан Ритман
@@ -47,14 +49,14 @@ public class EmployeeDto {
     private String workPhone;
 
     @ApiModelProperty("Дата рождения")
-    private Date birthDate;
+    private ZonedDateTime birthDate;
 
     @ApiModelProperty("Имя пользователя")
     private String username;
 
     @ApiModelProperty("Дата создания")
-    private Date creationDate;
+    private ZonedDateTime creationDate;
 
     @ApiModelProperty("Дата архивирования")
-    private Date archivedDate;
+    private ZonedDateTime archivedDate;
 }
