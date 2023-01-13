@@ -38,11 +38,11 @@ public class Nomenclature extends BaseEntity {
      * Текущее значение
      */
     @Column(name = "current_value")
-    private String currentValue;
+    private Long currentValue;
 
     /**
      * Индекс
      */
     @Column(name = "index")
-    private int index;
+    private String index;
 }

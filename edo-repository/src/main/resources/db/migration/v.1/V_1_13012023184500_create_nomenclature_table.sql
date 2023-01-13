@@ -4,8 +4,8 @@ create table if not exists nomenclature
     creation_date   date,
     archived_date   date,
     template        varchar,
-    current_value   varchar,
-    index           int
+    current_value   bigint,
+    index           varchar
 );
 
 comment on column nomenclature.id is 'id';
