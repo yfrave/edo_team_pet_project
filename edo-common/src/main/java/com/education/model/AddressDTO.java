@@ -1,33 +1,50 @@
 package com.education.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.*;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-
-@Schema(description = "Address DTO")
-@Data
+@ApiModel("Класс AddressDTO, dto для класса Address.class")
+@NoArgsConstructor
+@Getter
+@Setter
 public class AddressDTO {
+    @ApiModelProperty("Id")
     private Long id;
 
-    @JsonProperty
+    @ApiModelProperty("Полный адрес")
     private String fullAddress;
-    @JsonProperty
+    @ApiModelProperty("Улица")
     private String street;
-    @JsonProperty
+    @ApiModelProperty("Номер дома")
     private String house;
-    @JsonProperty
+    @ApiModelProperty("Индекс")
     private String index;
-    @JsonProperty
+    @ApiModelProperty("Корпус")
     private String housing;
-    @JsonProperty
+    @ApiModelProperty("Строение")
     private String building;
-    @JsonProperty
+    @ApiModelProperty("Город")
     private String city;
-    @JsonProperty
+    @ApiModelProperty("Регион")
     private String region;
-    @JsonProperty
+    @ApiModelProperty("Страна")
     private String country;
-    @JsonProperty
+    @ApiModelProperty("Этаж")
     private String flat;
+
+    public AddressDTO(String country, String region, String city, String street, String house,
+                   String building, String flat, String housing, String index) {
+        this.street = street;
+        this.house = house;
+        this.index = index;
+        this.housing = housing;
+        this.building = building;
+        this.city = city;
+        this.region = region;
+        this.country = country;
+        this.flat = flat;
+        this. fullAddress = String.join(", ", country, region, city, street, housing, building, flat,
+                house, index);
+    }
 }
