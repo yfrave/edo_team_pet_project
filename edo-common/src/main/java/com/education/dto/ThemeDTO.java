@@ -1,5 +1,7 @@
 package com.education.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,23 +9,21 @@ import lombok.Setter;
 
 import java.sql.Date;
 
-/**
- * Представляет DTO темы обращения.
- *
- * @author Алексей Сементковский
- * @version 1.0
- * @since 1.0
- */
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@ApiModel("Класс AddressDto, dto для класса Address.class")
+@ApiModel("Класс ThemeDto, DTO для класса Theme.class")
 public class ThemeDTO {
 
+    @ApiModelProperty("Название темы обращения")
     private String name;
+    @ApiModelProperty("Дата создания темы")
     private Date creationDate;
+    @ApiModelProperty("Дата архивации темы")
     private Date archivedDate;
-    private Long code;
+    @ApiModelProperty("Код темы")
+    private String code;
+    @ApiModelProperty("Родительская тема")
     private ThemeDTO parentTheme;
 }
