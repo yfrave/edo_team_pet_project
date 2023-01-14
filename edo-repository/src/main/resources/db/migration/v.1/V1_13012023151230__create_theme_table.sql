@@ -1,11 +1,11 @@
 create table if not exists theme
 (
     id bigserial not null primary key,
-    theme_name varchar(255),
-    creation_date date,
-    archived_date date,
-    code varchar(255),
-    parent_id bigint
+    theme_name varchar(255),            -- название темы
+    creation_date date,                 -- дата создания темы
+    archived_date date,                 -- дата архивации темы
+    code varchar(255),                  -- код темы
+    parent_id bigint                    -- родительская тема
 );
 comment on column theme.id is 'id темы обращения';
 comment on column theme.theme_name is 'Название темы обращения';

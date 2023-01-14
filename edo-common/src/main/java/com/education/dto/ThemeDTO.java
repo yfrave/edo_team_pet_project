@@ -18,6 +18,7 @@ import java.sql.Date;
 @AllArgsConstructor
 @Getter
 @Setter
+@ApiModel("Класс AddressDto, dto для класса Address.class")
 public class ThemeDTO {
 
     private String name;
