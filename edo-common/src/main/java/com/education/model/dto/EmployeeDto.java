@@ -1,4 +1,4 @@
 package com.education.model.dto;
 
-public class EmployeeDTO {
+public class EmployeeDto {
 }

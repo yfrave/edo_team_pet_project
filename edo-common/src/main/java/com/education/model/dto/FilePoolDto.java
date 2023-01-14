@@ -31,5 +31,5 @@ public class FilePoolDto {
     @ApiModelProperty("Дата архивирования файла")
     private ZonedDateTime archivedDate;
     @ApiModelProperty("Автор файла")
-    private EmployeeDTO creator;
+    private EmployeeDto creator;
 }
