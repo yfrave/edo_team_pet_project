@@ -1,15 +1,15 @@
 CREATE TABLE if not exists file_pool
-(
-    storage_file_id UUID not null primary key,
+(   id bigserial not null primary key,
+    storage_file_id UUID not null,
     file_name varchar(255),
     extension varchar(255),
     file_size int,
     page_count int,
-    upload_date date,
-    archived_date date,
-    creator_id bigserial
+    upload_date timestamp with timezone,
+    archived_date timestamp with timezone,
+    creator_id bigint
 );
-
+comment on column file_pool.id is 'ID'
 comment on column file_pool.storage_file_id is 'ID хранилища файла';
 comment on column file_pool.file_name is 'Имя хранилища файла';
 comment on column file_pool.extension is 'Расширение файла';

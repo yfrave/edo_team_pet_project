@@ -1,19 +1,21 @@
-package com.education.dto;
-import io.swagger.annotations.ApiModel;
+package com.education.model.dto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Date;
+
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class FilePoolDTO {
+public class FilePoolDto {
+    @ApiModelProperty("ID")
+    private Long id;
     @ApiModelProperty("ID хранилища файла")
     private UUID storageFileId;
     @ApiModelProperty("Имя хранилища файла")
@@ -21,13 +23,13 @@ public class FilePoolDTO {
     @ApiModelProperty("Расширение файла")
     private String extension;
     @ApiModelProperty("Размер файла")
-    private int size;
+    private Integer size;
     @ApiModelProperty("Количество страниц файла")
-    private int pageCount;
+    private Integer pageCount;
     @ApiModelProperty("Дата загрузки файла")
-    private Date uploadDate;
+    private ZonedDateTime uploadDate;
     @ApiModelProperty("Дата архивирования файла")
-    private Date archivedDate;
+    private ZonedDateTime archivedDate;
     @ApiModelProperty("Автор файла")
     private EmployeeDTO creator;
 }
