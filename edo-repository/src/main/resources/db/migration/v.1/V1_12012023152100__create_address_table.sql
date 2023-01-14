@@ -1,15 +1,15 @@
 create table if not exists address(
-    id bigserial not null primary key,
-    full_address text,
-    street text,
-    house text,
-    index text,
-    housing text,
-    building text,
-    city text,
-    region text,
-    country text,
-    flat text
+    id bigserial not null primary key,  --id
+    full_address text,                  --Полный адрес
+    street text,                        --Улица
+    house text,                         --Номер дома
+    index text,                         --Индекс
+    housing text,                       --Корпус
+    building text,                      --Строение
+    city text,                          --Город
+    region text,                        --Регион
+    country text,                       --Страна
+    flat text                           --Этаж или номер квартиры
 );
 
 comment on column address.id is 'Это id, чего ещё ты ожидаешь здесь увидеть?';
