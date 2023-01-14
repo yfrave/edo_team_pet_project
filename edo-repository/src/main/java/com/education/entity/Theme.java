@@ -14,6 +14,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.sql.Date;
+import java.time.ZonedDateTime;
 
 /**
  * Представляет тему обращения.
@@ -43,13 +44,13 @@ public class Theme extends BaseEntity {
      * Дата создания
      */
     @Column(name = "creation_date")
-    private Date creationDate;
+    private ZonedDateTime creationDate;
 
     /**
      * Дата перемещения в архив
      */
     @Column(name = "archived_date")
-    private Date archivedDate;
+    private ZonedDateTime archivedDate;
 
     /**
      * Код темы
