@@ -1,4 +1,4 @@
-package dto;
+package com.education.model.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -14,7 +14,7 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
-public class NomenclatureDTO {
+public class NomenclatureDto {
     @ApiModelProperty("Дата создания номенклатуры")
     private ZonedDateTime creationDate;
 

@@ -7,11 +7,20 @@ import lombok.*;
 
 import java.time.ZonedDateTime;
 
+/**
+ * Представляет номенклатуру
+ *
+ * @author Иван Кузнецов
+ * @version 1.0
+ * @since 1.0
+ */
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
+@ToString
 @Builder
 @Table(name = "nomenclature")
 public class Nomenclature extends BaseEntity {
