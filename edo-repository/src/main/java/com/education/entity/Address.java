@@ -2,7 +2,6 @@ package com.education.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 /**
@@ -17,6 +16,7 @@ import lombok.*;
 @Setter
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Address extends BaseEntity {
 
@@ -29,69 +29,54 @@ public class Address extends BaseEntity {
     /**
      * Улица
      */
-    @NotNull(message = "Street cannot be null")
+    @Column(name = "street")
     private String street;
 
     /**
      * Номер дома
      */
-    @NotNull(message = "house cannot be null")
+    @Column(name = "house")
     private String house;
 
     /**
      * Индекс
      */
-    @NotNull(message = "index cannot be null")
+    @Column(name = "index")
     private String index;
 
     /**
      * Корпус
      */
-    @NotNull(message = "housing cannot be null")
+    @Column(name = "housing")
     private String housing;
 
     /**
      * Строение
      */
-    @NotNull(message = "building cannot be null")
+    @Column(name = "building")
     private String building;
 
     /**
      * Город
      */
-    @NotNull(message = "city cannot be null")
+    @Column(name = "city")
     private String city;
 
     /**
      * Регион
      */
-    @NotNull(message = "region cannot be null")
+    @Column(name = "region")
     private String region;
 
     /**
      * Страна
      */
-    @NotNull(message = "country cannot be null")
+    @Column(name = "country")
     private String country;
 
     /**
      * Номер квартиры, или этаж
      */
-    @NotNull(message = "flat cannot be null")
+    @Column(name = "flat")
     private String flat;
-
-    public Address(String country, String region, String city, String street, String house,
-                   String building, String flat, String housing, String index) {
-        this.street = street;
-        this.house = house;
-        this.index = index;
-        this.housing = housing;
-        this.building = building;
-        this.city = city;
-        this.region = region;
-        this.country = country;
-        this.flat = flat;
-        this. fullAddress = String.join(", ", country, region, city, street, housing, building, flat,
-                house, index);
-    }
 }

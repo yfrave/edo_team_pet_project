@@ -1,14 +1,15 @@
-package com.education.model;
+package com.education.model.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-@ApiModel("Класс AddressDTO, dto для класса Address.class")
+@ApiModel("Класс AddressDto, dto для класса Address.class")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-public class AddressDTO {
+public class AddressDto {
     @ApiModelProperty("Id")
     private Long id;
 
@@ -32,19 +33,4 @@ public class AddressDTO {
     private String country;
     @ApiModelProperty("Этаж")
     private String flat;
-
-    public AddressDTO(String country, String region, String city, String street, String house,
-                   String building, String flat, String housing, String index) {
-        this.street = street;
-        this.house = house;
-        this.index = index;
-        this.housing = housing;
-        this.building = building;
-        this.city = city;
-        this.region = region;
-        this.country = country;
-        this.flat = flat;
-        this. fullAddress = String.join(", ", country, region, city, street, housing, building, flat,
-                house, index);
-    }
 }
