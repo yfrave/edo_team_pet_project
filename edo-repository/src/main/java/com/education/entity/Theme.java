@@ -49,7 +49,7 @@ public class Theme extends BaseEntity {
      * Код темы
      */
     @Column(name = "code")
-    private Long code;
+    private String code;
 
     /**
      * Родительская тема

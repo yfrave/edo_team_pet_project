@@ -4,7 +4,7 @@ create table if not exists theme
     theme_name varchar(255),
     creation_date date,
     archived_date date,
-    code bigint,
+    code varchar(255),
     parent_id bigint
 );
 comment on column theme.id is 'id темы обращения';
