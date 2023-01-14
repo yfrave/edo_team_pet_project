@@ -2,8 +2,8 @@ create table if not exists theme
 (
     id bigserial not null primary key,
     theme_name text,                    -- название темы
-    creation_date date,                 -- дата создания темы
-    archived_date date,                 -- дата архивации темы
+    creation_date timestamptz,                 -- дата создания темы
+    archived_date timestamptz,                 -- дата архивации темы
     code text,                          -- код темы
     parent_id bigint                    -- родительская тема
 );
