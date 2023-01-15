@@ -30,7 +30,6 @@ import java.time.ZonedDateTime;
 @Getter
 @Setter
 @ToString
-@Builder
 @Table(name = "theme")
 public class Theme extends BaseEntity {
 
