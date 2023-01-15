@@ -1,9 +1,9 @@
 create table if not exists question
 (
-    id bigserial not null primary key,                      -- id
+    id bigserial not null primary key,          -- id
     creation_date timestamptz not null,         -- дата создания обращения
     archived_date timestamptz not null,         -- дата архивирования обращения
-    summary varchar(255) not null                           -- краткое содержание обращения
+    summary varchar(255) not null               -- краткое содержание обращения
 );
 
 comment on table question is 'хранит краткое содержание обращений';
