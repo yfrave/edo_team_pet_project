@@ -1,25 +1,26 @@
-package com.education.dto;
+package com.education.model.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import java.sql.Date;
+import java.time.ZonedDateTime;
 
-@ApiModel("Класс QuestionDTO - DTO для Question.class")
+@ApiModel("Класс QuestionDto - DTO для Question.class")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class QuestionDTO {
+public class QuestionDto {
     @ApiModelProperty("Id обращения")
-    private long id;
+    private Long id;
 
     @ApiModelProperty("Дата создания обращения")
-    private Date creationDate;
+    private ZonedDateTime creationDate;
 
     @ApiModelProperty("Дата архивирования обращения")
-    private Date archivedDate;
+    private ZonedDateTime archivedDate;
 
     @ApiModelProperty("Краткое содержание обращения")
     private String summary;

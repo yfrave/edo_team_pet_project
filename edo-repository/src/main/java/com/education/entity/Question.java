@@ -6,6 +6,7 @@ import jakarta.persistence.Table;
 import lombok.*;
 
 import java.sql.Date;
+import java.time.ZonedDateTime;
 
 /**
  * @author Anton Latyshev.
@@ -24,13 +25,13 @@ public class Question extends BaseEntity{
      * Дата создания обращения.
      */
     @Column(name = "creation_date", nullable = false)
-    private Date creationDate;
+    private ZonedDateTime creationDate;
 
     /**
      * Дата архивирования обращения.
      */
     @Column(name = "archived_date", nullable = false)
-    private Date archivedDate;
+    private ZonedDateTime archivedDate;
 
     /**
      * Краткое содержание обращения.
