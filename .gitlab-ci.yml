@@ -4,7 +4,7 @@ variables:
 cache:
   paths:
     - ./.m2/repository
-  key: project-cache
+  key: project-cache-1
 
 stages:
   - build_artifacts
