@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Date;
 import java.time.ZonedDateTime;
 
 @NoArgsConstructor
@@ -15,8 +14,10 @@ import java.time.ZonedDateTime;
 @Getter
 @Setter
 @ApiModel("Класс ThemeDto, DTO для класса Theme.class")
-public class ThemeDTO {
+public class ThemeDto {
 
+    @ApiModelProperty("id темы обращения")
+    private Long id;
     @ApiModelProperty("Название темы обращения")
     private String name;
     @ApiModelProperty("Дата создания темы")
@@ -26,5 +27,5 @@ public class ThemeDTO {
     @ApiModelProperty("Код темы")
     private String code;
     @ApiModelProperty("Родительская тема")
-    private ThemeDTO parentTheme;
+    private ThemeDto parentTheme;
 }
