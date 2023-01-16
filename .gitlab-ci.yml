@@ -8,7 +8,7 @@ cache:
 
 stages:
   - build_artifacts
-  - build_image
+#  - build_image
 
 #build_image:
 #  image: docker:18.09
