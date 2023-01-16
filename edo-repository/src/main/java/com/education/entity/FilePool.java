@@ -13,6 +13,10 @@ import lombok.Setter;
 import lombok.ToString;
 import java.time.ZonedDateTime;
 import java.util.UUID;
+/**
+ * Представляет хранилище файла
+ * @author Рамазан Гаджиев
+ */
 
 @NoArgsConstructor
 @AllArgsConstructor
