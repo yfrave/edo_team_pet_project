@@ -26,7 +26,6 @@ import java.time.ZonedDateTime;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 @ToString
