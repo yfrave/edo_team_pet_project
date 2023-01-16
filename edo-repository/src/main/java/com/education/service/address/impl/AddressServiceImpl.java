@@ -36,8 +36,4 @@ public class AddressServiceImpl implements AddressService {
     public List<Address> findAllById(Iterable<Long> list) {
         return addressRepository.findAllById(list);
     }
-
-    public void setAddressRepository(AddressRepository addressRepository) {
-        this.addressRepository = addressRepository;
-    }
 }
