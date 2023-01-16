@@ -3,6 +3,7 @@ package com.education.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 /**
  * Представляет адрес.
@@ -17,8 +18,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-@Builder
+@SuperBuilder
 public class Address extends BaseEntity {
 
     /**

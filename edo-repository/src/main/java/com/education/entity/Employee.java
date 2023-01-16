@@ -3,8 +3,7 @@ package com.education.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import java.time.ZonedDateTime;
 
@@ -12,10 +11,13 @@ import java.time.ZonedDateTime;
  * @author Степан Ритман
  * Класс, описывающий сущность работника
  */
-@Table(name = "employee")
-@Data
-@EqualsAndHashCode(callSuper = true)
 @Entity
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "employee")
 public class Employee extends BaseEntity {
 
     /**

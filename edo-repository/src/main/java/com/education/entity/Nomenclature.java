@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.ZonedDateTime;
 
@@ -17,11 +18,10 @@ import java.time.ZonedDateTime;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 @ToString
-@Builder
+@SuperBuilder
 @Table(name = "nomenclature")
 public class Nomenclature extends BaseEntity {
 

@@ -1,0 +1,44 @@
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository -Dmaven.artifact.threads=50"
+
+cache:
+  paths:
+    - ./.m2/repository
+  key: project-cache
+
+stages:
+  - build_artifacts
+  - build_image
+
+#build_image:
+#  image: docker:18.09
+#  tags:
+#    - runner
+#  stage: build_image
+#  script:
+#    - docker build -t edo-server:$CI_PIPELINE_ID .
+#    - docker run edo-server:$CI_PIPELINE_ID
+
+.build-module:
+  image: maven:3.6.3-openjdk-17-slim
+  stage: build_artifacts
+  tags:
+    - runner
+  script:
+    - mvn $MAVEN_OPTS clean package
+#  artifacts:
+#    paths:
+#      - edo-cloud-server/target/edo-cloud-server-0.0.1.jar
+#      - edo-websocket/target/edo-websocket-0.0.1.jar
+#      - edo-file-storage/target/edo-file-storage-0.0.1.jar
+#      - edo-integration/target/edo-integration-0.0.1.jar
+#      - edo-repository/target/edo-repository-0.0.1.jar
+#      - edo-rest/target/edo-rest-0.0.1.jar
+#      - edo-scheduler/target/edo-scheduler-0.0.1.jar
+#      - edo-security/target/edo-security-0.0.1.jar
+#      - edo-service/target/edo-service-0.0.1.jar
+#    expire_in: 3 days
+
+build_artifacts:
+  extends:
+    - .build-module
