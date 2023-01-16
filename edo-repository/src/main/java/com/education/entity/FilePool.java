@@ -21,8 +21,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Getter
-@Setter
 @ToString
 @Table(name = "file_pool")
 public class FilePool extends BaseEntity{
@@ -30,42 +28,56 @@ public class FilePool extends BaseEntity{
      * ID хранилища файла
      */
     @Column(name = "storage_file_id")
-    private UUID storageFileId;
+    private UUID storageFileId = UUID.randomUUID();
     /**
      * Имя хранилища файла
      */
+    @Getter
+    @Setter
     @Column(name = "file_name")
     private String name;
     /**
      * Расширение файла
      */
     @Column(name = "extension")
+    @Getter
+    @Setter
     private String extension;
     /**
      * Размер файла
      */
     @Column(name = "file_size")
+    @Getter
+    @Setter
     private Integer size;
     /**
      * Количество страниц файла
      */
     @Column(name = "page_count")
+    @Getter
+    @Setter
     private Integer pageCount;
     /**
      * Дата загрузки файла
      */
     @Column(name = "upload_date")
+    @Getter
+    @Setter
     private ZonedDateTime uploadDate;
     /**
      * Дата архивирования файла
      */
     @Column(name = "archived_date")
+    @Getter
+    @Setter
     private ZonedDateTime archivedDate;
     /**
      * Автор файла
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")
+    @Getter
+    @Setter
     private Employee creator;
 
 }
