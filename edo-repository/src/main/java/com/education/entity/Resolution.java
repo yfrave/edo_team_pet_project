@@ -1,10 +1,12 @@
 package com.education.entity;
 
+import com.education.model.enumEntity.EnumResolution;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
+import java.time.ZonedDateTime;
 import java.util.List;
-import java.sql.Date;
 
 /**
  * POJO класс, содержащий информацию о датах и работниках.
@@ -15,69 +17,59 @@ import java.sql.Date;
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @Table(name = "resolution")
 public class Resolution extends BaseEntity {
-
-    /**
-     * Возможные типы решения
-     */
-    private enum resolutionEnum{
-        Резолюция,
-        направление,
-        запрос
-    }
 
     /**
      * Дата создания резолюции
      */
     @Column(name = "creation_date")
-    private Date creationDate;
+    private ZonedDateTime creationDate;
 
     /**
      * Дата архивации
      */
     @Column(name = "archived_date")
-    private Date archivedDate;
+    private ZonedDateTime archivedDate;
 
     /**
      * Дата последнего события
      */
     @Column(name = "last_action_date")
-    private Date lastActionDate;
+    private ZonedDateTime lastActionDate;
 
     /**
      * Переменная отражающая тип решения
      */
     @Column(name = "resolution_name")
     @Enumerated(EnumType.STRING)
-    private resolutionEnum resolutionEnum;
+    private EnumResolution enumResolution;
 
     /**
      * Работник создавший резолюцию
      */
-    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "creator_id")
     private Employee creator;
 
     /**
      * Работник подписывающий документ
      */
-    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "signer_id")
     private Employee signer;
 
     /**
      * Работники выполняющие решение
      */
-    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "executor_id")
-    private List<Employee> executor;
+    @OneToMany(fetch=FetchType.LAZY)
+    private List<Employee> executors;
 
     /**
      * Работник курирующий работу
      */
-    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "curator_id")
     private Employee curator;
 }
