@@ -2,7 +2,9 @@ package com.education.model.enumEntity;
 
 public enum EnumResolution {
 
-    Resolution("Резолюция"), DIRECTION("Направление"), REQUEST("Запрос");
+    RESOLUTION("Резолюция"),
+    DIRECTION("Направление"),
+    REQUEST("Запрос");
     private String value;
     EnumResolution(String value) {
         this.value = value;
