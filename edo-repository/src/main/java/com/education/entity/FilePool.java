@@ -13,6 +13,7 @@ import lombok.Setter;
 import lombok.ToString;
 import java.time.ZonedDateTime;
 import java.util.UUID;
+
 /**
  * Представляет хранилище файла
  * @author Рамазан Гаджиев
@@ -22,6 +23,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @ToString
+@Getter
+@Setter
 @Table(name = "file_pool")
 public class FilePool extends BaseEntity{
     /**
@@ -32,52 +35,38 @@ public class FilePool extends BaseEntity{
     /**
      * Имя хранилища файла
      */
-    @Getter
-    @Setter
     @Column(name = "file_name")
     private String name;
     /**
      * Расширение файла
      */
     @Column(name = "extension")
-    @Getter
-    @Setter
     private String extension;
     /**
      * Размер файла
      */
     @Column(name = "file_size")
-    @Getter
-    @Setter
     private Integer size;
     /**
      * Количество страниц файла
      */
     @Column(name = "page_count")
-    @Getter
-    @Setter
     private Integer pageCount;
     /**
      * Дата загрузки файла
      */
     @Column(name = "upload_date")
-    @Getter
-    @Setter
     private ZonedDateTime uploadDate;
     /**
      * Дата архивирования файла
      */
     @Column(name = "archived_date")
-    @Getter
-    @Setter
     private ZonedDateTime archivedDate;
     /**
      * Автор файла
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")
-    @Getter
-    @Setter
     private Employee creator;
 
 }

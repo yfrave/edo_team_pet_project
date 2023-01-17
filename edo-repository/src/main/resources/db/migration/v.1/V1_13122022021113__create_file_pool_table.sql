@@ -1,8 +1,8 @@
 CREATE TABLE if not exists file_pool
 (   id bigserial not null primary key,      --ID
-    storage_file_id UUID not null,          --ID хранилища файла
-    file_name text,                 --Имя хранилища файла
-    extension text,                 --Расширение файла
+    storage_file_id UUID not null unique,          --ID хранилища файла
+    file_name text,                         --Имя хранилища файла
+    extension text,                         --Расширение файла
     file_size int,                          --Размер файла
     page_count int,                         --Количество страниц файла
     upload_date TIMESTAMPTZ,                --Дата загрузки файла
