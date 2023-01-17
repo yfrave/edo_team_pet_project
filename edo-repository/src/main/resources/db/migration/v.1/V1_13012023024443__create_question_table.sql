@@ -7,7 +7,7 @@ create table if not exists question
 );
 
 comment on table question is 'хранит краткое содержание обращений';
-comment on column question.id is 'id';
+comment on column question.id is 'id обращения';
 comment on column question.creation_date is 'дата создания обращения';
 comment on column question.archived_date is 'дата архивирования обращения';
 comment on column question.summary is 'краткое содержание обращения';
