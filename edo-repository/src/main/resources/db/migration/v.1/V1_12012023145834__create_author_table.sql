@@ -1,16 +1,16 @@
 create table if not exists author
 (
     id bigserial not null primary key,
-    first_name varchar(255) not null,
-    last_name varchar(255) not null,
-    middle_name varchar(255) not null,
-    address varchar(255) not null,
-    snils varchar(11) not null,
-    mobile_phone varchar(15) not null,
-    email varchar(255) not null,
-    employment varchar(255) not null,
-    fio_dative varchar(255) not null,
-    fio_genitive varchar(255) not null,
+    first_name     varchar(255) not null,
+    last_name      varchar(255) not null,
+    middle_name    varchar(255) not null,
+    address        varchar(255) not null,
+    snils          varchar(11)  not null,
+    mobile_phone   varchar(15)  not null,
+    email          varchar(255) not null,
+    employment     varchar(255) not null,
+    fio_dative     varchar(255) not null,
+    fio_genitive   varchar(255) not null,
     fio_nominative varchar(255) not null
 );
 comment on column author.first_name is 'Имя автора';

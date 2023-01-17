@@ -1,11 +1,11 @@
 create table if not exists nomenclature
 (
-    id bigserial not null primary key,      --id
-    creation_date timestamp with timezone,  --Дата создания номенклатуры
-    archived_date timestamp with timezone,  --Дата перевода в архив
-    template text,                       --Шаблон
-    current_value bigint,                   --Текущее значение
-    index text                           --Индекс
+    id            bigserial not null primary key, --id
+    creation_date timestamp with time zone,       --Дата создания номенклатуры
+    archived_date timestamp with time zone,       --Дата перевода в архив
+    template      text,                           --Шаблон
+    current_value bigint,                         --Текущее значение
+    index         text                            --Индекс
 );
 
 comment on column nomenclature.id is 'id';
