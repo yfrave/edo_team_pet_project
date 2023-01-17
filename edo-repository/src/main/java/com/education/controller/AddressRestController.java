@@ -49,7 +49,9 @@ public class AddressRestController {
     }
 
     @ApiOperation(value = "Сохранить адрес")
-    @ApiResponse(code = 200, message = "Successfully created")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully created")
+    })
     @PostMapping("/")
     public ResponseEntity<Address> save(@RequestBody @ApiParam("Address") Address address) {
         addressService.save(address);
@@ -57,8 +59,9 @@ public class AddressRestController {
     }
 
     @ApiOperation(value = "Удалить адрес")
-    @ApiResponse(code = 200, message = "Successfully deleted")
-    @PostMapping("/")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully deleted")
+    })
     @DeleteMapping("/delete")
     public ResponseEntity<Void> deleteUser(@RequestBody @ApiParam("Address") Address address) {
         addressService.delete(address);
