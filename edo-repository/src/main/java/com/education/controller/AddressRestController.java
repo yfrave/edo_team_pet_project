@@ -29,10 +29,10 @@ public class AddressRestController {
     public ResponseEntity<Address> findAddress(@PathVariable("id")
                                                @ApiParam(name = "id", value = "Адрес id", example = "1")
                                                Long id) {
-        Address address = addressService.findById(id);
-        return address == null
+        Optional<Address> address = addressService.findById(id);
+        return address.isEmpty()
                 ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
-                : new ResponseEntity<>(address, HttpStatus.OK);
+                : new ResponseEntity<>(address.get(), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Получить список адресов", notes = "Находит адреса по их id. Возвращает списком List<Address>")

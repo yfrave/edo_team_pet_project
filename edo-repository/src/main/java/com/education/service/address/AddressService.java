@@ -10,7 +10,7 @@ public interface AddressService {
 
     void delete(Address address);
 
-    Address findById(Long id);
+    Optional<Address> findById(Long id);
 
     List<Address> findAllById(Iterable<Long> list);
 }

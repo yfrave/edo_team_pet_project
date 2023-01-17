@@ -33,11 +33,9 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class, readOnly = true)
-    public Address findById(Long id) {
-        var ad = addressRepository.getReferenceById(id);
-        return ad;
-//        return addressRepository.getReferenceById(id);
+//    @Transactional(rollbackFor = Exception.class, readOnly = true)
+    public Optional<Address> findById(Long id) {
+        return addressRepository.findById(id);
     }
 
     @Override
