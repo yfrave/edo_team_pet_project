@@ -8,6 +8,10 @@ spring:
     locations: db/migration
   application:
     name: edo-repository
+  jpa:
+    properties:
+      hibernate:
+        default_schema: edo
 server:
   port: 0
 eureka:

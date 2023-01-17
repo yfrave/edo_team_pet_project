@@ -15,7 +15,7 @@ public class AddressServiceImpl implements AddressService {
 
     private AddressRepository addressRepository;
 
-    @Autowired
+
     public AddressServiceImpl(AddressRepository addressRepository) {
         this.addressRepository = addressRepository;
     }
@@ -33,7 +33,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-//    @Transactional(rollbackFor = Exception.class, readOnly = true)
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public Optional<Address> findById(Long id) {
         return addressRepository.findById(id);
     }
