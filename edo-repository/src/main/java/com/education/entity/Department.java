@@ -22,29 +22,43 @@ import java.time.ZonedDateTime;
 @SuperBuilder
 @Table(name = "department")
 public class Department extends BaseEntity {
+    /**
+     * Короткое имя или аббревиатура
+     */
     @Column(name = "short_name")
     private String shortName;
 
+    /**
+     * Полное название
+     */
     @Column(name = "full_name")
     private String fullName;
 
+    /**
+     * Адрес
+     */
     @OneToOne
-    @JoinTable(name = "department_address",
-            joinColumns =
-                    {@JoinColumn(name = "department_id", referencedColumnName = "id")},
-            inverseJoinColumns =
-                    {@JoinColumn(name = "address_id", referencedColumnName = "id")}
-    )
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
+    /**
+     * Внешний идентификатор
+     */
     @Column(name = "need_todo")
     private String needTODO; //externalId (внешний идентификатор, у себя не создаем сущность, скачиваем из чужого хранилища)
 
+    /**
+     * Номер телефона
+     */
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "not_done")
-    private String notDone; //department (Связка с вышестоящим департаментом)
+    /**
+     * Вышестоящий департамент
+     */
+    @OneToOne
+    @JoinColumn(name = "department_id")
+    private Department department; //department (Связка с вышестоящим департаментом)
 
     /**
      * Дата создания отдела
