@@ -22,6 +22,7 @@ import java.time.ZonedDateTime;
 @SuperBuilder
 @Table(name = "department")
 public class Department extends BaseEntity {
+
     /**
      * Короткое имя или аббревиатура
      */
