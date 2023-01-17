@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/repository/address")
 public class AddressRestController {
+    @Autowired
     private AddressService addressService;
 
     @ApiOperation(value = "Получить адрес по d", notes = "Returns an address as per the id")
@@ -27,10 +29,10 @@ public class AddressRestController {
     public ResponseEntity<Address> findAddress(@PathVariable("id")
                                                @ApiParam(name = "id", value = "Адрес id", example = "1")
                                                Long id) {
-        Optional<Address> address = addressService.findById(id);
-        return address.isEmpty()
+        Address address = addressService.findById(id);
+        return address == null
                 ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
-                : new ResponseEntity<>(address.get(), HttpStatus.OK);
+                : new ResponseEntity<>(address, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Получить список адресов", notes = "Находит адреса по их id. Возвращает списком List<Address>")
