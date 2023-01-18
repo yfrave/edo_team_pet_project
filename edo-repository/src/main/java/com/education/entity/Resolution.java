@@ -64,6 +64,9 @@ public class Resolution extends BaseEntity {
      * Работники выполняющие решение
      */
     @OneToMany(fetch=FetchType.LAZY)
+    @JoinTable(name = "resolutions_employees",
+            joinColumns = @JoinColumn(name = "resolution_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"))
     private List<Employee> executors;
 
     /**
