@@ -1,7 +1,6 @@
 package com.education.model.dto;
 
-import com.education.entity.Address;
-import com.education.entity.Department;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -33,7 +32,7 @@ public class DepartmentDto {
             notes = "Адрес отдела",
             dataType = "Address.class"
     )
-    private Address address;
+    private AddressDto address;
     @ApiModelProperty(
             notes = "Ключ внешней таблицы",
             dataType = "Long"
@@ -48,7 +47,7 @@ public class DepartmentDto {
             notes = "Вышестоящий отдел",
             dataType = "Department.class"
     )
-    private Department department;
+    private DepartmentDto department;
     @ApiModelProperty(
             notes = "Дата открытия",
             dataType = "ZonedDateTime"
