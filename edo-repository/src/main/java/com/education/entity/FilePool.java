@@ -31,7 +31,7 @@ public class FilePool extends BaseEntity{
      * ID хранилища файла
      */
     @Column(name = "storage_file_id")
-    private UUID storageFileId = UUID.randomUUID();
+    private UUID storageFileId;
     /**
      * Имя хранилища файла
      */
