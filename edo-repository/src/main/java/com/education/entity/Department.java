@@ -73,5 +73,4 @@ public class Department extends BaseEntity {
      */
     @Column(name = "archived_date")
     private ZonedDateTime archivedDate;
-
 }
