@@ -2,8 +2,6 @@ package com.education.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -82,7 +80,4 @@ public class Address extends BaseEntity {
      */
     @Column(name = "flat")
     private String flat;
-
-    @OneToOne(mappedBy = "department")
-    private Department department;
 }
