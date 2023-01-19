@@ -3,7 +3,6 @@ package com.education.service.address.impl;
 import com.education.entity.Address;
 import com.education.repository.AddressRepository;
 import com.education.service.address.AddressService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
