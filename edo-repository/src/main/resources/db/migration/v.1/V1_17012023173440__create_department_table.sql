@@ -4,8 +4,8 @@ create table if not exists department
     short_name    text,               --Короткое имя, возможно аббревиатура
     full_name     text,               --Полное имя
     address_id    bigserial not null, --ключ адреса
-    archived_date timestamp(6),
-    creation_date timestamp(6),
+    archived_date timestamp(6),       --дата закрытия
+    creation_date timestamp(6),       --дата открытия
     external_id   bigserial,          --ключ внешней таблицы
     phone         varchar(255),       --номер телефона
     department_id bigserial           --ключ вышестоящего отдела
@@ -32,8 +32,8 @@ alter table if exists department
 insert into address(full_address, street, house, index, housing, building, city, region, country, flat)
 VALUES ('Moscow', 'Rogozin street', '10', '1234', ' ', ' ', 'Moscow', 'Moscow region', 'Russia', ' ');
 
-INSERT INTO department (short_name, full_name, address_id, archived_date, creation_date, need_todo, phone,
+INSERT INTO department (short_name, full_name, address_id, archived_date, creation_date, external_id, phone,
                         department_id)
-VALUES ('StS', 'Stock sale', DEFAULT, '2023-01-18 14:55:16.000000', '2023-01-18 14:55:18.000000', ' ', '89999999999',
+VALUES ('StS', 'Stock sale', DEFAULT, '2023-01-18 14:55:16.000000', '2023-01-18 14:55:18.000000', 0, '89999999999',
         1);
 

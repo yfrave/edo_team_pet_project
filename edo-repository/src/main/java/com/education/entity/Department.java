@@ -47,7 +47,7 @@ public class Department extends BaseEntity {
      * Внешний идентификатор
      */
     @Column(name = "external_id")
-    private Long externalId; //externalId (внешний идентификатор, у себя не создаем сущность, скачиваем из чужого хранилища)
+    private Long externalId;
 
     /**
      * Номер телефона
