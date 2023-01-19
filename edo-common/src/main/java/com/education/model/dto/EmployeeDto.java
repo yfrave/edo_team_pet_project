@@ -1,5 +1,4 @@
 package com.education.model.dto;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -59,4 +58,5 @@ public class EmployeeDto {
 
     @ApiModelProperty("Дата архивирования")
     private ZonedDateTime archivedDate;
+
 }
