@@ -18,12 +18,8 @@ public interface ThemeRepository extends JpaRepository<Theme, Long> {
     @Query("update Theme th set th.archivedDate=:date where th.id=:theme_id")
     Integer moveToArchive(@Param("theme_id")Long id, @Param("date") ZonedDateTime archivedDate);
 
-
-
-
-    List<Theme> findAllByIdAndArchivedDateIsNull(List<Long> ids);
+    List<Theme> findAllByIdAndArchivedDateIsNull(Long ids);
 
     Theme findByIdAndArchivedDateIsNull(Long id);
-
 
 }

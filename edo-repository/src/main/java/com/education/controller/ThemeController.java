@@ -1,6 +1,7 @@
 package com.education.controller;
 
 import com.education.service.theme.ThemeService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,14 +14,10 @@ import com.education.entity.Theme;
 
 @RestController
 @RequestMapping("api/repository/theme")
+@RequiredArgsConstructor
 public class ThemeController {
 
-
     private final ThemeService themeService;
-
-    public ThemeController(ThemeService themeService) {
-        this.themeService = themeService;
-    }
 
     @PostMapping
     public ResponseEntity<Theme> saveTheme(@RequestBody Theme theme) {
@@ -30,7 +27,7 @@ public class ThemeController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Theme> getThemeById(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(themeService.findById(id).isPresent() ? themeService.findById(id).get() : null, HttpStatus.OK);
+        return new ResponseEntity<>(themeService.findById(id).get(), HttpStatus.OK);
     }
 }
 
