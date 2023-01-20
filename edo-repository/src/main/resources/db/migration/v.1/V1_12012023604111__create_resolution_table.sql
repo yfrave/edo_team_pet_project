@@ -9,13 +9,11 @@ create table if not exists resolution
     signer_id bigint not null unique references employee (id),
     curator_id bigint not null unique references employee (id)
     ); --Таблица описывающая резолюцию
-
 create table if not exists resolutions_employees
 (
     resolution_id bigint references resolution (id),
     employee_id bigint references employee (id)
     ); --Таблица one to many
-
 comment on column resolutions_employees.resolution_id is 'id resolution';
 comment on column resolutions_employees.employee_id is 'id employee';
 

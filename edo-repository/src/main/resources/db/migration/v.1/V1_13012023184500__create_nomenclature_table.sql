@@ -7,7 +7,6 @@ create table if not exists nomenclature
     current_value bigint,                         --Текущее значение
     index         text                            --Индекс
 );
-
 comment on column nomenclature.id is 'id';
 comment on column nomenclature.creation_date is 'Дата создания номенклатуры';
 comment on column nomenclature.archived_date is 'Дата перевода в архив';
