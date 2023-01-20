@@ -10,6 +10,7 @@ CREATE TABLE if not exists file_pool
     archived_date   TIMESTAMPTZ,                    --Дата архивирования файла
     creator_id      bigint references employee  --Автор файла
 );
+
 comment on column file_pool.id is 'ID';
 comment on column file_pool.storage_file_id is 'ID хранилища файла';
 comment on column file_pool.file_name is 'Имя хранилища файла';

@@ -7,6 +7,7 @@ create table if not exists theme
     code       text,                   -- код темы
     parent_id  bigint references theme -- родительская тема
 );
+
 comment on table theme is 'Тема обращения';
 comment on column theme.id is 'id темы обращения';
 comment on column theme.theme_name is 'Название темы обращения';

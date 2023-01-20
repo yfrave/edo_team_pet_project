@@ -13,6 +13,7 @@ create table if not exists author
     fio_genitive   varchar(255) not null,
     fio_nominative varchar(255) not null
     );
+
 comment on column author.first_name is 'Имя автора';
 comment on column author.last_name is 'Фамилия автора';
 comment on column author.middle_name is 'Отчество автора';
