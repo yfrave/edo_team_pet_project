@@ -12,6 +12,7 @@ create table if not exists address
     country      text,                           --Страна
     flat         text                            --Этаж или номер квартиры
 );
+
 comment on column address.id is 'Это id, чего ещё ты ожидаешь здесь увидеть?';
 comment on column address.full_address is 'Полный адрес';
 comment on column address.street is 'Улица';
