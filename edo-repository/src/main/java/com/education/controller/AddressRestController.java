@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +16,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/repository/address")
+@AllArgsConstructor
 public class AddressRestController {
-    @Autowired
     private AddressService addressService;
 
     @ApiOperation(value = "Получить адрес по d", notes = "Returns an address as per the id")
@@ -64,7 +64,7 @@ public class AddressRestController {
             @ApiResponse(code = 200, message = "Successfully deleted")
     })
     @DeleteMapping("/delete")
-    public ResponseEntity<Void> deleteUser(@RequestBody @ApiParam("Address") Address address) {
+    public ResponseEntity<Void> delete(@RequestBody @ApiParam("Address") Address address) {
         addressService.delete(address);
         return ResponseEntity.ok().build();
     }

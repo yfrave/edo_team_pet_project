@@ -53,7 +53,7 @@ public class AddressFeignController {
             @ApiResponse(code = 200, message = "Successfully deleted")
     })
     @DeleteMapping("/delete")
-    public ResponseEntity<Void> deleteUser(@RequestBody @ApiParam("Address") AddressDto address) {
+    public ResponseEntity<Void> delete(@RequestBody @ApiParam("Address") AddressDto address) {
         service.delete(address);
         return ResponseEntity.ok().build();
     }
