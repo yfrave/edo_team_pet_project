@@ -28,3 +28,4 @@ comment on column resolution.creator_id is 'id Работника создавш
 comment on column resolution.signer_id is 'id Работника подписывающий документ';
 comment on column resolution.curator_id is 'id Работника курирующий работу';
 
+
