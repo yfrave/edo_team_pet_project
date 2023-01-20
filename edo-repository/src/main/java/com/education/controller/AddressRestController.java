@@ -8,11 +8,9 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,7 +61,7 @@ public class AddressRestController {
 
     @ApiOperation(value = "Сохранить адрес")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully created")
+            @ApiResponse(code = 201, message = "Successfully created")
     })
     @PostMapping("/")
     public ResponseEntity<Address> save(@RequestBody @ApiParam("Address") Address address) {
