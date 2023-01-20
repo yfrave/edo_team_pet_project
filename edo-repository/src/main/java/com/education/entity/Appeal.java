@@ -16,7 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@SuperBuilder
 @Table(name = "appeal")
 /**
  *  Класс "Обращения"
@@ -52,7 +51,7 @@ public class Appeal extends BaseEntity {
      */
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "appeal_employees",
+    @JoinTable(name = "appeal_signer",
             joinColumns = @JoinColumn(name = "appeal_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"))
 //    не хватает аннотации
@@ -70,13 +69,10 @@ public class Appeal extends BaseEntity {
     /**
      * Получатели
      */
-    @OneToMany(fetch=FetchType.LAZY)
-    @JoinTable(name = "appeal_employees",
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "appeal_addressee",
             joinColumns = @JoinColumn(name = "appeal_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"))
-    //    не хватает аннотации
-//    без нее работать сохранение и получение данных не будет
-    //если у тебя будут 2 связки на одну и ту же таблицу, то как хибер должен разграничить, какие из них addressee, а какие signers?
     private List<Employee> addressee;
 }
 
