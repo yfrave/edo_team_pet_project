@@ -1,24 +1,24 @@
 create table if not exists appeal
 (
-    id                bigserial  not null primary key,    -- id
-    creation_date timestamptz not null,                   -- Дата создания обращения
-    archived_date timestamptz,                            -- Дата архивирования обращения
-    number            varchar(255) not null,              -- Номер обращения
-    annotation        varchar(255) not null,              -- Описание обращения
-    creator_id        bigint not null references employee (id)   -- Автор
-    ); --Таблица описывающая обращение
+    id            bigserial    not null primary key,             -- id
+    creation_date timestamptz  not null,                         -- Дата создания обращения
+    archived_date timestamptz,                                   -- Дата архивирования обращения
+    number        varchar(255) not null,                         -- Номер обращения
+    annotation    varchar(255) not null,                         -- Описание обращения
+    creator_id    bigint       not null references employee (id) -- Автор
+); --Таблица описывающая обращение
 
 create table if not exists appeal_signer
 (
-    signer_id bigint not null references employee (id),          -- Сотрудники, которые будут подписывать документ
-    appeal_id bigint references appeal (id),
+    signer_id   bigint not null references employee (id), -- Сотрудники, которые будут подписывать документ
+    appeal_id   bigint references appeal (id),
     employee_id bigint references employee (id)
-    ); --Таблица one to many appeal_signer
+); --Таблица one to many appeal_signer
 create table if not exists appeal_addressee
 (
-    addressee_id bigint not null references employee (id),       -- Получатели
-    appeal_id bigint references appeal (id),
-    employee_id bigint references employee (id)
+    addressee_id bigint not null references employee (id), -- Получатели
+    appeal_id    bigint references appeal (id),
+    employee_id  bigint references employee (id)
 ); --Таблица one to many appeal_addressee
 
 comment on column appeal_signer.appeal_id is 'id appeal';
