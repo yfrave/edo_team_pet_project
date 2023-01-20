@@ -1,6 +1,7 @@
 package com.education.entity;
 
 import com.education.model.enumEntity.EnumResolution;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -18,6 +19,7 @@ import java.util.List;
 @Getter
 @Setter
 @SuperBuilder
+@ToString
 @Table(name = "resolution")
 public class Resolution extends BaseEntity {
 
@@ -49,6 +51,7 @@ public class Resolution extends BaseEntity {
     /**
      * Работник создавший резолюцию
      */
+    //@JsonIgnore
     @OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "creator_id")
     private Employee creator;
@@ -56,6 +59,7 @@ public class Resolution extends BaseEntity {
     /**
      * Работник подписывающий документ
      */
+    //@JsonIgnore
     @OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "signer_id")
     private Employee signer;
@@ -63,6 +67,7 @@ public class Resolution extends BaseEntity {
     /**
      * Работники выполняющие решение
      */
+    //@JsonIgnore
     @OneToMany(fetch=FetchType.LAZY)
     @JoinTable(name = "resolutions_employees",
             joinColumns = @JoinColumn(name = "resolution_id", referencedColumnName = "id"),
@@ -72,6 +77,7 @@ public class Resolution extends BaseEntity {
     /**
      * Работник курирующий работу
      */
+    //@JsonIgnore
     @OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "curator_id")
     private Employee curator;

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,62 +18,47 @@ public class ResolutionServiceImpl implements ResolutionService {
     final ResolutionRepository resolutionRepository;
 
 
-    /**
-     * @param resolution
-     * @return
-     */
-
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean save(Resolution resolution) {
-        return false;
+        Optional<Resolution> resolutionFromDB = resolutionRepository.findById(resolution.getId());
+        if (resolutionFromDB.isPresent()) {
+            return false;
+        }
+        resolutionRepository.save(resolution);
+        return true;
     }
 
-    /**
-     * @param resolution
-     * @return
-     */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean moveToArchive(Resolution resolution) {
-        return false;
+    public void moveToArchive(Long id) {
+        resolutionRepository.moveToArchive(id);
     }
 
-    /**
-     * @param id
-     * @return
-     */
+
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     @Override
     public Resolution findById(Long id) {
-        return null;
+        return resolutionRepository.findById(id).get();
     }
 
-    /**
-     * @return
-     */
+
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     @Override
-    public List<Resolution> findAllById(Iterable<Long> idc) {
-        return null;
+    public List<Resolution> findAllById(Iterable<Long> ids) {
+        return resolutionRepository.findAllById(ids);
     }
 
-    /**
-     * @param id
-     * @return
-     */
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     @Override
     public Resolution findByIdNotArchived(Long id) {
-        return null;
+        return resolutionRepository.findByIdNotArchived(id).orElse(null);
     }
 
-    /**
-     * @return
-     */
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     @Override
-    public List<Resolution> findAllByIdNotArchived(Iterable<Long> idc) {
-        return null;
+    public List<Resolution> findAllByIdNotArchived(Iterable<Long> ids) {
+        return resolutionRepository.findAllByIdNotArchived(ids);
+
     }
 }
