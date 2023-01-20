@@ -5,15 +5,14 @@ import com.education.entity.Theme;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public interface ThemeService {
     public void save(Theme theme);
 
-    public void moveToArchive(Theme theme);
+    public Integer moveToArchive(Long id);
 
-    public Optional<Theme> findById(Long id);
+    public Theme findById(Long id);
 
     public List<Theme> findAllById(List<Long> ids);
 

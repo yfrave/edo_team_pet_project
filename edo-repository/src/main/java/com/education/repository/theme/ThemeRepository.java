@@ -10,16 +10,17 @@ import org.springframework.stereotype.Repository;
 
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ThemeRepository extends JpaRepository<Theme, Long> {
 
-    @Modifying
-    @Query("update Theme th set th.archivedDate=:date where th.id=:theme_id")
-    Integer moveToArchive(@Param("theme_id")Long id, @Param("date") ZonedDateTime archivedDate);
-
-    List<Theme> findAllByIdAndArchivedDateIsNull(Long ids);
+    @Query("select th from Theme th where th.id in (:ids) and th.archivedDate is null")
+    List<Theme> findAllnotArchived(@Param("ids") List<Long> ids);
 
     Theme findByIdAndArchivedDateIsNull(Long id);
 
+    @Modifying
+    @Query(value = "UPDATE edo.theme SET archived_date = current_timestamp WHERE id = :theme_id", nativeQuery = true)
+    Integer moveToArchive(@Param("theme_id") Long id);
 }

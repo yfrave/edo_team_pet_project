@@ -3,45 +3,46 @@ package com.education.service.theme.impl;
 import com.education.entity.Theme;
 import com.education.repository.theme.ThemeRepository;
 import com.education.service.theme.ThemeService;
-import org.springframework.stereotype.Service;
 
-import java.time.ZonedDateTime;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ThemeServiceImpl implements ThemeService {
 
     private final ThemeRepository themeRepository;
 
-    public ThemeServiceImpl(ThemeRepository themeRepository) {
-        this.themeRepository = themeRepository;
-    }
-
+    @Transactional
     public void save(Theme theme) {
         themeRepository.save(theme);
     }
 
-    public void moveToArchive(Theme theme) {
-        theme.setArchivedDate(ZonedDateTime.now());
-//        themeRepository.update(theme);
+    @Transactional
+    public Integer moveToArchive(Long id) {
+        return themeRepository.moveToArchive(id);
     }
 
-    public Optional<Theme> findById(Long id) {
-        return themeRepository.findById(id);
+    @Transactional(readOnly = true)
+    public Theme findById(Long id) {
+        return themeRepository.findById(id).orElse(null);
     }
 
+    @Transactional(readOnly = true)
     public List<Theme> findAllById(List<Long> ids) {
-       return themeRepository.findAllById(ids);
+        return themeRepository.findAllById(ids);
     }
 
+    @Transactional(readOnly = true)
     public Theme findByIdNotArchived(Long id) {
-        return null;
-//        return themeRepository.findByIdNotArchived(id);
+        return themeRepository.findByIdAndArchivedDateIsNull(id);
     }
 
+    @Transactional(readOnly = true)
     public List<Theme> findAllByIdNotArchived(List<Long> ids) {
-        return null;
-//        return themeRepository.findAllByIdNotArchived(ids);
+        return themeRepository.findAllnotArchived(ids);
     }
 }
