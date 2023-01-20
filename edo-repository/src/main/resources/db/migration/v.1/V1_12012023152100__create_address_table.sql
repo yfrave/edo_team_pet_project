@@ -24,3 +24,4 @@ comment on column address.city is 'Город';
 comment on column address.region is 'Регион';
 comment on column address.country is 'Странна';
 comment on column address.flat is 'Этаж или номер квартиры';
+
