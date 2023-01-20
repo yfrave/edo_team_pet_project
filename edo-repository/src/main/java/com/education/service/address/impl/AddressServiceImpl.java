@@ -21,8 +21,8 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void save(Address obj) {
-        addressRepository.saveAndFlush(obj);
+    public Address save(Address obj) {
+        return addressRepository.saveAndFlush(obj);
     }
 
     @Override

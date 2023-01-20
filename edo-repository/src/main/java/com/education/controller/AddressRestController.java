@@ -27,22 +27,13 @@ public class AddressRestController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<Address> fetchAddress(@PathVariable("id")
-                                               @ApiParam(name = "id", value = "Адрес id", example = "1")
-                                               Long id) {
+                                                @ApiParam(name = "id", value = "Адрес id", example = "1")
+                                                Long id) {
         Optional<Address> address = addressService.findById(id);
         return address.isEmpty()
                 ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
                 : new ResponseEntity<>(address.get(), HttpStatus.OK);
     }
-
-//    @GetMapping("/test")
-//    public ResponseEntity<List<Long>> test() {
-//        List<Long> list = new ArrayList<>();
-//        list.add(1l);
-//        list.add(2l);
-//        list.add(3l);
-//        return new ResponseEntity<>(list, HttpStatus.OK);
-//    }
 
     @ApiOperation(value = "Получить список адресов", notes = "Находит адреса по их id. Возвращает списком List<Address>")
     @ApiResponses(value = {
@@ -51,8 +42,8 @@ public class AddressRestController {
     })
     @GetMapping("/findAll")
     public ResponseEntity<List<Address>> fetchAllAddresses(@RequestBody
-                                                          @ApiParam(name = "Address list")
-                                                          List<Long> idList) {
+                                                           @ApiParam(name = "Address list")
+                                                           List<Long> idList) {
         List<Address> list = addressService.findAllById(idList);
         return list != null && !list.isEmpty()
                 ? new ResponseEntity<>(list, HttpStatus.OK)
@@ -65,8 +56,7 @@ public class AddressRestController {
     })
     @PostMapping("/")
     public ResponseEntity<Address> save(@RequestBody @ApiParam("Address") Address address) {
-        addressService.save(address);
-        return new ResponseEntity<>(address, HttpStatus.CREATED);
+        return new ResponseEntity<>(addressService.save(address), HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "Удалить адрес")
