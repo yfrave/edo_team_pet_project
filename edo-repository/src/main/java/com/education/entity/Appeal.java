@@ -53,8 +53,6 @@ public class Appeal extends BaseEntity {
     @JoinTable(name = "appeal_signer",
             joinColumns = @JoinColumn(name = "appeal_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"))
-//    не хватает аннотации
-//    без нее работать сохранение и получение данных не будет
     private List<Employee> signer;
 
     /**
