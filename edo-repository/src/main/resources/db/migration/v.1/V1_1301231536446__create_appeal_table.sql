@@ -5,21 +5,27 @@ create table if not exists appeal
     archived_date timestamptz,                            -- Дата архивирования обращения
     number            varchar(255) not null,              -- Номер обращения
     annotation        varchar(255) not null,              -- Описание обращения
-    signer_id         bigint not null unique references employee (id),          -- Сотрудники, которые будут подписывать документ
-    creator_id        bigint not null unique references employee (id),          -- Автор
-    addressee_id      bigint not null unique references employee (id)           -- Получатели
---     addressee - множество. множество не может поместиться в одну колонку
---     signer - та же история
---     если ты ставишь unique, то подразумеваешь, что у тебя только один создатель для одной резолюции, больше дубликации невозможно
+    signer_id         bigint not null references employee (id),          -- Сотрудники, которые будут подписывать документ
+    creator_id        bigint not null unique references employee (id),   -- Автор
+    addressee_id      bigint not null references employee (id)           -- Получатели
     ); --Таблица описывающая обращение
-create table if not exists appeal_employees
+
+create table if not exists appeal_signer
 (
     appeal_id bigint references appeal (id),
     employee_id bigint references employee (id)
     ); --Таблица one to many
+create table if not exists appeal_addressee
+(
+    appeal_id bigint references appeal (id),
+    employee_id bigint references employee (id)
+); --Таблица one to many
 
-comment on column appeal_employees.appeal_id is 'id appeal';
-comment on column appeal_employees.employee_id is 'id employee';
+comment on column appeal_signer.appeal_id is 'id appeal';
+comment on column appeal_signer.employee_id is 'id employee';
+
+comment on column appeal_addressee.appeal_id is 'id appeal';
+comment on column appeal_addressee.employee_id is 'id employee';
 
 comment on column appeal.id is 'id';
 comment on column appeal.creation_date is 'Дата создания обращения';
