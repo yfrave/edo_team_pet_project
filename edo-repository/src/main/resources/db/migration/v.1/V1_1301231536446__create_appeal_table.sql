@@ -10,13 +10,11 @@ create table if not exists appeal
 
 create table if not exists appeal_signer
 (
-    signer_id   bigint not null references employee (id), -- Сотрудники, которые будут подписывать документ
     appeal_id   bigint references appeal (id),
     employee_id bigint references employee (id)
 ); --Таблица one to many appeal_signer
 create table if not exists appeal_addressee
 (
-    addressee_id bigint not null references employee (id), -- Получатели
     appeal_id    bigint references appeal (id),
     employee_id  bigint references employee (id)
 ); --Таблица one to many appeal_addressee
