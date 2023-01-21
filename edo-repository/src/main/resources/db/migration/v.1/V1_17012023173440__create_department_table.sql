@@ -3,12 +3,12 @@ create table if not exists department
     id            bigserial not null primary key references address (id),
     short_name    text,               --Короткое имя, возможно аббревиатура
     full_name     text,               --Полное имя
-    address_id    bigserial not null, --ключ адреса
+    address_id    bigint    not null, --ключ адреса
     archived_date timestamp(6),       --дата закрытия
     creation_date timestamp(6),       --дата открытия
-    external_id   bigserial,          --ключ внешней таблицы
+    external_id   bigint,             --ключ внешней таблицы
     phone         varchar(255),       --номер телефона
-    department_id bigserial           --ключ вышестоящего отдела
+    department_id bigint              --ключ вышестоящего отдела
 );
 
 comment on column department.id is 'id';
@@ -34,6 +34,6 @@ VALUES ('Moscow', 'Rogozin street', '10', '1234', ' ', ' ', 'Moscow', 'Moscow re
 
 INSERT INTO department (short_name, full_name, address_id, archived_date, creation_date, external_id, phone,
                         department_id)
-VALUES ('StS', 'Stock sale', DEFAULT, '2023-01-18 14:55:16.000000', '2023-01-18 14:55:18.000000', 0, '89999999999',
+VALUES ('StS', 'Stock sale', 1, '2023-01-18 14:55:16.000000', '2023-01-18 14:55:18.000000', 0, '89999999999',
         1);
 
