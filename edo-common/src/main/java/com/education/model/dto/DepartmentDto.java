@@ -31,8 +31,7 @@ public class DepartmentDto {
     private String fullName;
 
     @ApiModelProperty(
-            notes = "Адрес отдела",
-            dataType = "Address.class"
+            notes = "Адрес отдела"
     )
     private String address;
 
