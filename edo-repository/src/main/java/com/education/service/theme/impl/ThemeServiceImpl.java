@@ -19,7 +19,7 @@ public class ThemeServiceImpl implements ThemeService {
 
     @Transactional
     public void save(ThemeDto themeDto) {
-        Theme parentTheme = themeDto.getIdParentTheme() == null? null : themeRepository.findById(themeDto.getIdParentTheme()).orElse(null);
+        Theme parentTheme = themeDto.getIdParentTheme() == null ? null : themeRepository.findById(themeDto.getIdParentTheme()).orElse(null);
         Theme theme = new Theme(themeDto.getName(), null, themeDto.getArchivedDate(), themeDto.getCode(), parentTheme);
         themeRepository.save(theme);
     }
@@ -40,34 +40,36 @@ public class ThemeServiceImpl implements ThemeService {
         }
     }
 
-        @Transactional(readOnly = true)
-        public List<ThemeDto> findAllById (List < Long > ids) {
-            List<Theme> themes = themeRepository.findAllById(ids);
-            List<ThemeDto> listDto = new ArrayList<>();
-            for (Theme theme : themes) {
-                Long parentThemeId = theme.getParentTheme() != null ? theme.getParentTheme().getId() : null;
-                listDto.add(new ThemeDto(theme.getId(), theme.getName(), theme.getCreationDate(), theme.getArchivedDate(), theme.getCode(), parentThemeId));
-            }
-            return listDto;
+    @Transactional(readOnly = true)
+    public List<ThemeDto> findAllById(List<Long> ids) {
+        List<Theme> themes = themeRepository.findAllById(ids);
+        List<ThemeDto> listDto = new ArrayList<>();
+        for (Theme theme : themes) {
+            Long parentThemeId = theme.getParentTheme() != null ? theme.getParentTheme().getId() : null;
+            listDto.add(new ThemeDto(theme.getId(), theme.getName(), theme.getCreationDate(), theme.getArchivedDate(), theme.getCode(), parentThemeId));
         }
+        return listDto;
+    }
 
-        @Transactional(readOnly = true)
-        public ThemeDto findByIdNotArchived (Long id){
-            Theme theme = themeRepository.findByIdAndArchivedDateIsNull(id);
-            return new ThemeDto(theme.getId(), theme.getName(), theme.getCreationDate(), theme.getArchivedDate(), theme.getCode(), theme.getParentTheme().getId());
-        }
-
-        @Transactional(readOnly = true)
-        public List<ThemeDto> findAllByIdNotArchived (List < Long > ids) {
-            List<Theme> themes = themeRepository.findAllnotArchived(ids);
-            List<ThemeDto> listDto = new ArrayList<>();
-            for (Theme theme : themes) {
-                if (theme != null) {
-                    listDto.add(new ThemeDto(theme.getId(), theme.getName(), theme.getCreationDate(), theme.getArchivedDate(), theme.getCode(), theme.getParentTheme().getId()));
-                } else {
-                    listDto.add(null);
-                }
-            }
-            return listDto;
+    @Transactional(readOnly = true)
+    public ThemeDto findByIdNotArchived(Long id) {
+        Theme theme = themeRepository.findByIdAndArchivedDateIsNull(id);
+        if (theme == null) {
+            return null;
+        } else {
+            Long parentThemeId = theme.getParentTheme() != null ? theme.getParentTheme().getId() : null;
+            return theme != null ? new ThemeDto(theme.getId(), theme.getName(), theme.getCreationDate(), theme.getArchivedDate(), theme.getCode(), parentThemeId) : null;
         }
     }
+
+    @Transactional(readOnly = true)
+    public List<ThemeDto> findAllByIdNotArchived(List<Long> ids) {
+        List<Theme> themes = themeRepository.findAllnotArchived(ids);
+        List<ThemeDto> listDto = new ArrayList<>();
+        for (Theme theme : themes) {
+            Long parentThemeId = theme.getParentTheme() != null ? theme.getParentTheme().getId() : null;
+            listDto.add(new ThemeDto(theme.getId(), theme.getName(), theme.getCreationDate(), theme.getArchivedDate(), theme.getCode(), parentThemeId));
+        }
+        return listDto;
+    }
+}
