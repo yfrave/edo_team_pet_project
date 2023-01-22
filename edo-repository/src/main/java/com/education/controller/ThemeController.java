@@ -1,5 +1,6 @@
 package com.education.controller;
 
+import com.education.model.dto.ThemeDto;
 import com.education.service.theme.ThemeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.education.entity.Theme;
 
 import java.util.List;
 
@@ -24,38 +24,33 @@ public class ThemeController {
     private final ThemeService themeService;
 
     @PostMapping
-    public ResponseEntity<Theme> saveTheme(@RequestBody Theme theme) {
-        themeService.save(theme);
-        return new ResponseEntity<>(theme, HttpStatus.CREATED);
+    public ResponseEntity<ThemeDto> saveTheme(@RequestBody ThemeDto themeDto) {
+        themeService.save(themeDto);
+        return new ResponseEntity<>(themeDto, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Theme> getThemeById(@PathVariable("id") Long id) {
+    public ResponseEntity<ThemeDto> getThemeById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(themeService.findById(id), themeService.findById(id) != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
     @GetMapping
-    public ResponseEntity<List<Theme>> getAllById(@RequestParam(value = "ids", required = false) List<Long> ids) {
-        return new ResponseEntity<>(themeService.findAllById((List<Long>) ids), HttpStatus.OK);
+    public ResponseEntity<List<ThemeDto>> getAllById(@RequestParam(value = "ids", required = false) List<Long> ids) {
+        return new ResponseEntity<>(themeService.findAllById(ids), HttpStatus.OK);
     }
 
     @GetMapping("/notarchived/{id}")
-    public ResponseEntity<Theme> findByIdNotArchived(@PathVariable("id") Long id) {
+    public ResponseEntity<ThemeDto> findByIdNotArchived(@PathVariable("id") Long id) {
         return new ResponseEntity<>(themeService.findByIdNotArchived(id), themeService.findByIdNotArchived(id) != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/notarchived")
-    public ResponseEntity<List<Theme>> findAllByIdNotArchived(@RequestParam(value = "ids", required = false) List<Long> ids) {
-        return new ResponseEntity<>(themeService.findAllByIdNotArchived((List<Long>) ids), HttpStatus.OK);
+    public ResponseEntity<List<ThemeDto>> findAllByIdNotArchived(@RequestParam(value = "ids", required = false) List<Long> ids) {
+        return new ResponseEntity<>(themeService.findAllByIdNotArchived(ids), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Integer> moveToArchive(@PathVariable("id") Long id) {
         return new ResponseEntity<>(themeService.moveToArchive(id), HttpStatus.OK);
     }
-
-
 }
-
-
-

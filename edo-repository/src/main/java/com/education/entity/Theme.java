@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Date;
 import java.time.ZonedDateTime;
@@ -42,6 +43,7 @@ public class Theme extends BaseEntity {
      * Дата создания
      */
     @Column(name = "creation_date")
+    @CreationTimestamp
     private ZonedDateTime creationDate;
 
     /**

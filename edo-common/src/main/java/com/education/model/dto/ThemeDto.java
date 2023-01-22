@@ -27,5 +27,5 @@ public class ThemeDto {
     @ApiModelProperty("Код темы")
     private String code;
     @ApiModelProperty("Родительская тема")
-    private ThemeDto parentTheme;
+    private Long idParentTheme;
 }

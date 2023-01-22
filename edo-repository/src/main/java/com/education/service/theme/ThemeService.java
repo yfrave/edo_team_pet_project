@@ -2,21 +2,22 @@ package com.education.service.theme;
 
 
 import com.education.entity.Theme;
+import com.education.model.dto.ThemeDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public interface ThemeService {
-    public void save(Theme theme);
+    public void save(ThemeDto themeDto);
 
     public Integer moveToArchive(Long id);
 
-    public Theme findById(Long id);
+    public ThemeDto findById(Long id);
 
-    public List<Theme> findAllById(List<Long> ids);
+    public List<ThemeDto> findAllById(List<Long> ids);
 
-    public Theme findByIdNotArchived(Long id);
+    public ThemeDto findByIdNotArchived(Long id);
 
-    public List<Theme> findAllByIdNotArchived(List<Long> ids);
+    public List<ThemeDto> findAllByIdNotArchived(List<Long> ids);
 }
