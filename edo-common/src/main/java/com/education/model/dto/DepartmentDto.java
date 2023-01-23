@@ -31,9 +31,10 @@ public class DepartmentDto {
     private String fullName;
 
     @ApiModelProperty(
-            notes = "Адрес отдела"
+            notes = "Адрес отдела",
+            dataType = "AddressDto.class"
     )
-    private String address;
+    private AddressDto address;
 
     @ApiModelProperty(
             notes = "Ключ внешней таблицы",
@@ -50,9 +51,9 @@ public class DepartmentDto {
 
     @ApiModelProperty(
             notes = "Вышестоящий отдел",
-            dataType = "Department.class"
+            dataType = "DepartmentDto.class"
     )
-    private String department;
+    private DepartmentDto department;
 
     @ApiModelProperty(
             notes = "Дата открытия",
