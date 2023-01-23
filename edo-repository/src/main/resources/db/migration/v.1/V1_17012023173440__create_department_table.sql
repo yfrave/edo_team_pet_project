@@ -1,20 +1,15 @@
 create table if not exists department
 (
-    id            bigint not null references address (id),
+    id            bigint not null primary key,
     short_name    text,                                               --Короткое имя, возможно аббревиатура
     full_name     text,                                               --Полное имя
-    address_id    bigint not null,                                    --ключ адреса
+    address_id    bigint not null references address (id),            --ключ адреса
     archived_date timestamp with time zone default current_timestamp, --дата закрытия
     creation_date timestamp with time zone default current_timestamp, --дата открытия
     external_id   bigint,                                             --ключ внешней таблицы
     phone         varchar(255),                                       --номер телефона
-    department_id bigint,                                              --ключ вышестоящего отдела
-    primary key (id, address_id)
+    department_id bigint                                              --ключ вышестоящего отдела
 );
-
-alter table if exists department
-    add constraint fk_uq1_address_department foreign key (address_id) references address;
-
 
 comment on column department.id is 'id';
 comment on column department.short_name is 'аббревиатура';
