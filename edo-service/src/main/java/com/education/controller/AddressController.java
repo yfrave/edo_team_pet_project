@@ -12,12 +12,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api/service/address")
 @AllArgsConstructor
-public class AddressFeignController {
+public class AddressController {
     AddressService service;
+    private static final Logger LOG = Logger.getLogger(AddressController.class.getName());
 
     @ApiOperation(value = "Получить адрес по d", notes = "Returns an address as per the id")
     @ApiResponses(value = {
@@ -26,6 +29,7 @@ public class AddressFeignController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<AddressDto> getAddress(@PathVariable Long id) {
+        LOG.log(Level.INFO, "отправил AddressDto.class");
         return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
     }
 
@@ -34,8 +38,9 @@ public class AddressFeignController {
             @ApiResponse(code = 200, message = "Successfully retrieved"),
             @ApiResponse(code = 404, message = "Not found - The addresses was not found")
     })
-    @GetMapping("/findAll")
+    @PostMapping("/findAll")
     public ResponseEntity<List<AddressDto>> getAddressesList(@RequestBody List<Long> idList) {
+        LOG.log(Level.INFO, "отправил list AddressDto.class");
         return new ResponseEntity<>(service.fetchAddressedList(idList), HttpStatus.OK);
     }
 
@@ -45,6 +50,7 @@ public class AddressFeignController {
     })
     @PostMapping("/")
     public ResponseEntity<AddressDto> save(@RequestBody @ApiParam("Address") AddressDto address) {
+        LOG.log(Level.INFO, "сохранил AddressDto.class");
         return new ResponseEntity<>(service.save(address), HttpStatus.CREATED);
     }
 
@@ -55,6 +61,7 @@ public class AddressFeignController {
     @DeleteMapping("/delete")
     public ResponseEntity<Void> delete(@RequestBody @ApiParam("Address") AddressDto address) {
         service.delete(address);
+        LOG.log(Level.INFO, "удалил AddressDto.class");
         return ResponseEntity.ok().build();
     }
 }

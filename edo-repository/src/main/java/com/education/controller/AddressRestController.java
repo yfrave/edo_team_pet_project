@@ -40,7 +40,7 @@ public class AddressRestController {
             @ApiResponse(code = 200, message = "Successfully retrieved"),
             @ApiResponse(code = 404, message = "Not found - The addresses was not found")
     })
-    @GetMapping("/findAll")
+    @PostMapping("/findAll")
     public ResponseEntity<List<Address>> fetchAllAddresses(@RequestBody
                                                            @ApiParam(name = "Address list")
                                                            List<Long> idList) {
