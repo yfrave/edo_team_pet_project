@@ -1,9 +1,9 @@
 create table if not exists department
 (
-    id            bigint not null primary key,
+    id            bigint primary key,
     short_name    text,                                               --Короткое имя, возможно аббревиатура
     full_name     text,                                               --Полное имя
-    address_id    bigint not null references address (id),            --ключ адреса
+    address_id    bigint references address (id),                     --ключ адреса
     archived_date timestamp with time zone default current_timestamp, --дата закрытия
     creation_date timestamp with time zone default current_timestamp, --дата открытия
     external_id   bigint,                                             --ключ внешней таблицы
