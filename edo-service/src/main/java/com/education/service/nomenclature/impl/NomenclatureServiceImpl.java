@@ -30,8 +30,8 @@ public class NomenclatureServiceImpl implements NomenclatureService {
      * принимает объект NomenclatureDto
      */
     @Override
-    public NomenclatureDto save(NomenclatureDto nomenclature) {
-        return client.save(nomenclature);
+    public void save(NomenclatureDto nomenclature) {
+        client.save(nomenclature);
     }
 
     /**

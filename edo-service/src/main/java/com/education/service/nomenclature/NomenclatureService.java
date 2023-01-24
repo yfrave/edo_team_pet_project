@@ -18,7 +18,7 @@ public interface NomenclatureService {
      * Сохраняет номенклатуру в БД
      * принимает объект NomenclatureDto
      */
-    NomenclatureDto save(NomenclatureDto nomenclature);
+    void save(NomenclatureDto nomenclature);
 
     /**
      * Переводит номенклатуру в архив

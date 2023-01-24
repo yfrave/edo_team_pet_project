@@ -23,9 +23,10 @@ public class NomenclatureRestController {
             @ApiResponse(code = 201, message = "Сущность сохранена")
     })
     @PostMapping("/")
-    public ResponseEntity<NomenclatureDto> save(@RequestBody @ApiParam("Nomenclature") NomenclatureDto nomenclature) {
+    public ResponseEntity<HttpStatus> save(@RequestBody @ApiParam("Nomenclature") NomenclatureDto nomenclature) {
         nomenclature.setCreationDate(ZonedDateTime.now());
-        return new ResponseEntity<>(nomenclatureService.save(nomenclature), HttpStatus.CREATED);
+        nomenclatureService.save(nomenclature);
+        return ResponseEntity.ok(HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "Получить номенклатуру по id")

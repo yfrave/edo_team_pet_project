@@ -34,9 +34,9 @@ public class NomenclatureServiceImpl implements NomenclatureService {
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public NomenclatureDto save(NomenclatureDto nomenclature) {
+    public void save(NomenclatureDto nomenclature) {
         Nomenclature newNomenclature = NomenclatureToDtoConverter.convertToNomenclature(nomenclature);
-        return NomenclatureToDtoConverter.convertToDto(nomenclatureRepository.saveAndFlush(newNomenclature));
+        nomenclatureRepository.saveAndFlush(newNomenclature);
     }
 
     /**
@@ -67,7 +67,11 @@ public class NomenclatureServiceImpl implements NomenclatureService {
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     @Override
     public List<NomenclatureDto> findAllById(Iterable<Long> list) {
-        return nomenclatureRepository.findAllById(list)
+        List<Nomenclature> nomenclatures = nomenclatureRepository.findAllById(list);
+        if (nomenclatures.isEmpty()) {
+            return null;
+        }
+        return nomenclatures
                 .stream()
                 .map(NomenclatureToDtoConverter::convertToDto)
                 .collect(Collectors.toList());
@@ -91,11 +95,13 @@ public class NomenclatureServiceImpl implements NomenclatureService {
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     @Override
     public List<NomenclatureDto> findAllByIdNotArchived(Iterable<Long> list) {
-        return nomenclatureRepository.findAllById(list)
+        List<Nomenclature> nomenclatures = nomenclatureRepository.findAllByIdNotArchived(list);
+        if (nomenclatures.isEmpty()) {
+            return null;
+        }
+        return nomenclatures
                 .stream()
                 .map(NomenclatureToDtoConverter::convertToDto)
                 .collect(Collectors.toList());
     }
-
-
 }
