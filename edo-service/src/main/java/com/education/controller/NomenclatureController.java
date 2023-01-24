@@ -88,6 +88,7 @@ public class NomenclatureController {
     })
     @PatchMapping("/archived/{id}")
     public ResponseEntity<HttpStatus> moveToArchive(@PathVariable("id") Long id) {
+        nomenclatureService.moveToArchive(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 }

@@ -2,10 +2,21 @@ package com.education.converter;
 
 import com.education.entity.Nomenclature;
 import com.education.model.dto.NomenclatureDto;
-import org.springframework.stereotype.Component;
 
-@Component
+/**
+ * Представляет конвертер номенклатуры в ДТО
+ * и ДТО в номенклатуру
+ *
+ * @author Иван Кузнецов
+ * @version 1.0
+ * @since 1.0
+ */
+
 public class NomenclatureToDtoConverter {
+
+    /**
+     * Метод ковертирует номенклатуру в ДТО
+     */
     public static NomenclatureDto convertToDto(Nomenclature nomenclature) {
         return new NomenclatureDto(nomenclature.getId(),
                 nomenclature.getCreationDate(),
@@ -14,6 +25,10 @@ public class NomenclatureToDtoConverter {
                 nomenclature.getCurrentValue(),
                 nomenclature.getIndex());
     }
+
+    /**
+     * Метод ковертирует ДТО в номенклатуру
+     */
     public static Nomenclature convertToNomenclature(NomenclatureDto nomenclatureDto) {
         return new Nomenclature(nomenclatureDto.getCreationDate(),
                 nomenclatureDto.getArchivedDate(),

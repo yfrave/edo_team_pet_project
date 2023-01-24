@@ -5,7 +5,6 @@ import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
@@ -15,17 +14,43 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
+/**
+ * Представляет реализацию операций для связи с модулем edo-repository
+ * для номенклатуры
+ *
+ * @author Иван Кузнецов
+ * @version 1.0
+ * @since 1.0
+ */
+
 @Component
 @RequiredArgsConstructor
 public class NomenclatureRestTemplateClient {
+
+    /**
+     * Клиент для отправки и получения запросов
+     */
     private final RestTemplate restTemplate;
-    private final LoadBalancerClient loadBalancerClient;
+
+    /**
+     * Клиент для получения instance
+     */
     private final EurekaClient eurekaClient;
 
+    /**
+     * путь рест котроллера номенклатуры
+     */
     private final String baseUrl = "api/repository/nomenclature";
 
+    /**
+     * Имя модуля в который отправляются запросы
+     */
     private final String serviceName = "edo-repository";
 
+    /**
+     * Отправяляет запрос на сохранение номенклатуру
+     * принимает объект NomenclatureDto
+     */
     public NomenclatureDto save(NomenclatureDto nomenclature) {
         Application app = eurekaClient.getApplication(serviceName);
         InstanceInfo instance = app.getInstances().stream().findAny().get();
@@ -47,6 +72,10 @@ public class NomenclatureRestTemplateClient {
         return response.getBody();
     }
 
+    /**
+     * Отправляет запрос для предоставления NomenclatureDto номенклатуры по id
+     * принимает id искомой номенклатуру
+     */
     public NomenclatureDto findById(Long id) {
         Application app = eurekaClient.getApplication(serviceName);
         InstanceInfo instance = app.getInstances().stream().findAny().get();
@@ -68,6 +97,10 @@ public class NomenclatureRestTemplateClient {
         return response.getBody();
     }
 
+    /**
+     * Отправляет запрос для предоставления списка NomenclatureDto номенклатур по id
+     * принимает список id искомых номенклатур
+     */
     public List<NomenclatureDto> findAllById(List<Long> ids) {
         Application app = eurekaClient.getApplication(serviceName);
         InstanceInfo instance = app.getInstances().stream().findAny().get();
@@ -91,6 +124,10 @@ public class NomenclatureRestTemplateClient {
         return response.getBody();
     }
 
+    /**
+     * Отправляет запрос для предоставления не заархивированной NomenclatureDto номенклатуры по id
+     * принимает id искомой номенклатуру
+     */
     public NomenclatureDto findByIdNotArchived(Long id) {
         Application app = eurekaClient.getApplication(serviceName);
         InstanceInfo instance = app.getInstances().stream().findAny().get();
@@ -112,6 +149,10 @@ public class NomenclatureRestTemplateClient {
         return response.getBody();
     }
 
+    /**
+     * Отправляет запрос для предоставления списка не заархивированных NomenclatureDto номенклатур по id
+     * принимает список id искомых номенклатуру
+     */
     public List<NomenclatureDto> findAllByIdNotArchived(List<Long> ids) {
         Application app = eurekaClient.getApplication(serviceName);
         InstanceInfo instance = app.getInstances().stream().findAny().get();
@@ -135,6 +176,10 @@ public class NomenclatureRestTemplateClient {
         return response.getBody();
     }
 
+    /**
+     * Отправляет запрос для перевода номенклатуры в архив
+     * принимает id номенклатуры, которую надо отправить в архив
+     */
     public NomenclatureDto moveToArchive(Long id) {
         Application app = eurekaClient.getApplication(serviceName);
         InstanceInfo instance = app.getInstances().stream().findAny().get();
