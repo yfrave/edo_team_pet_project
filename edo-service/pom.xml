@@ -9,6 +9,14 @@
         <version>0.0.1</version>
     </parent>
     <description>Модуль для бизнес логики</description>
+    <dependencies>
+        <dependency>
+            <groupId>com.education</groupId>
+            <artifactId>edo-common</artifactId>
+            <version>0.0.1</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
     <artifactId>edo-service</artifactId>
 
