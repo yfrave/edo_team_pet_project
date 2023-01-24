@@ -17,30 +17,30 @@ public class ThemeServiceImpl implements ThemeService {
 
     private final ThemeRepository themeRepository;
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void save(ThemeDto themeDto) {
         Theme parentTheme = themeDto.getIdParentTheme() == null ? null : themeRepository.findById(themeDto.getIdParentTheme()).orElse(null);
         Theme theme = new Theme(themeDto.getName(), null, themeDto.getArchivedDate(), themeDto.getCode(), parentTheme);
         themeRepository.save(theme);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Integer moveToArchive(Long id) {
         return themeRepository.moveToArchive(id);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
     public ThemeDto findById(Long id) {
         Theme theme = themeRepository.findById(id).orElse(null);
         if (theme == null) {
             return null;
         } else {
             Long parentThemeId = theme.getParentTheme() != null ? theme.getParentTheme().getId() : null;
-            return theme != null ? new ThemeDto(theme.getId(), theme.getName(), theme.getCreationDate(), theme.getArchivedDate(), theme.getCode(), parentThemeId) : null;
+            return new ThemeDto(theme.getId(), theme.getName(), theme.getCreationDate(), theme.getArchivedDate(), theme.getCode(), parentThemeId);
         }
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<ThemeDto> findAllById(List<Long> ids) {
         List<Theme> themes = themeRepository.findAllById(ids);
         List<ThemeDto> listDto = new ArrayList<>();
@@ -51,20 +51,20 @@ public class ThemeServiceImpl implements ThemeService {
         return listDto;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
     public ThemeDto findByIdNotArchived(Long id) {
         Theme theme = themeRepository.findByIdAndArchivedDateIsNull(id);
         if (theme == null) {
             return null;
         } else {
             Long parentThemeId = theme.getParentTheme() != null ? theme.getParentTheme().getId() : null;
-            return theme != null ? new ThemeDto(theme.getId(), theme.getName(), theme.getCreationDate(), theme.getArchivedDate(), theme.getCode(), parentThemeId) : null;
+            return new ThemeDto(theme.getId(), theme.getName(), theme.getCreationDate(), theme.getArchivedDate(), theme.getCode(), parentThemeId);
         }
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<ThemeDto> findAllByIdNotArchived(List<Long> ids) {
-        List<Theme> themes = themeRepository.findAllnotArchived(ids);
+        List<Theme> themes = themeRepository.findAllNotArchived(ids);
         List<ThemeDto> listDto = new ArrayList<>();
         for (Theme theme : themes) {
             Long parentThemeId = theme.getParentTheme() != null ? theme.getParentTheme().getId() : null;
