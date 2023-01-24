@@ -8,7 +8,7 @@ create table if not exists department
     creation_date timestamp with time zone default current_timestamp, --дата открытия
     external_id   bigint,                                             --ключ внешней таблицы
     phone         varchar(255),                                       --номер телефона
-    department_id bigint                                              --ключ вышестоящего отдела
+    department_id bigint references department (id)                   --ключ вышестоящего отдела
 );
 
 comment on column department.id is 'id';
