@@ -6,4 +6,6 @@ public interface ThemeService {
 
     ThemeDto save(ThemeDto themeDto);
 
+    ThemeDto findById(Long id);
+
 }

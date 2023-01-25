@@ -27,7 +27,7 @@ public class ThemeController {
     private final ThemeService themeService;
 
     @Operation(summary = "Сохраняет тему")
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<ThemeDto> saveTheme(@RequestBody ThemeDto themeDto) {
         themeService.save(themeDto);
         return new ResponseEntity<>(themeDto, HttpStatus.CREATED);
