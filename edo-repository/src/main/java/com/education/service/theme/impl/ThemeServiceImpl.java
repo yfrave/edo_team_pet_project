@@ -1,5 +1,6 @@
 package com.education.service.theme.impl;
 
+import com.education.converter.ThemeToDtoConverter;
 import com.education.entity.Theme;
 import com.education.model.dto.ThemeDto;
 import com.education.repository.theme.ThemeRepository;
@@ -16,11 +17,16 @@ import java.util.List;
 public class ThemeServiceImpl implements ThemeService {
 
     private final ThemeRepository themeRepository;
+    private final ThemeToDtoConverter conv;
+
 
     @Transactional(rollbackFor = Exception.class)
     public void save(ThemeDto themeDto) {
-        Theme parentTheme = themeDto.getIdParentTheme() == null ? null : themeRepository.findById(themeDto.getIdParentTheme()).orElse(null);
-        Theme theme = new Theme(themeDto.getName(), null, themeDto.getArchivedDate(), themeDto.getCode(), parentTheme);
+        Theme theme = conv.convertDtoToTheme(themeDto);
+
+//        Theme parentTheme = themeDto.getIdParentTheme() == null ? null : themeRepository.findById(themeDto.getIdParentTheme()).orElse(null);
+//        Theme theme = new Theme(themeDto.getName(), null, themeDto.getArchivedDate(), themeDto.getCode(), parentTheme);
+
         themeRepository.save(theme);
     }
 
@@ -35,8 +41,10 @@ public class ThemeServiceImpl implements ThemeService {
         if (theme == null) {
             return null;
         } else {
-            Long parentThemeId = theme.getParentTheme() != null ? theme.getParentTheme().getId() : null;
-            return new ThemeDto(theme.getId(), theme.getName(), theme.getCreationDate(), theme.getArchivedDate(), theme.getCode(), parentThemeId);
+            return conv.convertThemeToDto(theme);
+
+//            Long parentThemeId = theme.getParentTheme() != null ? theme.getParentTheme().getId() : null;
+//            return new ThemeDto(theme.getId(), theme.getName(), theme.getCreationDate(), theme.getArchivedDate(), theme.getCode(), parentThemeId);
         }
     }
 
@@ -45,8 +53,10 @@ public class ThemeServiceImpl implements ThemeService {
         List<Theme> themes = themeRepository.findAllById(ids);
         List<ThemeDto> listDto = new ArrayList<>();
         for (Theme theme : themes) {
-            Long parentThemeId = theme.getParentTheme() != null ? theme.getParentTheme().getId() : null;
-            listDto.add(new ThemeDto(theme.getId(), theme.getName(), theme.getCreationDate(), theme.getArchivedDate(), theme.getCode(), parentThemeId));
+//            Long parentThemeId = theme.getParentTheme() != null ? theme.getParentTheme().getId() : null;
+//            listDto.add(new ThemeDto(theme.getId(), theme.getName(), theme.getCreationDate(), theme.getArchivedDate(), theme.getCode(), parentThemeId));
+            listDto.add(conv.convertThemeToDto(theme));
+
         }
         return listDto;
     }
@@ -57,8 +67,10 @@ public class ThemeServiceImpl implements ThemeService {
         if (theme == null) {
             return null;
         } else {
-            Long parentThemeId = theme.getParentTheme() != null ? theme.getParentTheme().getId() : null;
-            return new ThemeDto(theme.getId(), theme.getName(), theme.getCreationDate(), theme.getArchivedDate(), theme.getCode(), parentThemeId);
+            return conv.convertThemeToDto(theme);
+
+//            Long parentThemeId = theme.getParentTheme() != null ? theme.getParentTheme().getId() : null;
+//            return new ThemeDto(theme.getId(), theme.getName(), theme.getCreationDate(), theme.getArchivedDate(), theme.getCode(), parentThemeId);
         }
     }
 
@@ -67,8 +79,9 @@ public class ThemeServiceImpl implements ThemeService {
         List<Theme> themes = themeRepository.findAllNotArchived(ids);
         List<ThemeDto> listDto = new ArrayList<>();
         for (Theme theme : themes) {
-            Long parentThemeId = theme.getParentTheme() != null ? theme.getParentTheme().getId() : null;
-            listDto.add(new ThemeDto(theme.getId(), theme.getName(), theme.getCreationDate(), theme.getArchivedDate(), theme.getCode(), parentThemeId));
+//            Long parentThemeId = theme.getParentTheme() != null ? theme.getParentTheme().getId() : null;
+//            listDto.add(new ThemeDto(theme.getId(), theme.getName(), theme.getCreationDate(), theme.getArchivedDate(), theme.getCode(), parentThemeId));
+            listDto.add(conv.convertThemeToDto(theme));
         }
         return listDto;
     }

@@ -13,12 +13,17 @@ public class ThemeToDtoConverter {
     private final ThemeRepository themeRepository;
 
     public ThemeDto convertThemeToDto(Theme theme) {
+
+        Long parentThemeId = theme.getParentTheme() == null
+                ? null
+                : theme.getParentTheme().getId();
+
         return new ThemeDto(theme.getId(),
                 theme.getName(),
                 theme.getCreationDate(),
                 theme.getArchivedDate(),
                 theme.getCode(),
-                theme.getParentTheme().getId());
+                parentThemeId);
     }
 
     /**
