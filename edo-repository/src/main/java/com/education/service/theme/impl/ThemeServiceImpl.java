@@ -12,6 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Сервис для темы обращения
+ */
 @Service
 @RequiredArgsConstructor
 public class ThemeServiceImpl implements ThemeService {
@@ -20,6 +23,9 @@ public class ThemeServiceImpl implements ThemeService {
     private final ThemeToDtoConverter conv;
 
 
+    /**
+     * Получает ThemeDto и сохраняет тему
+     */
     @Transactional(rollbackFor = Exception.class)
     public void save(ThemeDto themeDto) {
         Theme theme = conv.convertDtoToTheme(themeDto);
@@ -30,11 +36,17 @@ public class ThemeServiceImpl implements ThemeService {
         themeRepository.save(theme);
     }
 
+    /**
+     * Помещает тему с переданным id в архивные, проставляя ей archivedDate
+     */
     @Transactional(rollbackFor = Exception.class)
     public Integer moveToArchive(Long id) {
         return themeRepository.moveToArchive(id);
     }
 
+    /**
+     * Выдает тему по id
+     */
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public ThemeDto findById(Long id) {
         Theme theme = themeRepository.findById(id).orElse(null);
@@ -48,6 +60,9 @@ public class ThemeServiceImpl implements ThemeService {
         }
     }
 
+    /**
+     * Выдает темы по списку id
+     */
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<ThemeDto> findAllById(List<Long> ids) {
         List<Theme> themes = themeRepository.findAllById(ids);
@@ -61,6 +76,9 @@ public class ThemeServiceImpl implements ThemeService {
         return listDto;
     }
 
+    /**
+     * Выдает тему по id, если она не в архивных (т.е. архивная дата отсутствует)
+     */
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public ThemeDto findByIdNotArchived(Long id) {
         Theme theme = themeRepository.findByIdAndArchivedDateIsNull(id);
@@ -74,6 +92,9 @@ public class ThemeServiceImpl implements ThemeService {
         }
     }
 
+    /**
+     * Выдает по списку id соответствующие темы, которые не являются архивными
+     */
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<ThemeDto> findAllByIdNotArchived(List<Long> ids) {
         List<Theme> themes = themeRepository.findAllNotArchived(ids);

@@ -6,12 +6,18 @@ import com.education.repository.theme.ThemeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+/**
+ * Преобразование темы -> ThemeDTO и в обратную сторону
+ */
 @Component
 @RequiredArgsConstructor
 public class ThemeToDtoConverter {
 
     private final ThemeRepository themeRepository;
 
+    /**
+     * Конвертирует тему в ThemeDTO
+     */
     public ThemeDto convertThemeToDto(Theme theme) {
 
         Long parentThemeId = theme.getParentTheme() == null
