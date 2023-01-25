@@ -46,13 +46,13 @@ public class ThemeController {
     }
 
     @Operation(summary = "Выдает неархивную тему по id")
-    @GetMapping("/notarchived/{id}")
+    @GetMapping("/notArchived/{id}")
     public ResponseEntity<ThemeDto> findByIdNotArchived(@PathVariable("id") Long id) {
         return new ResponseEntity<>(themeService.findByIdNotArchived(id), themeService.findByIdNotArchived(id) != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
     @Operation(summary = "Выдает неархивные темы по списку id")
-    @GetMapping("/notarchived")
+    @GetMapping("/notArchived")
     public ResponseEntity<List<ThemeDto>> findAllByIdNotArchived(@RequestParam(value = "ids", required = false) List<Long> ids) {
         return new ResponseEntity<>(themeService.findAllByIdNotArchived(ids), HttpStatus.OK);
     }
