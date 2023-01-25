@@ -1,7 +1,11 @@
 package com.education.model.dto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.ZonedDateTime;
 
@@ -10,6 +14,10 @@ import java.time.ZonedDateTime;
  */
 @ApiModel("DTO для класса Employee")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class EmployeeDto {
     @ApiModelProperty("Id работника")
     private Long id;

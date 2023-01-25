@@ -1,13 +1,15 @@
 package com.education.service.filepool;
 
+
 import com.education.entity.FilePool;
+import com.education.model.dto.FilePoolDto;
 
 import java.util.List;
 
 public interface FilePoolService {
-    FilePool add(FilePool filePool);
+    FilePoolDto add(FilePoolDto filePool);
 
-    FilePool findById(Long id);
+    FilePoolDto findById(Long id);
 
     List<FilePool> findAllById(List<Long> id);
 

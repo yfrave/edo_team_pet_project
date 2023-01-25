@@ -1,4 +1,5 @@
 package com.education.model.dto;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import lombok.Setter;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
+@ApiModel("Класс AddressDto, dto для класса Address.class")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
