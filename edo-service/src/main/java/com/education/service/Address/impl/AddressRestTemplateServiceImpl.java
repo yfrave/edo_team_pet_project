@@ -42,6 +42,11 @@ public class AddressRestTemplateServiceImpl implements AddressService {
     private final String serviceName = "edo-repository";
 
 
+    /**
+     * get addresses By Id
+     * @param id Long
+     * @return AddressDto
+     */
     @Override
     public AddressDto getById(Long id) {
         InstanceInfo instance = eurekaClient.getApplication(serviceName)
@@ -60,6 +65,11 @@ public class AddressRestTemplateServiceImpl implements AddressService {
         return template.exchange(request, AddressDto.class).getBody();
     }
 
+    /**
+     * fetch Addressed by List
+     * @param idList List<Long>
+     * @return List<AddressDto>
+     */
     @Override
     public List<AddressDto> fetchAddressedList(List<Long> idList) {
         InstanceInfo instance = eurekaClient.getApplication(serviceName)
@@ -81,6 +91,11 @@ public class AddressRestTemplateServiceImpl implements AddressService {
         return response.getBody();
     }
 
+    /**
+     * save Address in db
+     * @param address AddressDto
+     * @return AddressDto
+     */
     @Override
     public AddressDto save(AddressDto address) {
         InstanceInfo instance = eurekaClient.getApplication(serviceName)
@@ -99,6 +114,10 @@ public class AddressRestTemplateServiceImpl implements AddressService {
         return template.exchange(request, AddressDto.class).getBody();
     }
 
+    /**
+     * delete address from db
+     * @param id Long
+     */
     @Override
     public void delete(Long id) {
         InstanceInfo instance = eurekaClient.getApplication(serviceName)
