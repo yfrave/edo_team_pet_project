@@ -2,25 +2,23 @@ package com.education.controller;
 
 import com.education.model.dto.AddressDto;
 import com.education.service.Address.AddressService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api/service/address")
 @AllArgsConstructor
+@ApiModel("контроллер эдо-сервиса для сущности Адрес")
+@Log
 public class AddressController {
+    @ApiModelProperty("сервис для контроллера")
     AddressService service;
-    private static final Logger LOG = Logger.getLogger(AddressController.class.getName());
 
     @ApiOperation(value = "Получить адрес по d", notes = "Returns an address as per the id")
     @ApiResponses(value = {
@@ -29,7 +27,7 @@ public class AddressController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<AddressDto> getAddress(@PathVariable Long id) {
-        LOG.log(Level.INFO, "отправил AddressDto.class");
+        log.info("отправил AddressDto.class");
         return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
     }
 
@@ -40,7 +38,7 @@ public class AddressController {
     })
     @GetMapping("/findAll")
     public ResponseEntity<List<AddressDto>> getAddressesList(@RequestBody List<Long> idList) {
-        LOG.log(Level.INFO, "отправил list AddressDto.class");
+        log.info("отправил list AddressDto.class");
         return new ResponseEntity<>(service.fetchAddressedList(idList), HttpStatus.OK);
     }
 
@@ -50,7 +48,7 @@ public class AddressController {
     })
     @PostMapping("/")
     public ResponseEntity<AddressDto> save(@RequestBody @ApiParam("Address") AddressDto address) {
-        LOG.log(Level.INFO, "сохранил AddressDto.class");
+        log.info("сохранил AddressDto.class");
         return new ResponseEntity<>(service.save(address), HttpStatus.CREATED);
     }
 
@@ -61,7 +59,7 @@ public class AddressController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable @ApiParam("Address") Long id) {
         service.delete(id);
-        LOG.log(Level.INFO, "удалил AddressDto.class");
+        log.info("удалил AddressDto.class");
         return ResponseEntity.ok().build();
     }
 }
