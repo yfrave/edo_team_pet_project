@@ -3,11 +3,12 @@ package com.education.service.impl;
 import com.education.model.dto.FilePoolDto;
 import com.education.service.FilePoolNoFeignService;
 import lombok.AllArgsConstructor;
-import org.apache.http.HttpEntity;
+import org.springframework.http.HttpEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,16 +24,17 @@ public class FilePoolNoFeignServiceImpl implements FilePoolNoFeignService {
 
     public FilePoolDto add(FilePoolDto filePoolDto) {
         HttpEntity<FilePoolDto> request = new HttpEntity<FilePoolDto>(filePoolDto);
-        restTemplate.postForObject()
-        return filePool;
+        return restTemplate.postForObject(URL,request, FilePoolDto.class);
+
     }
 
-    public List<FilePool> findAllById(List<Long> ids) {
-        return filePoolRepository.findAllById(ids);
+    public List<FilePoolDto> findAllById(List<Long> ids) {
+        List<FilePoolDto> filePoolDtos = new ArrayList<>();
+        return filePoolDtos;
     }
 
     public void moveToArchive(Long id) {
-        filePoolRepository.moveToArchive(id);
+
     }
 
 }
