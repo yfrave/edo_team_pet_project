@@ -1,8 +1,11 @@
 package com.education.service.address.impl;
 
 import com.education.entity.Address;
+import com.education.model.dto.AddressDto;
 import com.education.repository.AddressRepository;
 import com.education.service.address.AddressService;
+import static com.education.util.DtoConverter.*;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,14 +24,15 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Address save(Address obj) {
-        return addressRepository.saveAndFlush(obj);
+    public AddressDto save(AddressDto obj) {
+        Address address = convertFrom(obj);
+        return convertTo(addressRepository.saveAndFlush(address));
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void delete(Address obj) {
-        addressRepository.delete(obj);
+    public void delete(Long id) {
+        addressRepository.deleteById(id);
     }
 
     @Override

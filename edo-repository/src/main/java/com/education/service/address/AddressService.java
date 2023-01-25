@@ -1,14 +1,15 @@
 package com.education.service.address;
 
 import com.education.entity.Address;
+import com.education.model.dto.AddressDto;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface AddressService {
-    Address save(Address address);
+    AddressDto save(AddressDto address);
 
-    void delete(Address address);
+    void delete(Long id);
 
     Optional<Address> findById(Long id);
 

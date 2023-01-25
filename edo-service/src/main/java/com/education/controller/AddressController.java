@@ -38,7 +38,7 @@ public class AddressController {
             @ApiResponse(code = 200, message = "Successfully retrieved"),
             @ApiResponse(code = 404, message = "Not found - The addresses was not found")
     })
-    @PostMapping("/findAll")
+    @GetMapping("/findAll")
     public ResponseEntity<List<AddressDto>> getAddressesList(@RequestBody List<Long> idList) {
         LOG.log(Level.INFO, "отправил list AddressDto.class");
         return new ResponseEntity<>(service.fetchAddressedList(idList), HttpStatus.OK);
@@ -58,9 +58,9 @@ public class AddressController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully deleted")
     })
-    @DeleteMapping("/delete")
-    public ResponseEntity<Void> delete(@RequestBody @ApiParam("Address") AddressDto address) {
-        service.delete(address);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable @ApiParam("Address") Long id) {
+        service.delete(id);
         LOG.log(Level.INFO, "удалил AddressDto.class");
         return ResponseEntity.ok().build();
     }

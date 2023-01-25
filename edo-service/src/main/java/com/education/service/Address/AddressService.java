@@ -11,5 +11,5 @@ public interface AddressService {
 
     AddressDto save(AddressDto address);
 
-    void delete(AddressDto address);
+    void delete(Long id);
 }

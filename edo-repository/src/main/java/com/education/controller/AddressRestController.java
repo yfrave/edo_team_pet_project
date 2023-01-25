@@ -1,22 +1,30 @@
 package com.education.controller;
 
 import com.education.entity.Address;
+import com.education.model.dto.AddressDto;
 import com.education.service.address.AddressService;
+
+import static com.education.util.DtoConverter.convertTo;
+
+import com.education.util.DtoConverter;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/repository/address")
 @AllArgsConstructor
+@Log
 public class AddressRestController {
     private AddressService addressService;
 
@@ -26,13 +34,15 @@ public class AddressRestController {
             @ApiResponse(code = 404, message = "Not found - The address was not found")
     })
     @GetMapping("/{id}")
-    public ResponseEntity<Address> fetchAddress(@PathVariable("id")
-                                                @ApiParam(name = "id", value = "Адрес id", example = "1")
-                                                Long id) {
+    public ResponseEntity<AddressDto> fetchAddress(@PathVariable("id")
+                                                   @ApiParam(name = "id", value = "Адрес id", example = "1")
+                                                   Long id)
+    {
         Optional<Address> address = addressService.findById(id);
+        log.info("Address is received");
         return address.isEmpty()
                 ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
-                : new ResponseEntity<>(address.get(), HttpStatus.OK);
+                : new ResponseEntity<>(convertTo(address.get()), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Получить список адресов", notes = "Находит адреса по их id. Возвращает списком List<Address>")
@@ -40,13 +50,15 @@ public class AddressRestController {
             @ApiResponse(code = 200, message = "Successfully retrieved"),
             @ApiResponse(code = 404, message = "Not found - The addresses was not found")
     })
-    @PostMapping("/findAll")
-    public ResponseEntity<List<Address>> fetchAllAddresses(@RequestBody
-                                                           @ApiParam(name = "Address list")
-                                                           List<Long> idList) {
+    @GetMapping("/findAll")
+    public ResponseEntity<List<AddressDto>> fetchAllAddresses(@RequestBody
+                                                              @ApiParam(name = "Address list")
+                                                              List<Long> idList)
+    {
         List<Address> list = addressService.findAllById(idList);
         return list != null && !list.isEmpty()
-                ? new ResponseEntity<>(list, HttpStatus.OK)
+                ? new ResponseEntity<>(list.stream()
+                .map(DtoConverter::convertTo).collect(Collectors.toList()), HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
@@ -55,7 +67,10 @@ public class AddressRestController {
             @ApiResponse(code = 201, message = "Successfully created")
     })
     @PostMapping("/")
-    public ResponseEntity<Address> save(@RequestBody @ApiParam("Address") Address address) {
+    public ResponseEntity<AddressDto> save(@RequestBody
+                                           @ApiParam("Address")
+                                           AddressDto address)
+    {
         return new ResponseEntity<>(addressService.save(address), HttpStatus.CREATED);
     }
 
@@ -63,9 +78,12 @@ public class AddressRestController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully deleted")
     })
-    @DeleteMapping("/delete")
-    public ResponseEntity<Void> delete(@RequestBody @ApiParam("Address") Address address) {
-        addressService.delete(address);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable("id")
+                                       @ApiParam("id")
+                                       Long id)
+    {
+        addressService.delete(id);
         return ResponseEntity.ok().build();
     }
 }
