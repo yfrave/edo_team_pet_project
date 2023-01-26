@@ -25,15 +25,17 @@ public class ThemeServiceImpl implements ThemeService {
 
     /**
      * Получает ThemeDto и сохраняет тему
+     *
+     * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public void save(ThemeDto themeDto) {
+    public ThemeDto save(ThemeDto themeDto) {
         Theme theme = conv.convertDtoToTheme(themeDto);
 
 //        Theme parentTheme = themeDto.getIdParentTheme() == null ? null : themeRepository.findById(themeDto.getIdParentTheme()).orElse(null);
 //        Theme theme = new Theme(themeDto.getName(), null, themeDto.getArchivedDate(), themeDto.getCode(), parentTheme);
 
-        themeRepository.save(theme);
+        return conv.convertThemeToDto(themeRepository.save(theme));
     }
 
     /**

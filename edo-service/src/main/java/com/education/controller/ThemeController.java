@@ -2,17 +2,13 @@ package com.education.controller;
 
 import com.education.model.dto.ThemeDto;
 import com.education.service.theme.ThemeService;
-import com.education.model.dto.ThemeDto;
-import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,16 +20,14 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Log
 @RequestMapping("api/service/theme")
 public class ThemeController {
     private final ThemeService themeService;
 
-    @ApiOperation(value = "Сохранить сущность в БД")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Сущность сохранена")
-    })
     @PostMapping("/")
-    public ResponseEntity<ThemeDto> save(@RequestBody @ApiParam("Theme") ThemeDto themeDto) {
+    public ResponseEntity<ThemeDto> save(@RequestBody ThemeDto themeDto) {
+        log.info("Отправляю ThemeDto на сохранение");
         return new ResponseEntity<>(themeService.save(themeDto), HttpStatus.CREATED);
     }
 
@@ -75,4 +69,3 @@ public class ThemeController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 }
-

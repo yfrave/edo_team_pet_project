@@ -11,12 +11,6 @@ import org.springframework.web.client.RestTemplate;
 @EnableDiscoveryClient
 public class EdoServiceApplication {
 
-    @LoadBalanced
-    @Bean
-    RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
-
     public static void main(String[] args) {
         SpringApplication.run(EdoServiceApplication.class, args);
     }

@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public interface ThemeService {
-    void save(ThemeDto themeDto);
+    ThemeDto save(ThemeDto themeDto);
 
     Integer moveToArchive(Long id);
 
