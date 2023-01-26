@@ -11,6 +11,7 @@ public class DtoConverter {
 
     /**
      * Convert Address to AddressDto
+     *
      * @param address Address
      * @return AddressDto
      */
@@ -30,11 +31,12 @@ public class DtoConverter {
 
     /**
      * Convert AddressDto to Address
+     *
      * @param dto AddressDto
      * @return Address
      */
     public static Address convertFrom(AddressDto dto) {
-        return new Address(dto.getFullAddress(),
+        Address address = new Address(dto.getFullAddress(),
                 dto.getStreet(),
                 dto.getHouse(),
                 dto.getIndex(),
@@ -44,5 +46,7 @@ public class DtoConverter {
                 dto.getRegion(),
                 dto.getCountry(),
                 dto.getFlat());
+        address.setId(dto.getId());
+        return address;
     }
 }
