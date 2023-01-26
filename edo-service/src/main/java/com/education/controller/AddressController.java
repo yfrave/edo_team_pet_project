@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/service/address")
 @AllArgsConstructor
-@ApiModel("контроллер эдо-сервиса для сущности Адрес")
+@ApiModel("Контроллер эдо-сервиса для сущности Адрес")
 @Log
 public class AddressController {
     @ApiModelProperty("сервис для контроллера")
