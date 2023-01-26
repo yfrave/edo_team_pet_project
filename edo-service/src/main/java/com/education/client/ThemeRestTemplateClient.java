@@ -83,7 +83,6 @@ public class ThemeRestTemplateClient {
         if (!response.getStatusCode().is2xxSuccessful()) {
             throw new RuntimeException("Can't get the theme");
         }
-
         return response.getBody();
     }
 
@@ -161,12 +160,10 @@ public class ThemeRestTemplateClient {
         return response.getBody();
     }
 
-
     public Long moveToArchive(Long id) {
         Application app = EUREKA_CLIENT.getApplication(SERVICE_NAME);
         InstanceInfo instance = app.getInstances().get((int) (app.getInstances().size() * Math.random()));
         log.log(Level.INFO, "В классе ThemeRestTemplateClient используется порт {0}", instance.getPort());
-
 
 
         var request = new RequestEntity(null, HttpMethod.DELETE,
