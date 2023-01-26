@@ -24,22 +24,22 @@ public class AddressRestTemplateServiceImpl implements AddressService {
     /**
      * Клиент для отправки и получения запросов
      */
-    private final RestTemplate template;
+    private RestTemplate template;
 
     /**
      * Клиент для получения instance
      */
-    private final EurekaClient eurekaClient;
+    private EurekaClient eurekaClient;
 
     /**
      * путь до рест контроллера репозитория
      */
-    private final String baseUrl = "/api/repository/address";
+    private String baseUrl = "/api/repository/address";
 
     /**
      * Имя модуля, в который отправляются запросы
      */
-    private final String serviceName = "edo-repository";
+    private String serviceName = "edo-repository";
 
 
     /**
