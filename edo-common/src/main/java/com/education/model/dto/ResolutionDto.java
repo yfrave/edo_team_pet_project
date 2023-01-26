@@ -14,7 +14,11 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
+@ToString
 public class ResolutionDto {
+
+    @ApiModelProperty("Id резолюции")
+    private Long id;
 
     @ApiModelProperty("Дата создания резолюции")
     private ZonedDateTime creationDate;

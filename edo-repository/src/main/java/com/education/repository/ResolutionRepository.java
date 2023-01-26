@@ -1,10 +1,7 @@
 package com.education.repository;
 
 import com.education.entity.Resolution;
-import org.springframework.data.jpa.repository.EntityGraph;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -21,7 +18,7 @@ public interface ResolutionRepository extends JpaRepository<Resolution, Long> {
     List<Resolution> findAllById(Iterable<Long> ids);
 
     @Modifying
-    @Query(value = "UPDATE edo.resolution SET archived_date = current_timestamp where id = :id", nativeQuery = true)
+    @Query(value = "UPDATE edo.resolution SET archived_date = current_timestamp where id = :id", nativeQuery = true) //TODO затестить без  edo.
     void moveToArchive(@Param("id") Long id);
 
     @Query("select r from Resolution r where r.id = :id and r.archivedDate is null")
