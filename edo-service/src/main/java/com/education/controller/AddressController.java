@@ -18,7 +18,7 @@ import java.util.List;
 @Log
 public class AddressController {
     @ApiModelProperty("сервис для контроллера")
-    AddressService service;
+    private AddressService service;
 
     @ApiOperation(value = "Получить адрес по d", notes = "Returns an address as per the id")
     @ApiResponses(value = {
