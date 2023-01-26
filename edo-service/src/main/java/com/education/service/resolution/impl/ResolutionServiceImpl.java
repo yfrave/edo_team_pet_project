@@ -20,23 +20,23 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class ResolutionServiceImpl implements ResolutionService {
 
-    private final RestTemplate template;
+    private final RestTemplate TEMPLATE;
 
-    private final EurekaClient eurekaClient;
+    private final EurekaClient EUREKA_CLIENT;
 
-    private final String baseUrl = "/api/repository/resolution";
+    private final String BASE_URL = "/api/repository/resolution";
 
-    private final String serviceName = "edo-repository";
+    private final String SERVICE_NAME = "edo-repository";
 
 
     private InstanceInfo getInstance() {
-        Application application = eurekaClient.getApplication(serviceName);
+        Application application = EUREKA_CLIENT.getApplication(SERVICE_NAME);
         InstanceInfo instance = application.getInstances().get(new Random().nextInt(application.size()));
         return instance;
     }
 
     private URI getURIByInstance(InstanceInfo instanceInfo, String pathVariable) {
-        URI uri = UriComponentsBuilder.fromPath(baseUrl + pathVariable)
+        URI uri = UriComponentsBuilder.fromPath(BASE_URL + pathVariable)
                 .scheme("http")
                 .host(instanceInfo.getHostName())
                 .port(instanceInfo.getPort())
@@ -49,8 +49,7 @@ public class ResolutionServiceImpl implements ResolutionService {
     public boolean save(ResolutionDto resolution) {
         InstanceInfo instanceInfo = getInstance();
         URI uri = getURIByInstance(instanceInfo, "");
-        System.out.println(resolution.toString());
-        template.postForObject(uri, resolution, ResolutionDto.class);
+        TEMPLATE.postForObject(uri, resolution, ResolutionDto.class);
         if (findById(resolution.getId()) == resolution) {
             return true;
         }
@@ -61,14 +60,14 @@ public class ResolutionServiceImpl implements ResolutionService {
     public void moveToArchive(Long id) {
         InstanceInfo instanceInfo = getInstance();
         URI uri = getURIByInstance(instanceInfo, String.format("/ToArchive/%s", id.toString()));
-        template.put(uri, null);
+        TEMPLATE.put(uri, null);
     }
 
     @Override
     public ResolutionDto findById(Long id) {
         InstanceInfo instanceInfo = getInstance();
         URI uri = getURIByInstance(instanceInfo, String.format("/ById/%s", id.toString()));
-        ResolutionDto response = template.getForObject(uri, ResolutionDto.class);
+        ResolutionDto response = TEMPLATE.getForObject(uri, ResolutionDto.class);
         return response;
     }
 
@@ -77,7 +76,7 @@ public class ResolutionServiceImpl implements ResolutionService {
         InstanceInfo instanceInfo = getInstance();
         String path = ids.toString().substring(1, ids.toString().length() - 1);
         URI uri = getURIByInstance(instanceInfo, String.format("/AllById/%s", path));
-        ResolutionDto[] response = template.getForObject(uri, ResolutionDto[].class);
+        ResolutionDto[] response = TEMPLATE.getForObject(uri, ResolutionDto[].class);
         return Arrays.asList(response);
     }
 
@@ -85,7 +84,7 @@ public class ResolutionServiceImpl implements ResolutionService {
     public ResolutionDto findByIdNotArchived(Long id) {
         InstanceInfo instanceInfo = getInstance();
         URI uri = getURIByInstance(instanceInfo, String.format("/NotArchived/%s", id.toString()));
-        ResolutionDto response = template.getForObject(uri, ResolutionDto.class);
+        ResolutionDto response = TEMPLATE.getForObject(uri, ResolutionDto.class);
         return response;
     }
 
@@ -94,7 +93,7 @@ public class ResolutionServiceImpl implements ResolutionService {
         InstanceInfo instanceInfo = getInstance();
         String path = ids.toString().substring(1, ids.toString().length() - 1);
         URI uri = getURIByInstance(instanceInfo, String.format("/AllNotArchived/%s", path));
-        ResolutionDto[] response = template.getForObject(uri, ResolutionDto[].class);
+        ResolutionDto[] response = TEMPLATE.getForObject(uri, ResolutionDto[].class);
         return Arrays.asList(response);
     }
 }

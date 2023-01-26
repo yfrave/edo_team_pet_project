@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping("api/repository/resolution")
 public class ResolutionController {
 
-    final private ResolutionService resolutionService;
+    final private ResolutionService RESOLUTION_SERVICE;
 
 
     @ApiOperation(value = "Сохранение сущности в БД")
@@ -28,7 +28,7 @@ public class ResolutionController {
     })
     @PostMapping
     public ResponseEntity<Resolution> saveResolution(@RequestBody Resolution resolution) {
-        if (resolutionService.save(resolution)) {
+        if (RESOLUTION_SERVICE.save(resolution)) {
             return new ResponseEntity<>(resolution, HttpStatus.CREATED);
         }
         return new ResponseEntity<>(resolution, HttpStatus.CONFLICT);
@@ -40,8 +40,8 @@ public class ResolutionController {
     })
     @PutMapping("/ToArchive/{id}")
     public ResponseEntity<Resolution> moveToArchiveResolution(@PathVariable Long id) {
-        resolutionService.moveToArchive(id);
-        return new ResponseEntity<>(resolutionService.findById(id), HttpStatus.OK);
+        RESOLUTION_SERVICE.moveToArchive(id);
+        return new ResponseEntity<>(RESOLUTION_SERVICE.findById(id), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Получение сущности по id")
@@ -51,7 +51,7 @@ public class ResolutionController {
     })
     @GetMapping(value = "/ById/{id}")
     public ResponseEntity<Resolution> findByIdResolution(@PathVariable Long id) {
-        Resolution resolution = resolutionService.findById(id);
+        Resolution resolution = RESOLUTION_SERVICE.findById(id);
         if (resolution == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -66,7 +66,7 @@ public class ResolutionController {
     })
     @GetMapping(value = "/AllById/{ids}")
     public ResponseEntity<List<Resolution>> findAllByIdResolution(@PathVariable List<Long> ids) {
-        List<Resolution> resolution = resolutionService.findAllById(ids);
+        List<Resolution> resolution = RESOLUTION_SERVICE.findAllById(ids);
         if (resolution.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -80,7 +80,7 @@ public class ResolutionController {
     })
     @GetMapping(value = "/NotArchived/{id}")
     public ResponseEntity<Resolution> findByIdNotArchivedResolution(@PathVariable Long id) {
-        Resolution resolution = resolutionService.findByIdNotArchived(id);
+        Resolution resolution = RESOLUTION_SERVICE.findByIdNotArchived(id);
         if (resolution == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -91,10 +91,9 @@ public class ResolutionController {
             @ApiResponse(code = 200, message = "Сущность найдена"),
             @ApiResponse(code = 404, message = "Сущность не найдена")
     })
-
     @GetMapping(value = "/ALlNotArchived/{ids}")
     public ResponseEntity<List<Resolution>> findAllByIdNotArchivedResolution(@PathVariable List<Long> ids) {
-        List<Resolution> resolution = resolutionService.findAllByIdNotArchived(ids);
+        List<Resolution> resolution = RESOLUTION_SERVICE.findAllByIdNotArchived(ids);
         if (resolution.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

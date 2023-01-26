@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("api/service/resolution")
 public class ResolutionController {
 
-    final private ResolutionService resolutionService;
+    final private ResolutionService RESOLUTION_SERVICE;
 
     @ApiOperation(value = "Сохранение сущности в БД")
     @ApiResponses(value = {
@@ -28,7 +28,7 @@ public class ResolutionController {
     })
     @PostMapping
     public ResponseEntity<ResolutionDto> saveResolution(@ApiParam("resolutionDto") @RequestBody ResolutionDto resolutionDto) {
-        if (resolutionService.save(resolutionDto)) {
+        if (RESOLUTION_SERVICE.save(resolutionDto)) {
             return new ResponseEntity<>(resolutionDto, HttpStatus.CREATED);
         }
         return new ResponseEntity<>(resolutionDto, HttpStatus.CONFLICT);
@@ -40,8 +40,8 @@ public class ResolutionController {
     })
     @PutMapping("/ToArchive/{id}")
     public ResponseEntity<ResolutionDto> moveToArchiveResolution(@ApiParam("id") @PathVariable Long id) {
-        resolutionService.moveToArchive(id);
-        return new ResponseEntity<>(resolutionService.findById(id), HttpStatus.OK);
+        RESOLUTION_SERVICE.moveToArchive(id);
+        return new ResponseEntity<>(RESOLUTION_SERVICE.findById(id), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Получение сущности по id")
@@ -51,7 +51,7 @@ public class ResolutionController {
     })
     @GetMapping(value = "/ById/{id}")
     public ResponseEntity<ResolutionDto> findByIdResolution(@ApiParam("id") @PathVariable Long id) {
-        ResolutionDto resolution = resolutionService.findById(id);
+        ResolutionDto resolution = RESOLUTION_SERVICE.findById(id);
         if (resolution == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -66,7 +66,7 @@ public class ResolutionController {
     })
     @GetMapping(value = "/AllById/{ids}")
     public ResponseEntity<List<ResolutionDto>> findAllByIdResolution(@ApiParam("ids") @PathVariable List<Long> ids) {
-        List<ResolutionDto> resolutionDto = resolutionService.findAllById(ids);
+        List<ResolutionDto> resolutionDto = RESOLUTION_SERVICE.findAllById(ids);
         if (resolutionDto.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -80,7 +80,7 @@ public class ResolutionController {
     })
     @GetMapping(value = "/NotArchived/{id}")
     public ResponseEntity<ResolutionDto> findByIdNotArchivedResolution(@ApiParam("id") @PathVariable Long id) {
-        ResolutionDto resolutionDto = resolutionService.findByIdNotArchived(id);
+        ResolutionDto resolutionDto = RESOLUTION_SERVICE.findByIdNotArchived(id);
         if (resolutionDto == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -95,7 +95,7 @@ public class ResolutionController {
 
     @GetMapping(value = "/AllNotArchived/{ids}")
     public ResponseEntity<List<ResolutionDto>> findAllByIdNotArchivedResolution(@ApiParam("ids") @PathVariable List<Long> ids) {
-        List<ResolutionDto> resolutionDto = resolutionService.findAllByIdNotArchived(ids);
+        List<ResolutionDto> resolutionDto = RESOLUTION_SERVICE.findAllByIdNotArchived(ids);
         if (resolutionDto.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
