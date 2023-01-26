@@ -5,7 +5,8 @@ import com.education.service.Address.AddressService;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
-import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
@@ -21,18 +22,20 @@ import java.util.Random;
  * Сервис для контроллера, работает с AddressDto
  */
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Log
 public class AddressRestTemplateServiceImpl implements AddressService {
 
     /**
      * Клиент для отправки и получения запросов
      */
+    @NonNull
     private RestTemplate template;
 
     /**
      * Клиент для получения instance
      */
+    @NonNull
     private EurekaClient eurekaClient;
 
     /**
