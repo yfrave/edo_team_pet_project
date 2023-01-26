@@ -15,38 +15,43 @@ import java.util.List;
 public interface NomenclatureService {
 
     /**
-     * Сохраняет номенклатуру в БД
-     * принимает объект NomenclatureDto
+     * Сохраняет номенклатуру
+     * @param nomenclature NomenclatureDto
+     * @return NomenclatureDto
      */
-    void save(NomenclatureDto nomenclature);
+    NomenclatureDto save(NomenclatureDto nomenclature);
 
     /**
      * Переводит номенклатуру в архив
-     * принимает id номенклатуры, которую надо отправить в архив
+     * @param id Long
      */
     void moveToArchive(Long id);
 
     /**
-     * Предоставляет NomenclatureDto номенклатуры из БД по id
-     * принимает id искомой номенклатуру
+     * Предоставляет NomenclatureDto номенклатуры по id
+     * @param id Long
+     * @return NomenclatureDto
      */
     NomenclatureDto findById(Long id);
 
     /**
-     * Предоставляет список NomenclatureDto номенклатур из БД по id
-     * принимает список id искомых номенклатур
+     * Предоставляет список NomenclatureDto номенклатур по id
+     * @param list List of id
+     * @return List of NomenclatureDto
      */
     List<NomenclatureDto> findAllById(List<Long> list);
 
     /**
-     * Предоставляет не заархивированное NomenclatureDto номенклатуры из БД по id
-     * принимает id искомой номенклатуру
+     * Предоставляет не заархивированное NomenclatureDto номенклатуры по id
+     * @param id Long
+     * @return NomenclatureDto
      */
     NomenclatureDto findByIdNotArchived(Long id);
 
     /**
      * Предоставляет список не заархивированных NomenclatureDto номенклатур из БД по id
-     * принимает список id искомых номенклатуру
+     * @param list List of id
+     * @return List of NomenclatureDto
      */
     List<NomenclatureDto> findAllByIdNotArchived(List<Long> list);
 

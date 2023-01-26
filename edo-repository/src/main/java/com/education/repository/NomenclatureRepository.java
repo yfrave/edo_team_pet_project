@@ -22,20 +22,26 @@ public interface NomenclatureRepository extends JpaRepository<Nomenclature, Long
 
     /**
      * Метод предоставляет не заархивированную номенклатуру по id
+     * @param id Long
+     * @return Optional of Nomenclature
      */
     @Query(value = "SELECT n FROM Nomenclature n WHERE n.id = :id AND n.archivedDate is null")
     Optional<Nomenclature> findByIdNotArchived(@Param("id") Long id);
 
     /**
      * Метод предоставляет список не заархивированных номенклатур по id
+     * @param list List of id
+     * @return List of Nomenclature
      */
     @Query(value = "SELECT n FROM Nomenclature n WHERE n.id in :list AND n.archivedDate is null")
     List<Nomenclature> findAllByIdNotArchived(@Param("list") Iterable<Long> list);
 
     /**
      * Метод переводит в архив номенклатуру присваивая значение даты архивации
+     * @param id Long
      */
     @Modifying
     @Query (value = "UPDATE edo.nomenclature SET archived_date = current_timestamp WHERE id = :id", nativeQuery = true)
     void moveToArchive(@Param("id") Long id);
+
 }

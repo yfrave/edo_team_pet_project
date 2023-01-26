@@ -27,16 +27,17 @@ public class NomenclatureServiceImpl implements NomenclatureService {
 
     /**
      * Сохраняет номенклатуру
-     * принимает объект NomenclatureDto
+     * @param nomenclature NomenclatureDto
+     * @return NomenclatureDto
      */
     @Override
-    public void save(NomenclatureDto nomenclature) {
-        client.save(nomenclature);
+    public NomenclatureDto save(NomenclatureDto nomenclature) {
+        return client.save(nomenclature);
     }
 
     /**
      * Переводит номенклатуру в архив
-     * принимает id номенклатуры, которую надо отправить в архив
+     * @param id Long
      */
     @Override
     public void moveToArchive(Long id) {
@@ -45,7 +46,8 @@ public class NomenclatureServiceImpl implements NomenclatureService {
 
     /**
      * Предоставляет NomenclatureDto номенклатуры по id
-     * принимает id искомой номенклатуру
+     * @param id Long
+     * @return NomenclatureDto
      */
     @Override
     public NomenclatureDto findById(Long id) {
@@ -54,7 +56,8 @@ public class NomenclatureServiceImpl implements NomenclatureService {
 
     /**
      * Предоставляет список NomenclatureDto номенклатур по id
-     * принимает список id искомых номенклатур
+     * @param list List of id
+     * @return List of NomenclatureDto
      */
     @Override
     public List<NomenclatureDto> findAllById(List<Long> list) {
@@ -63,7 +66,8 @@ public class NomenclatureServiceImpl implements NomenclatureService {
 
     /**
      * Предоставляет не заархивированное NomenclatureDto номенклатуры по id
-     * принимает id искомой номенклатуру
+     * @param id Long
+     * @return NomenclatureDto
      */
     @Override
     public NomenclatureDto findByIdNotArchived(Long id) {
@@ -71,8 +75,9 @@ public class NomenclatureServiceImpl implements NomenclatureService {
     }
 
     /**
-     * Предоставляет список не заархивированных NomenclatureDto номенклатур по id
-     * принимает список id искомых номенклатуру
+     * Предоставляет список не заархивированных NomenclatureDto номенклатур из БД по id
+     * @param list List of id
+     * @return List of NomenclatureDto
      */
     @Override
     public List<NomenclatureDto> findAllByIdNotArchived(List<Long> list) {

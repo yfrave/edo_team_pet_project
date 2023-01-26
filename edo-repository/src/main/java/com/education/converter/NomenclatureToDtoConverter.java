@@ -15,7 +15,9 @@ import com.education.model.dto.NomenclatureDto;
 public class NomenclatureToDtoConverter {
 
     /**
-     * Метод ковертирует номенклатуру в ДТО
+     * Метод конвертирует номенклатуру в ДТО
+     * @param nomenclature Nomenclature
+     * @return NomenclatureDto
      */
     public static NomenclatureDto convertToDto(Nomenclature nomenclature) {
         return new NomenclatureDto(nomenclature.getId(),
@@ -27,7 +29,9 @@ public class NomenclatureToDtoConverter {
     }
 
     /**
-     * Метод ковертирует ДТО в номенклатуру
+     * Метод конвертирует ДТО в номенклатуру
+     * @param nomenclatureDto NomenclatureDto
+     * @return Nomenclature
      */
     public static Nomenclature convertToNomenclature(NomenclatureDto nomenclatureDto) {
         return new Nomenclature(nomenclatureDto.getCreationDate(),

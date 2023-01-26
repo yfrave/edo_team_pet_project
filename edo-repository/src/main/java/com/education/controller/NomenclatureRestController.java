@@ -3,16 +3,15 @@ package com.education.controller;
 import com.education.model.dto.NomenclatureDto;
 import com.education.service.nomenclature.NomenclatureService;
 import io.swagger.annotations.*;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.ZonedDateTime;
 import java.util.List;
 
 @ApiModel("Nomenclature API")
-@RequiredArgsConstructor
+@AllArgsConstructor
 @RestController
 @RequestMapping("api/repository/nomenclature")
 public class NomenclatureRestController {
@@ -23,10 +22,8 @@ public class NomenclatureRestController {
             @ApiResponse(code = 201, message = "Сущность сохранена")
     })
     @PostMapping("/")
-    public ResponseEntity<HttpStatus> save(@RequestBody @ApiParam("Nomenclature") NomenclatureDto nomenclature) {
-        nomenclature.setCreationDate(ZonedDateTime.now());
-        nomenclatureService.save(nomenclature);
-        return ResponseEntity.ok(HttpStatus.CREATED);
+    public ResponseEntity<NomenclatureDto> save(@RequestBody @ApiParam("Nomenclature") NomenclatureDto nomenclature) {
+        return new ResponseEntity<>(nomenclatureService.save(nomenclature), HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "Получить номенклатуру по id")
@@ -47,8 +44,8 @@ public class NomenclatureRestController {
             @ApiResponse(code = 200, message = "Successfully retrieved"),
             @ApiResponse(code = 404, message = "Not found - Nomenclature not found")
     })
-    @GetMapping
-    public ResponseEntity<List<NomenclatureDto>> findAllById(@RequestParam List<Long> ids) {
+    @PostMapping("/findAll")
+    public ResponseEntity<List<NomenclatureDto>> findAllById(@RequestBody List<Long> ids) {
         List<NomenclatureDto> nomenclatures = nomenclatureService.findAllById(ids);
         return nomenclatures != null && !nomenclatures.isEmpty()
                 ? new ResponseEntity<>(nomenclatures, HttpStatus.OK)
@@ -73,8 +70,8 @@ public class NomenclatureRestController {
             @ApiResponse(code = 200, message = "Successfully retrieved"),
             @ApiResponse(code = 404, message = "Not found - Nomenclature not found")
     })
-    @GetMapping("/notArchived")
-    public ResponseEntity<List<NomenclatureDto>> findAllByIdNotArchived(@RequestParam List<Long> ids) {
+    @PostMapping("/notArchived")
+    public ResponseEntity<List<NomenclatureDto>> findAllByIdNotArchived(@RequestBody List<Long> ids) {
         List<NomenclatureDto> nomenclatures = nomenclatureService.findAllByIdNotArchived(ids);
         return nomenclatures != null && !nomenclatures.isEmpty()
                 ? new ResponseEntity<>(nomenclatures, HttpStatus.OK)
@@ -86,8 +83,8 @@ public class NomenclatureRestController {
             @ApiResponse(code = 200, message = "Successfully retrieved")
     })
     @PatchMapping("/archived/{id}")
-    public ResponseEntity<HttpStatus> moveToArchive(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> moveToArchive(@PathVariable("id") Long id) {
         nomenclatureService.moveToArchive(id);
-        return ResponseEntity.ok(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 }

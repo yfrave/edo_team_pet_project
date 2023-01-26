@@ -30,18 +30,19 @@ public class NomenclatureServiceImpl implements NomenclatureService {
 
     /**
      * Сохраняет номенклатуру в БД
-     * принимает объект NomenclatureDto
+     * @param nomenclature NomenclatureDto
+     * @return NomenclatureDto
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void save(NomenclatureDto nomenclature) {
+    public NomenclatureDto save(NomenclatureDto nomenclature) {
         Nomenclature newNomenclature = NomenclatureToDtoConverter.convertToNomenclature(nomenclature);
-        nomenclatureRepository.saveAndFlush(newNomenclature);
+        return NomenclatureToDtoConverter.convertToDto(nomenclatureRepository.saveAndFlush(newNomenclature));
     }
 
     /**
      * Переводит номенклатуру в архив
-     * принимает id номенклатуры, которую надо отправить в архив
+     * @param id Long
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -51,7 +52,8 @@ public class NomenclatureServiceImpl implements NomenclatureService {
 
     /**
      * Предоставляет NomenclatureDto номенклатуры из БД по id
-     * принимает id искомой номенклатуру
+     * @param id Long
+     * @return NomenclatureDto
      */
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     @Override
@@ -62,7 +64,8 @@ public class NomenclatureServiceImpl implements NomenclatureService {
 
     /**
      * Предоставляет список NomenclatureDto номенклатур из БД по id
-     * принимает список id искомых номенклатур
+     * @param list List of id
+     * @return List of NomenclatureDto
      */
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     @Override
@@ -79,7 +82,8 @@ public class NomenclatureServiceImpl implements NomenclatureService {
 
     /**
      * Предоставляет не заархивированное NomenclatureDto номенклатуры из БД по id
-     * принимает id искомой номенклатуру
+     * @param id Long
+     * @return NomenclatureDto
      */
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     @Override
@@ -90,7 +94,8 @@ public class NomenclatureServiceImpl implements NomenclatureService {
 
     /**
      * Предоставляет список не заархивированных NomenclatureDto номенклатур из БД по id
-     * принимает список id искомых номенклатуру
+     * @param list List of id
+     * @return List of NomenclatureDto
      */
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     @Override

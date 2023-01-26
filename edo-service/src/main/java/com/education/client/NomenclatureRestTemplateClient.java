@@ -12,7 +12,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
+import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Представляет реализацию операций для связи с модулем edo-repository
@@ -40,28 +43,27 @@ public class NomenclatureRestTemplateClient {
     /**
      * путь рест котроллера номенклатуры
      */
-    private final String baseUrl = "api/repository/nomenclature";
+    static final String BASE_URL = "api/repository/nomenclature";
 
     /**
      * Имя модуля в который отправляются запросы
      */
-    private final String serviceName = "edo-repository";
+    static final String SERVICE_NAME = "edo-repository";
 
     /**
-     * Отправяляет запрос на сохранение номенклатуру
-     * принимает объект NomenclatureDto
+     * Имя протокола для отправки запроса
+     */
+    static final String SCHEMA_NAME = "http";
+
+    /**
+     * Отправяляет запрос на сохранение номенклатуры
+     * @param nomenclature NomenclatureDto
+     * @return NomenclatureDto
      */
     public NomenclatureDto save(NomenclatureDto nomenclature) {
-        Application app = eurekaClient.getApplication(serviceName);
-        InstanceInfo instance = app.getInstances().stream().findAny().get();
-
+        nomenclature.setCreationDate(ZonedDateTime.now());
         var request = new RequestEntity(nomenclature, HttpMethod.POST,
-                UriComponentsBuilder.fromPath(baseUrl + "/")
-                        .scheme("http")
-                        .host(instance.getHostName())
-                        .port(instance.getPort())
-                        .build()
-                        .toUri());
+                buildUri(getInstance(), "/"));
 
         var response = restTemplate.exchange(request, NomenclatureDto.class);
 
@@ -74,45 +76,29 @@ public class NomenclatureRestTemplateClient {
 
     /**
      * Отправляет запрос для предоставления NomenclatureDto номенклатуры по id
-     * принимает id искомой номенклатуру
+     * @param id Long
+     * @return NomenclatureDto
      */
     public NomenclatureDto findById(Long id) {
-        Application app = eurekaClient.getApplication(serviceName);
-        InstanceInfo instance = app.getInstances().stream().findAny().get();
-
         var request = new RequestEntity(null, HttpMethod.GET,
-                UriComponentsBuilder.fromPath(baseUrl + "/{id}")
-                        .scheme("http")
-                        .host(instance.getHostName())
-                        .port(instance.getPort())
-                        .buildAndExpand(id)
-                        .toUri());
+                buildUri(getInstance(), "/{id}", id));
 
         var response = restTemplate.exchange(request, NomenclatureDto.class);
 
         if (!response.getStatusCode().is2xxSuccessful()) {
             throw new RuntimeException("Can't get nomenclature");
         }
-
         return response.getBody();
     }
 
     /**
      * Отправляет запрос для предоставления списка NomenclatureDto номенклатур по id
-     * принимает список id искомых номенклатур
+     * @param ids List of id
+     * @return List of NomenclatureDto
      */
     public List<NomenclatureDto> findAllById(List<Long> ids) {
-        Application app = eurekaClient.getApplication(serviceName);
-        InstanceInfo instance = app.getInstances().stream().findAny().get();
-
-        var request = new RequestEntity(null, HttpMethod.GET,
-                UriComponentsBuilder.fromPath(baseUrl)
-                        .scheme("http")
-                        .host(instance.getHostName())
-                        .port(instance.getPort())
-                        .queryParam("ids", ids)
-                        .build()
-                        .toUri());
+        var request = new RequestEntity(ids, HttpMethod.POST,
+                buildUri(getInstance(), "/findAll"));
 
         var response = restTemplate.exchange(request, new ParameterizedTypeReference<List<NomenclatureDto>>() {
         });
@@ -120,51 +106,34 @@ public class NomenclatureRestTemplateClient {
         if (!response.getStatusCode().is2xxSuccessful()) {
             throw new RuntimeException("Can't get nomenclatures");
         }
-
         return response.getBody();
     }
 
     /**
      * Отправляет запрос для предоставления не заархивированной NomenclatureDto номенклатуры по id
-     * принимает id искомой номенклатуру
+     * @param id Long
+     * @return NomenclatureDto
      */
     public NomenclatureDto findByIdNotArchived(Long id) {
-        Application app = eurekaClient.getApplication(serviceName);
-        InstanceInfo instance = app.getInstances().stream().findAny().get();
-
         var request = new RequestEntity(null, HttpMethod.GET,
-                UriComponentsBuilder.fromPath(baseUrl + "/notArchived/{id}")
-                        .scheme("http")
-                        .host(instance.getHostName())
-                        .port(instance.getPort())
-                        .buildAndExpand(id)
-                        .toUri());
+                buildUri(getInstance(), "/notArchived/{id}", id));
 
         var response = restTemplate.exchange(request, NomenclatureDto.class);
 
         if (!response.getStatusCode().is2xxSuccessful()) {
             throw new RuntimeException("Can't get nomenclature");
         }
-
         return response.getBody();
     }
 
     /**
      * Отправляет запрос для предоставления списка не заархивированных NomenclatureDto номенклатур по id
-     * принимает список id искомых номенклатуру
+     * @param ids List of id
+     * @return List of NomenclatureDto
      */
     public List<NomenclatureDto> findAllByIdNotArchived(List<Long> ids) {
-        Application app = eurekaClient.getApplication(serviceName);
-        InstanceInfo instance = app.getInstances().stream().findAny().get();
-
-        var request = new RequestEntity(null, HttpMethod.GET,
-                UriComponentsBuilder.fromPath(baseUrl + "/notArchived")
-                        .scheme("http")
-                        .host(instance.getHostName())
-                        .port(instance.getPort())
-                        .queryParam("ids", ids)
-                        .build()
-                        .toUri());
+        var request = new RequestEntity(ids, HttpMethod.POST,
+                buildUri(getInstance(), "/notArchived"));
 
         var response = restTemplate.exchange(request, new ParameterizedTypeReference<List<NomenclatureDto>>() {
         });
@@ -172,32 +141,63 @@ public class NomenclatureRestTemplateClient {
         if (!response.getStatusCode().is2xxSuccessful()) {
             throw new RuntimeException("Can't get nomenclatures");
         }
-
         return response.getBody();
     }
 
     /**
      * Отправляет запрос для перевода номенклатуры в архив
-     * принимает id номенклатуры, которую надо отправить в архив
+     * @param id Long
      */
-    public NomenclatureDto moveToArchive(Long id) {
-        Application app = eurekaClient.getApplication(serviceName);
-        InstanceInfo instance = app.getInstances().stream().findAny().get();
-
+    public void moveToArchive(Long id) {
         var request = new RequestEntity(null, HttpMethod.PATCH,
-                UriComponentsBuilder.fromPath(baseUrl + "/archived/{id}")
-                        .scheme("http")
-                        .host(instance.getHostName())
-                        .port(instance.getPort())
-                        .buildAndExpand(id)
-                        .toUri());
+                buildUri(getInstance(), "/archived/{id}", id));
 
         var response = restTemplate.exchange(request, NomenclatureDto.class);
 
         if (!response.getStatusCode().is2xxSuccessful()) {
             throw new RuntimeException("Can't move to archive");
         }
+    }
 
-        return response.getBody();
+    /**
+     * get random instance
+     * @return InstanceInfo
+     */
+    private InstanceInfo getInstance() {
+        Random random = new Random();
+        Application app = eurekaClient.getApplication(SERVICE_NAME);
+        List<InstanceInfo> instances = app.getInstances();
+        return instances.get(random.nextInt(instances.size()));
+    }
+
+    /**
+     * Build URI
+     * @param instance InstanceInfo
+     * @param path This is the request path
+     * @return URI
+     */
+    private URI buildUri(InstanceInfo instance, String path) {
+        return UriComponentsBuilder.fromPath(BASE_URL + path)
+                .scheme(SCHEMA_NAME)
+                .host(instance.getHostName())
+                .port(instance.getPort())
+                .build()
+                .toUri();
+    }
+
+    /**
+     * Build uri with id
+     * @param instance InstanceInfo
+     * @param path This is the request path
+     * @param id Long
+     * @return URI
+     */
+    private URI buildUri(InstanceInfo instance, String path, Long id) {
+       return UriComponentsBuilder.fromPath(BASE_URL + path)
+                .scheme(SCHEMA_NAME)
+                .host(instance.getHostName())
+                .port(instance.getPort())
+                .buildAndExpand(id)
+                .toUri();
     }
 }
