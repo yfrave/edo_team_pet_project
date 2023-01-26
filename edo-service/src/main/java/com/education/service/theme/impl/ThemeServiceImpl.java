@@ -2,7 +2,6 @@ package com.education.service.theme.impl;
 
 import com.education.client.ThemeRestTemplateClient;
 import com.education.model.dto.ThemeDto;
-import com.education.model.dto.ThemeDto;
 import com.education.service.theme.ThemeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,30 +12,30 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ThemeServiceImpl implements ThemeService {
 
-    private final ThemeRestTemplateClient client;
+    private final ThemeRestTemplateClient CLIENT;
 
 
     public ThemeDto save(ThemeDto nomenclature) {
-        return client.save(nomenclature);
+        return CLIENT.save(nomenclature);
     }
 
     public ThemeDto findById(Long id) {
-        return client.findById(id);
+        return CLIENT.findById(id);
     }
 
     public List<ThemeDto> findAllById(List<Long> list) {
-        return client.findAllById(list);
+        return CLIENT.findAllById(list);
     }
 
     public ThemeDto findByIdNotArchived(Long id) {
-        return client.findByIdNotArchived(id);
+        return CLIENT.findByIdNotArchived(id);
     }
     
     public List<ThemeDto> findAllByIdNotArchived(List<Long> list) {
-        return client.findAllByIdNotArchived(list);
+        return CLIENT.findAllByIdNotArchived(list);
     }
     
     public void moveToArchive(Long id) {
-        client.moveToArchive(id);
+        CLIENT.moveToArchive(id);
     }
 }
