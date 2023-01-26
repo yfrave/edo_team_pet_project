@@ -43,6 +43,8 @@ public class AddressRestTemplateServiceImpl implements AddressService {
      */
     private String baseUrl = "/api/repository/address";
 
+    private String uriScheme = "http";
+
     /**
      * get addresses By Id
      *
@@ -100,6 +102,10 @@ public class AddressRestTemplateServiceImpl implements AddressService {
         template.delete(uri);
     }
 
+    /**
+     * getInstance
+     * @return InstanceInfo
+     */
     private InstanceInfo getInstance() {
         String serviceName = "edo-repository";
         Application app = eurekaClient.getApplication(serviceName);
@@ -109,19 +115,31 @@ public class AddressRestTemplateServiceImpl implements AddressService {
         return app.getInstances().get(new Random().nextInt(app.size()));
     }
 
+    /**
+     * generateUri
+     * @param instance InstanceInfo
+     * @param id Long
+     * @return URI
+     */
     private URI generateUri(InstanceInfo instance, Long id) {
         String lastPartComponent = "/{id}";
         return UriComponentsBuilder.fromPath(baseUrl + lastPartComponent)
-                .scheme("http")
+                .scheme(uriScheme)
                 .host(instance.getHostName())
                 .port(instance.getPort())
                 .buildAndExpand(id)
                 .toUri();
     }
 
+    /**
+     * generateUri
+     * @param instance InstanceInfo
+     * @param path String
+     * @return URI
+     */
     private URI generateUri(InstanceInfo instance, String path) {
         return UriComponentsBuilder.fromPath(baseUrl + path)
-                .scheme("http")
+                .scheme(uriScheme)
                 .host(instance.getHostName())
                 .port(instance.getPort())
                 .build()
