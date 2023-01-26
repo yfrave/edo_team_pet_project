@@ -65,10 +65,10 @@ public class AddressRestTemplateServiceImpl implements AddressService {
      */
     @Override
     public List<AddressDto> fetchAddressedList(List<Long> idList) {
-        URI uri = generateUri(this.getInstance(), "/findAll");
+        String lastPathComponent = "/findAll";
+        URI uri = generateUri(this.getInstance(), lastPathComponent);
         var request = new RequestEntity<>(idList, HttpMethod.POST, uri);
-        var myBean = new ParameterizedTypeReference<List<AddressDto>>() {
-        }; // поправить эту фигню.
+        var myBean = new ParameterizedTypeReference<List<AddressDto>>() {};
         var response = template.exchange(request, myBean);
 
         return response.getBody();
@@ -82,7 +82,8 @@ public class AddressRestTemplateServiceImpl implements AddressService {
      */
     @Override
     public AddressDto save(AddressDto address) {
-        URI uri = generateUri(this.getInstance(), "/");
+        String lastPathComponent = "/";
+        URI uri = generateUri(this.getInstance(), lastPathComponent);
         var request = new RequestEntity<>(address, HttpMethod.POST, uri);
 
         return template.exchange(request, AddressDto.class).getBody();
@@ -100,7 +101,8 @@ public class AddressRestTemplateServiceImpl implements AddressService {
     }
 
     private InstanceInfo getInstance() {
-        Application app = eurekaClient.getApplication("edo-repository");
+        String serviceName = "edo-repository";
+        Application app = eurekaClient.getApplication(serviceName);
         if (app == null) {
             log.warning("EurekaClient  не смогла достучаться до edo-repository");
         }
@@ -108,7 +110,8 @@ public class AddressRestTemplateServiceImpl implements AddressService {
     }
 
     private URI generateUri(InstanceInfo instance, Long id) {
-        return UriComponentsBuilder.fromPath(baseUrl + "/{id}")
+        String lastPartComponent = "/{id}";
+        return UriComponentsBuilder.fromPath(baseUrl + lastPartComponent)
                 .scheme("http")
                 .host(instance.getHostName())
                 .port(instance.getPort())
