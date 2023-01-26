@@ -18,7 +18,8 @@ public interface ResolutionRepository extends JpaRepository<Resolution, Long> {
     List<Resolution> findAllById(Iterable<Long> ids);
 
     @Modifying
-    @Query(value = "UPDATE edo.resolution SET archived_date = current_timestamp where id = :id", nativeQuery = true) //TODO затестить без  edo.
+    @Query(value = "UPDATE edo.resolution SET archived_date = current_timestamp where id = :id",
+            nativeQuery = true)
     void moveToArchive(@Param("id") Long id);
 
     @Query("select r from Resolution r where r.id = :id and r.archivedDate is null")
