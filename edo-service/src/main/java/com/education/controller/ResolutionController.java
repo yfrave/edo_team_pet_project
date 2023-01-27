@@ -76,7 +76,7 @@ public class ResolutionController {
     @GetMapping(value = "/allById/{ids}")
     public ResponseEntity<List<ResolutionDto>> findAllByIdResolution(@ApiParam("ids") @PathVariable List<Long> ids) {
         List<ResolutionDto> resolutionDto = resolutionService.findAllById(ids);
-        if (resolutionDto.isEmpty()) {
+        if (resolutionDto==null) {
             log.log(Level.WARN, "Сущности не найдены");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -109,7 +109,7 @@ public class ResolutionController {
     @GetMapping(value = "/allNotArchived/{ids}")
     public ResponseEntity<List<ResolutionDto>> findAllByIdNotArchivedResolution(@ApiParam("ids") @PathVariable List<Long> ids) {
         List<ResolutionDto> resolutionDto = resolutionService.findAllByIdNotArchived(ids);
-        if (resolutionDto.isEmpty()) {
+        if (resolutionDto==null) {
             log.log(Level.WARN, "Сущности не найдены");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
