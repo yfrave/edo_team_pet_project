@@ -4,7 +4,7 @@ import com.education.model.dto.FilePoolDto;
 
 import java.util.List;
 
-public interface FilePoolNoFeignService {
+public interface FilePoolService {
 
     FilePoolDto add(FilePoolDto filePoolDto);
 

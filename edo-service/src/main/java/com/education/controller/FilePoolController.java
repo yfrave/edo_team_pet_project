@@ -1,9 +1,8 @@
 package com.education.controller;
 
-import com.education.entity.FilePool;
+
 import com.education.model.dto.FilePoolDto;
-import com.education.service.filepool.FilePoolService;
-import com.education.util.DtoConverter;
+import com.education.service.FilePoolService;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
@@ -23,19 +22,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
-@Log
-@RequestMapping("/api/repository/file_pool")
+@RequestMapping("/api/service/file_pool")
 @AllArgsConstructor
-@ApiModel("Controller for FilePool")
+@ApiModel("Контроллер эдо-сервиса для сущности Хранилище файлов (FilePool)")
+@Log
 public class FilePoolController {
-    @ApiModelProperty("service")
-    private final FilePoolService FILE_POOL_SERVICE;
-
+    @ApiModelProperty("Сервис контроллера FilePool")
+    private FilePoolService service;
 
     @ApiOperation(value = "Получить хранилище файлов по id", notes = "Returns an address as per the id")
     @ApiResponses(value = {
@@ -43,12 +39,9 @@ public class FilePoolController {
             @ApiResponse(code = 404, message = "Not found - The file pool was not found")
     })
     @GetMapping("/{id}")
-    public ResponseEntity<FilePoolDto> fetchFilePool(@PathVariable("id") Long id) {
-        log.info("Request to get file pool by id = " + id);
-        FilePoolDto filePoolDto = FILE_POOL_SERVICE.findById(id);
-        return filePoolDto != null
-                ? new ResponseEntity<>(filePoolDto, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<FilePoolDto> getFilePool(@PathVariable Long id) {
+        log.info("Got request to find file pool by id = " + id);
+        return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Получить список файловых хранилищ", notes = "Находит файловые хранилища по их id. Возвращает списком List<FilePool>")
@@ -57,17 +50,9 @@ public class FilePoolController {
             @ApiResponse(code = 404, message = "Not found - The file pools was not found")
     })
     @GetMapping("/findAll")
-    public ResponseEntity<List<FilePoolDto>> fetchFindAllById(@RequestParam
-                                                              @ApiParam("FilePool list")
-                                                              List<Long> ids) {
-        log.info("Got request to get file pools by ids");
-        List<FilePool> filePools = FILE_POOL_SERVICE.findAllById(ids);
-        return filePools != null && !filePools.isEmpty()
-                ? new ResponseEntity<>(filePools.
-                stream().
-                map(DtoConverter::convertToDto).
-                collect(Collectors.toList()), HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<List<FilePoolDto>> getListOfFilePoolByIds(@RequestParam List<Long> ids) {
+        log.info("Got request to find list of file pool");
+        return new ResponseEntity<>(service.findAllById(ids), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Добавить хранилище файлов")
@@ -75,14 +60,9 @@ public class FilePoolController {
             @ApiResponse(code = 201, message = "Successfully added")
     })
     @PostMapping("/")
-    public ResponseEntity<FilePoolDto> add(@RequestBody
-                                           @ApiParam("filePool")
-                                           FilePoolDto filePool) {
-
-        filePool.setUploadDate(ZonedDateTime.now());
+    public ResponseEntity<FilePoolDto> add(@RequestBody @ApiParam("FilePool") FilePoolDto filePoolDto) {
         log.info("Got request to add new file pool");
-        ResponseEntity<FilePoolDto> responseEntity = new ResponseEntity<>(FILE_POOL_SERVICE.add(filePool), HttpStatus.CREATED);
-        return responseEntity;
+        return new ResponseEntity<>(service.add(filePoolDto), HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "Переместить в архив хранилище файлов")
@@ -90,9 +70,9 @@ public class FilePoolController {
             @ApiResponse(code = 200, message = "Successfully moved")
     })
     @PutMapping("/{id}")
-    public ResponseEntity<Void> moveToArchived(@PathVariable("id") Long id) {
-        log.info("Got request to move file pool to archive");
-        FILE_POOL_SERVICE.moveToArchive(id);
+    public ResponseEntity<Void> moveToArchive(@PathVariable @ApiParam("FilePool") Long id) {
+        log.info("Got request to move file pool to archive by id = " + id);
+        service.moveToArchive(id);
         return ResponseEntity.ok().build();
     }
 
