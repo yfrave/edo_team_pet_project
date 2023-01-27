@@ -7,7 +7,7 @@ import java.util.List;
 public interface AddressService {
     AddressDto getById(Long id);
 
-    List<AddressDto> fetchAddressedList(List<Long> idList);
+    List<AddressDto> fetchAddressesList(List<Long> idList);
 
     AddressDto save(AddressDto address);
 

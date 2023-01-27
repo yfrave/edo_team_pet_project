@@ -39,7 +39,7 @@ public class AddressController {
     @GetMapping("/findAll")
     public ResponseEntity<List<AddressDto>> getAddressesList(@RequestBody List<Long> idList) {
         log.info("отправил list AddressDto.class");
-        return new ResponseEntity<>(service.fetchAddressedList(idList), HttpStatus.OK);
+        return new ResponseEntity<>(service.fetchAddressesList(idList), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Сохранить адрес")

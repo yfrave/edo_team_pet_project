@@ -66,7 +66,7 @@ public class AddressRestTemplateServiceImpl implements AddressService {
      * @return List<AddressDto>
      */
     @Override
-    public List<AddressDto> fetchAddressedList(List<Long> idList) {
+    public List<AddressDto> fetchAddressesList(List<Long> idList) {
         String lastPathComponent = "/findAll";
         URI uri = generateUri(this.getInstance(), lastPathComponent);
         var request = new RequestEntity<>(idList, HttpMethod.POST, uri);
