@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,7 +48,7 @@ public class NomenclatureServiceImpl implements NomenclatureService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void moveToArchive(Long id) {
-        nomenclatureRepository.moveToArchive(id);
+        nomenclatureRepository.moveToArchive(id, ZonedDateTime.now());
     }
 
     /**

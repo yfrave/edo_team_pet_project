@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +23,7 @@ public interface NomenclatureRepository extends JpaRepository<Nomenclature, Long
 
     /**
      * Метод предоставляет не заархивированную номенклатуру по id
+     *
      * @param id Long
      * @return Optional of Nomenclature
      */
@@ -30,6 +32,7 @@ public interface NomenclatureRepository extends JpaRepository<Nomenclature, Long
 
     /**
      * Метод предоставляет список не заархивированных номенклатур по id
+     *
      * @param list List of id
      * @return List of Nomenclature
      */
@@ -39,9 +42,9 @@ public interface NomenclatureRepository extends JpaRepository<Nomenclature, Long
     /**
      * Метод переводит в архив номенклатуру присваивая значение даты архивации
      * @param id Long
+     * @param currentTime ZonedDateTime
      */
     @Modifying
-    @Query (value = "UPDATE edo.nomenclature SET archived_date = current_timestamp WHERE id = :id", nativeQuery = true)
-    void moveToArchive(@Param("id") Long id);
-
+    @Query(value = "UPDATE Nomenclature n SET n.archivedDate = :currentTime WHERE n.id = :id")
+    void moveToArchive(@Param("id") Long id, @Param("currentTime") ZonedDateTime currentTime);
 }
