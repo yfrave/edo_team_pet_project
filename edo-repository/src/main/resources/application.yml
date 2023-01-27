@@ -3,7 +3,6 @@ spring:
     properties:
       hibernate:
         default_schema: edo
-
   flyway:
     enabled: true
     user: postgres
