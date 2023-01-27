@@ -7,6 +7,7 @@ import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
 import lombok.RequiredArgsConstructor;
 
+import org.apache.http.HttpHost;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -37,7 +38,7 @@ public class ResolutionServiceImpl implements ResolutionService {
 
     private URI getURIByInstance(InstanceInfo instanceInfo, String pathVariable) {
         URI uri = UriComponentsBuilder.fromPath(BASE_URL + pathVariable)
-                .scheme("http")
+                .scheme(HttpHost.DEFAULT_SCHEME_NAME)
                 .host(instanceInfo.getHostName())
                 .port(instanceInfo.getPort())
                 .buildAndExpand(pathVariable)
