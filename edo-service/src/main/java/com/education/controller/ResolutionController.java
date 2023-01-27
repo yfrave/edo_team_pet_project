@@ -22,7 +22,7 @@ import java.util.List;
 @RequestMapping("api/service/resolution")
 public class ResolutionController {
 
-    final private ResolutionService RESOLUTION_SERVICE;
+    final private ResolutionService resolutionService;
 
     @ApiOperation(value = "Сохранение сущности в БД")
     @ApiResponses(value = {
@@ -31,11 +31,12 @@ public class ResolutionController {
     })
     @PostMapping
     public ResponseEntity<ResolutionDto> saveResolution(@ApiParam("resolutionDto") @RequestBody ResolutionDto resolutionDto) {
-        if (RESOLUTION_SERVICE.save(resolutionDto)) {
-            log.log(Level.INFO, "Сущность сохранена");
+        resolutionService.save(resolutionDto);
+        if (resolutionService.findById(resolutionDto.getId())!=null) {
+            log.log(Level.INFO, "Сущность сохранена или обновлена");
             return new ResponseEntity<>(resolutionDto, HttpStatus.CREATED);
         }
-        log.log(Level.WARN, "Сущность не сохранена");
+        log.log(Level.WARN, "Сущность не сохранена и не обновлена");
         return new ResponseEntity<>(resolutionDto, HttpStatus.CONFLICT);
     }
 
@@ -43,11 +44,11 @@ public class ResolutionController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Сущность изменена"),
     })
-    @PutMapping("/ToArchive/{id}")
+    @PutMapping("/toArchive/{id}")
     public ResponseEntity<ResolutionDto> moveToArchiveResolution(@ApiParam("id") @PathVariable Long id) {
-        RESOLUTION_SERVICE.moveToArchive(id);
+        resolutionService.moveToArchive(id);
         log.log(Level.INFO, "Дата архивации обновлена");
-        return new ResponseEntity<>(RESOLUTION_SERVICE.findById(id), HttpStatus.OK);
+        return new ResponseEntity<>(resolutionService.findById(id), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Получение сущности по id")
@@ -55,9 +56,9 @@ public class ResolutionController {
             @ApiResponse(code = 200, message = "Сущность найдена"),
             @ApiResponse(code = 404, message = "Сущность не найдена")
     })
-    @GetMapping(value = "/ById/{id}")
+    @GetMapping(value = "/byId/{id}")
     public ResponseEntity<ResolutionDto> findByIdResolution(@ApiParam("id") @PathVariable Long id) {
-        ResolutionDto resolution = RESOLUTION_SERVICE.findById(id);
+        ResolutionDto resolution = resolutionService.findById(id);
         if (resolution == null) {
             log.log(Level.WARN, "Сущность не найдена");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -72,9 +73,9 @@ public class ResolutionController {
             @ApiResponse(code = 200, message = "Сущности найдены"),
             @ApiResponse(code = 404, message = "Сущности не найдены")
     })
-    @GetMapping(value = "/AllById/{ids}")
+    @GetMapping(value = "/allById/{ids}")
     public ResponseEntity<List<ResolutionDto>> findAllByIdResolution(@ApiParam("ids") @PathVariable List<Long> ids) {
-        List<ResolutionDto> resolutionDto = RESOLUTION_SERVICE.findAllById(ids);
+        List<ResolutionDto> resolutionDto = resolutionService.findAllById(ids);
         if (resolutionDto.isEmpty()) {
             log.log(Level.WARN, "Сущности не найдены");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -88,9 +89,9 @@ public class ResolutionController {
             @ApiResponse(code = 200, message = "Сущность найдена"),
             @ApiResponse(code = 404, message = "Сущность не найдена")
     })
-    @GetMapping(value = "/NotArchived/{id}")
+    @GetMapping(value = "/notArchived/{id}")
     public ResponseEntity<ResolutionDto> findByIdNotArchivedResolution(@ApiParam("id") @PathVariable Long id) {
-        ResolutionDto resolutionDto = RESOLUTION_SERVICE.findByIdNotArchived(id);
+        ResolutionDto resolutionDto = resolutionService.findByIdNotArchived(id);
         if (resolutionDto == null) {
             log.log(Level.WARN, "Сущность не найдена");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -105,9 +106,9 @@ public class ResolutionController {
             @ApiResponse(code = 404, message = "Сущности не найдены")
     })
 
-    @GetMapping(value = "/AllNotArchived/{ids}")
+    @GetMapping(value = "/allNotArchived/{ids}")
     public ResponseEntity<List<ResolutionDto>> findAllByIdNotArchivedResolution(@ApiParam("ids") @PathVariable List<Long> ids) {
-        List<ResolutionDto> resolutionDto = RESOLUTION_SERVICE.findAllByIdNotArchived(ids);
+        List<ResolutionDto> resolutionDto = resolutionService.findAllByIdNotArchived(ids);
         if (resolutionDto.isEmpty()) {
             log.log(Level.WARN, "Сущности не найдены");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

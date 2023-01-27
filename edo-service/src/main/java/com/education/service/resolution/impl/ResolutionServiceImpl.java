@@ -46,27 +46,23 @@ public class ResolutionServiceImpl implements ResolutionService {
     }
 
     @Override
-    public boolean save(ResolutionDto resolution) {
+    public void save(ResolutionDto resolution) {
         InstanceInfo instanceInfo = getInstance();
         URI uri = getURIByInstance(instanceInfo, "");
         TEMPLATE.postForObject(uri, resolution, ResolutionDto.class);
-        if (findById(resolution.getId()) == resolution) {
-            return true;
-        }
-        return false;
     }
 
     @Override
     public void moveToArchive(Long id) {
         InstanceInfo instanceInfo = getInstance();
-        URI uri = getURIByInstance(instanceInfo, String.format("/ToArchive/%s", id.toString()));
+        URI uri = getURIByInstance(instanceInfo, String.format("/toArchive/%s", id.toString()));
         TEMPLATE.put(uri, null);
     }
 
     @Override
     public ResolutionDto findById(Long id) {
         InstanceInfo instanceInfo = getInstance();
-        URI uri = getURIByInstance(instanceInfo, String.format("/ById/%s", id.toString()));
+        URI uri = getURIByInstance(instanceInfo, String.format("/byId/%s", id.toString()));
         ResolutionDto response = TEMPLATE.getForObject(uri, ResolutionDto.class);
         return response;
     }
@@ -75,7 +71,7 @@ public class ResolutionServiceImpl implements ResolutionService {
     public List<ResolutionDto> findAllById(Iterable<Long> ids) {
         InstanceInfo instanceInfo = getInstance();
         String path = ids.toString().substring(1, ids.toString().length() - 1);
-        URI uri = getURIByInstance(instanceInfo, String.format("/AllById/%s", path));
+        URI uri = getURIByInstance(instanceInfo, String.format("/allById/%s", path));
         ResolutionDto[] response = TEMPLATE.getForObject(uri, ResolutionDto[].class);
         return Arrays.asList(response);
     }
@@ -83,7 +79,7 @@ public class ResolutionServiceImpl implements ResolutionService {
     @Override
     public ResolutionDto findByIdNotArchived(Long id) {
         InstanceInfo instanceInfo = getInstance();
-        URI uri = getURIByInstance(instanceInfo, String.format("/NotArchived/%s", id.toString()));
+        URI uri = getURIByInstance(instanceInfo, String.format("/notArchived/%s", id.toString()));
         ResolutionDto response = TEMPLATE.getForObject(uri, ResolutionDto.class);
         return response;
     }
@@ -92,7 +88,7 @@ public class ResolutionServiceImpl implements ResolutionService {
     public List<ResolutionDto> findAllByIdNotArchived(Iterable<Long> ids) {
         InstanceInfo instanceInfo = getInstance();
         String path = ids.toString().substring(1, ids.toString().length() - 1);
-        URI uri = getURIByInstance(instanceInfo, String.format("/AllNotArchived/%s", path));
+        URI uri = getURIByInstance(instanceInfo, String.format("/allNotArchived/%s", path));
         ResolutionDto[] response = TEMPLATE.getForObject(uri, ResolutionDto[].class);
         return Arrays.asList(response);
     }

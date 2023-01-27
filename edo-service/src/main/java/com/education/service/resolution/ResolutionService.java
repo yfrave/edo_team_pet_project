@@ -5,7 +5,7 @@ import com.education.model.dto.ResolutionDto;
 import java.util.List;
 
 public interface ResolutionService {
-    boolean save(ResolutionDto resolution);
+    void save(ResolutionDto resolution);
 
     void moveToArchive(Long id);
 

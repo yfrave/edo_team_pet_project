@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,13 +19,8 @@ public class ResolutionServiceImpl implements ResolutionService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean save(Resolution resolution) {
-        Optional<Resolution> resolutionFromDB = resolutionRepository.findById(resolution.getId());
-        if (resolutionFromDB.isPresent()) {
-            return false;
-        }
+    public void save(Resolution resolution) {
         resolutionRepository.save(resolution);
-        return true;
     }
 
     @Transactional(rollbackFor = Exception.class)
