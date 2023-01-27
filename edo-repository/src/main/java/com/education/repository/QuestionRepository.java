@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public interface QuestionRepository extends JpaRepository <Question, Long> {
     @Modifying
-    @Query(value = "update edo.question set archived_date = current_timestamp where id = :id ", nativeQuery = true)
+    @Query(value = "update question set archived_date = current_timestamp where id = :id ", nativeQuery = true)
     void moveToArchive(@Param("id") Long id);
 
     @Query("select q from Question q where q.id = :id and q.archivedDate is null")
