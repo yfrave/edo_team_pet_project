@@ -18,7 +18,7 @@ public interface FilePoolRepository extends JpaRepository<FilePool, Long> {
      */
     @Modifying
 //    @Query(value = "UPDATE FilePool f SET f.archivedDate = CURRENT_TIMESTAMP WHERE f.id = :id")
-    @Query(value = "UPDATE edo.file_pool SET archived_date = CURRENT_TIMESTAMP WHERE id = :id", nativeQuery = true)
+    @Query(value = "UPDATE file_pool SET archived_date = CURRENT_TIMESTAMP WHERE id = :id", nativeQuery = true)
     void moveToArchive(@Param("id") Long id);
 }
 
