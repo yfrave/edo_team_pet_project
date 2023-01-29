@@ -20,6 +20,7 @@ import java.time.ZonedDateTime;
 @Entity
 @Getter
 @Setter
+@SuperBuilder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
