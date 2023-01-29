@@ -24,7 +24,6 @@ import java.time.ZonedDateTime;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@SuperBuilder
 @Table(name = "employee")
 public class Employee extends BaseEntity {
 
