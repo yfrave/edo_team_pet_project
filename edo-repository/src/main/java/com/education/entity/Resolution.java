@@ -1,6 +1,7 @@
 package com.education.entity;
 
 import com.education.model.enumEntity.EnumResolution;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -18,6 +19,7 @@ import java.util.List;
 @Getter
 @Setter
 @SuperBuilder
+@ToString
 @Table(name = "resolution")
 public class Resolution extends BaseEntity {
 
