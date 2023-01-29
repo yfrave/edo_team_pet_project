@@ -5,7 +5,7 @@ import com.education.model.dto.FilePoolDto;
 import com.education.repository.FilePoolRepository;
 import com.education.service.filepool.FilePoolService;
 import com.education.util.DtoConverter;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,17 +15,13 @@ import java.util.List;
  * Service for entity FilePool
  */
 @Service
+@AllArgsConstructor
 public class FilePoolServiceImpl implements FilePoolService {
 
     /**
      * Repository
      */
-    private final FilePoolRepository filePoolRepository;
-
-    @Autowired
-    public FilePoolServiceImpl(FilePoolRepository filePoolRepository) {
-        this.filePoolRepository = filePoolRepository;
-    }
+    private final FilePoolRepository FILE_POOL_REPOSITORY;
 
     /**
      * Add in db method
@@ -35,7 +31,7 @@ public class FilePoolServiceImpl implements FilePoolService {
      */
     @Transactional(rollbackFor = Exception.class)
     public FilePoolDto add(FilePoolDto filePool) {
-        filePoolRepository.save(DtoConverter.convertFromDto(filePool));
+        FILE_POOL_REPOSITORY.save(DtoConverter.convertFromDto(filePool));
         return filePool;
     }
 
@@ -47,7 +43,7 @@ public class FilePoolServiceImpl implements FilePoolService {
      */
     @Transactional(rollbackFor = Exception.class)
     public FilePoolDto findById(Long id) {
-        FilePool filePool = filePoolRepository.findById(id).orElse(null);
+        FilePool filePool = FILE_POOL_REPOSITORY.findById(id).orElse(null);
         return filePool != null ? DtoConverter.convertToDto(filePool) : null;
     }
 
@@ -59,7 +55,7 @@ public class FilePoolServiceImpl implements FilePoolService {
      */
     @Transactional(rollbackFor = Exception.class)
     public List<FilePool> findAllById(List<Long> ids) {
-        return filePoolRepository.findAllById(ids);
+        return FILE_POOL_REPOSITORY.findAllById(ids);
     }
 
     /**
@@ -69,7 +65,7 @@ public class FilePoolServiceImpl implements FilePoolService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void moveToArchive(Long id) {
-        filePoolRepository.moveToArchive(id);
+        FILE_POOL_REPOSITORY.moveToArchive(id);
     }
 
 
