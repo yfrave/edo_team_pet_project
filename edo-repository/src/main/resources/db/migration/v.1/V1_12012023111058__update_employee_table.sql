@@ -1,19 +1,19 @@
 ALTER TABLE IF EXISTS employee
     ADD COLUMN IF NOT EXISTS first_name VARCHAR(20),
-    ADD COLUMN last_name                VARCHAR(20),
-    ADD COLUMN middle_name              VARCHAR(20),
-    ADD COLUMN address                  VARCHAR(200),
-    ADD COLUMN photo_url                VARCHAR(300),
-    ADD COLUMN fio_dative               VARCHAR(60),
-    ADD COLUMN fio_nominative           VARCHAR(60),
-    ADD COLUMN fio_genitive             VARCHAR(60),
-    ADD COLUMN external_id              VARCHAR(20),
-    ADD COLUMN phone                    VARCHAR(20),
-    ADD COLUMN work_phone               VARCHAR(20),
-    ADD COLUMN birth_date               TIMESTAMPTZ,
-    ADD COLUMN username                 VARCHAR(20),
-    ADD COLUMN creation_date            TIMESTAMPTZ,
-    ADD COLUMN archived_date            TIMESTAMPTZ;
+    ADD COLUMN IF NOT EXISTS last_name                VARCHAR(20),
+    ADD COLUMN IF NOT EXISTS middle_name              VARCHAR(20),
+    ADD COLUMN IF NOT EXISTS address                  VARCHAR(200),
+    ADD COLUMN IF NOT EXISTS photo_url                VARCHAR(300),
+    ADD COLUMN IF NOT EXISTS fio_dative               VARCHAR(60),
+    ADD COLUMN IF NOT EXISTS fio_nominative           VARCHAR(60),
+    ADD COLUMN IF NOT EXISTS fio_genitive             VARCHAR(60),
+    ADD COLUMN IF NOT EXISTS external_id              VARCHAR(20),
+    ADD COLUMN IF NOT EXISTS phone                    VARCHAR(20),
+    ADD COLUMN IF NOT EXISTS work_phone               VARCHAR(20),
+    ADD COLUMN IF NOT EXISTS birth_date               TIMESTAMPTZ,
+    ADD COLUMN IF NOT EXISTS username                 VARCHAR(20),
+    ADD COLUMN IF NOT EXISTS creation_date            TIMESTAMPTZ,
+    ADD COLUMN IF NOT EXISTS archived_date            TIMESTAMPTZ;
 
 COMMENT ON COLUMN edo.employee.id IS 'Id работника';
 COMMENT ON COLUMN edo.employee.first_name IS 'имя работника';
