@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Сервис для темы обращения
@@ -60,40 +61,27 @@ public class ThemeServiceImpl implements ThemeService {
      */
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<ThemeDto> findAllById(List<Long> ids) {
-        List<Theme> themes = THEME_REPOSITORY.findAllById(ids);
-        List<ThemeDto> listDto = new ArrayList<>();
-        for (Theme theme : themes) {
-//            Long parentThemeId = theme.getParentTheme() != null ? theme.getParentTheme().getId() : null;
-//            listDto.add(new ThemeDto(theme.getId(), theme.getName(), theme.getCreationDate(), theme.getArchivedDate(), theme.getCode(), parentThemeId));
-            listDto.add(CONV.convertThemeToDto(theme));
 
+        return THEME_REPOSITORY.findAllById(ids).stream().map(CONV::convertThemeToDto).toList();
         }
-        return listDto;
-    }
 
     /**
      * Выдает тему по id, если она не в архивных (т.е. архивная дата отсутствует)
      */
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public ThemeDto findByIdNotArchived(Long id) {
-        Theme theme = THEME_REPOSITORY.findByIdAndArchivedDateIsNull(id);
-        if (theme == null) {
-            return null;
-        } else {
-            return CONV.convertThemeToDto(theme);
+
+        return THEME_REPOSITORY.findByIdAndArchivedDateIsNull(id) == null
+                ? null
+                : CONV.convertThemeToDto(THEME_REPOSITORY.findByIdAndArchivedDateIsNull(id));
         }
-    }
 
     /**
      * Выдает по списку id соответствующие темы, которые не являются архивными
      */
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<ThemeDto> findAllByIdNotArchived(List<Long> ids) {
-        List<Theme> themes = THEME_REPOSITORY.findAllNotArchived(ids);
-        List<ThemeDto> listDto = new ArrayList<>();
-        for (Theme theme : themes) {
-            listDto.add(CONV.convertThemeToDto(theme));
-        }
-        return listDto;
+
+        return THEME_REPOSITORY.findAllNotArchived(ids).stream().map(CONV::convertThemeToDto).toList();
     }
 }

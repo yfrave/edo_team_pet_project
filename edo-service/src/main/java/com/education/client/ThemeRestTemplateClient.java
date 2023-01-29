@@ -3,7 +3,6 @@ package com.education.client;
 import com.education.model.dto.ThemeDto;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
-import com.netflix.discovery.shared.Application;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.core.ParameterizedTypeReference;
@@ -44,13 +43,13 @@ public class ThemeRestTemplateClient {
     private String SCHEME = "http";
 
     public ThemeDto save(ThemeDto themeDto) {
-        Application app = EUREKA_CLIENT.getApplication(SERVICE_NAME);
-        InstanceInfo instance = app.getInstances().get((int) (app.getInstances().size() * Math.random()));
+        List<InstanceInfo> instances = EUREKA_CLIENT.getApplication(SERVICE_NAME).getInstances();
+        InstanceInfo instance = instances.get((int) (instances.size() * Math.random()));
         log.log(Level.INFO, "В классе ThemeRestTemplateClient используется порт {0}", instance.getPort());
 
         var request = new RequestEntity(themeDto, HttpMethod.POST,
                 UriComponentsBuilder.fromPath(BASE_URL + "/")
-                        .scheme("http")
+                        .scheme(SCHEME)
                         .host(instance.getHostName())
                         .port(instance.getPort())
                         .build()
@@ -65,8 +64,8 @@ public class ThemeRestTemplateClient {
     }
 
     public ThemeDto findById(Long id) {
-        Application app = EUREKA_CLIENT.getApplication(SERVICE_NAME);
-        InstanceInfo instance = app.getInstances().get((int) (app.getInstances().size() * Math.random()));
+        List<InstanceInfo> instances = EUREKA_CLIENT.getApplication(SERVICE_NAME).getInstances();
+        InstanceInfo instance = instances.get((int) (instances.size() * Math.random()));
         log.log(Level.INFO, "В классе ThemeRestTemplateClient используется порт {0}", instance.getPort());
 
 
@@ -87,8 +86,8 @@ public class ThemeRestTemplateClient {
     }
 
     public List<ThemeDto> findAllById(List<Long> ids) {
-        Application app = EUREKA_CLIENT.getApplication(SERVICE_NAME);
-        InstanceInfo instance = app.getInstances().get((int) (app.getInstances().size() * Math.random()));
+        List<InstanceInfo> instances = EUREKA_CLIENT.getApplication(SERVICE_NAME).getInstances();
+        InstanceInfo instance = instances.get((int) (instances.size() * Math.random()));
         log.log(Level.INFO, "В классе ThemeRestTemplateClient используется порт {0}", instance.getPort());
 
 
@@ -111,8 +110,8 @@ public class ThemeRestTemplateClient {
     }
 
     public ThemeDto findByIdNotArchived(Long id) {
-        Application app = EUREKA_CLIENT.getApplication(SERVICE_NAME);
-        InstanceInfo instance = app.getInstances().get((int) (app.getInstances().size() * Math.random()));
+        List<InstanceInfo> instances = EUREKA_CLIENT.getApplication(SERVICE_NAME).getInstances();
+        InstanceInfo instance = instances.get((int) (instances.size() * Math.random()));
         log.log(Level.INFO, "В классе ThemeRestTemplateClient используется порт {0}", instance.getPort());
 
 
@@ -137,8 +136,8 @@ public class ThemeRestTemplateClient {
      * принимает список id искомых номенклатуру
      */
     public List<ThemeDto> findAllByIdNotArchived(List<Long> ids) {
-        Application app = EUREKA_CLIENT.getApplication(SERVICE_NAME);
-        InstanceInfo instance = app.getInstances().get((int) (app.getInstances().size() * Math.random()));
+        List<InstanceInfo> instances = EUREKA_CLIENT.getApplication(SERVICE_NAME).getInstances();
+        InstanceInfo instance = instances.get((int) (instances.size() * Math.random()));
         log.log(Level.INFO, "В классе ThemeRestTemplateClient используется порт {0}", instance.getPort());
 
 
@@ -161,8 +160,8 @@ public class ThemeRestTemplateClient {
     }
 
     public Long moveToArchive(Long id) {
-        Application app = EUREKA_CLIENT.getApplication(SERVICE_NAME);
-        InstanceInfo instance = app.getInstances().get((int) (app.getInstances().size() * Math.random()));
+        List<InstanceInfo> instances = EUREKA_CLIENT.getApplication(SERVICE_NAME).getInstances();
+        InstanceInfo instance = instances.get((int) (instances.size() * Math.random()));
         log.log(Level.INFO, "В классе ThemeRestTemplateClient используется порт {0}", instance.getPort());
 
 

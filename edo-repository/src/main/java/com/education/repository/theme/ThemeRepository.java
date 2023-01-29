@@ -30,6 +30,6 @@ public interface ThemeRepository extends JpaRepository<Theme, Long> {
      * Проставляет для темы архивную дату (current_timestamp)
      */
     @Modifying
-    @Query(value = "UPDATE edo.theme SET archived_date = current_timestamp WHERE id = :theme_id", nativeQuery = true)
+    @Query(value = "UPDATE theme SET archived_date = current_timestamp WHERE id = :theme_id", nativeQuery = true)
     Integer moveToArchive(@Param("theme_id") Long id);
 }
