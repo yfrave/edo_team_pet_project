@@ -1,7 +1,7 @@
 package com.education.controller;
 
 import com.education.model.dto.EmployeeDto;
-import com.education.service.EmployeeRestTemplateService;
+import com.education.service.employee.EmployeeRestTemplateService;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;

@@ -1,4 +1,4 @@
-package com.education.feign;
+package com.education.client;
 
 
 import com.education.model.dto.EmployeeDto;

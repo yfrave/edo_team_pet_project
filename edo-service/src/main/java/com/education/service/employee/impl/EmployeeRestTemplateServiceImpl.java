@@ -1,10 +1,10 @@
-package com.education.service.impl;
+package com.education.service.employee.impl;
 
 
 
-import com.education.feign.EmployeeRestTemplateClient;
+import com.education.client.EmployeeRestTemplateClient;
 import com.education.model.dto.EmployeeDto;
-import com.education.service.EmployeeRestTemplateService;
+import com.education.service.employee.EmployeeRestTemplateService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

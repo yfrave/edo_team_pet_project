@@ -1,4 +1,4 @@
-package com.education.service;
+package com.education.service.employee;
 
 
 import com.education.model.dto.EmployeeDto;
