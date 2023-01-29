@@ -27,13 +27,4 @@
 
     <artifactId>edo-service</artifactId>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.education</groupId>
-            <artifactId>edo-common</artifactId>
-            <version>0.0.1</version>
-            <scope>compile</scope>
-        </dependency>
-    </dependencies>
-
 </project>

@@ -58,9 +58,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public QuestionDto findById(Long id) {
         Optional<Question> question = questionRepository.findById(id);
-        return question != null && !question.isEmpty()
-                ? converter.toDto(question.get())
-                : null;
+        return question.map(converter::toDto).orElse(null);
     }
 
     /**
@@ -72,10 +70,10 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public List<QuestionDto> findAllById(List<Long> ids) {
         List<Question> questions = questionRepository.findAllById(ids);
-        return questions != null && !questions.isEmpty()
+        return !questions.isEmpty()
                 ? questions
                 .stream()
-                .map(a -> converter.toDto(a))
+                .map(converter::toDto)
                 .toList()
                 : null;
     }
@@ -106,7 +104,7 @@ public class QuestionServiceImpl implements QuestionService {
         return questions != null && !questions.isEmpty()
                 ? questions
                 .stream()
-                .map(a -> converter.toDto(a))
+                .map(converter::toDto)
                 .toList()
                 : null;
     }

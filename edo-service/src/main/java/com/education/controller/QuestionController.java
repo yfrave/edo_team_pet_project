@@ -23,7 +23,7 @@ public class QuestionController {
     private final QuestionService questionService;
 
     @ApiOperation("Создание обращения")
-    @PostMapping("/add")
+    @PostMapping("/")
     public ResponseEntity<QuestionDto> save(@RequestBody QuestionDto question) {
         log.info("Creating new Question");
         questionService.save(question);

@@ -33,8 +33,7 @@ public class QuestionServiceImpl implements QuestionService {
      */
     @Override
     public void save(QuestionDto question) {
-        String path = "add";
-        var uri = getUri(path);
+        var uri = getUri("");
         rest.postForObject(uri, question, QuestionDto.class);
     }
 
@@ -70,8 +69,7 @@ public class QuestionServiceImpl implements QuestionService {
      */
     @Override
     public List<QuestionDto> findAllById(List<Long> ids) {
-        String path = "all";
-        return getQuestionDtos(ids, path);
+        return getQuestionDtos(ids, "all");
     }
 
     /**
@@ -81,8 +79,7 @@ public class QuestionServiceImpl implements QuestionService {
      */
     @Override
     public QuestionDto findByIdNotArchived(Long id) {
-        String path = "notArchived/" + id;
-        var uri = getUri(path);
+        var uri = getUri("notArchived/" + id);
         try {
             return rest.getForObject(uri, QuestionDto.class);
         } catch (Exception e) {
@@ -97,8 +94,7 @@ public class QuestionServiceImpl implements QuestionService {
      */
     @Override
     public List<QuestionDto> findAllByIdNotArchived(List<Long> ids) {
-        String path = "notArchivedAll";
-        return getQuestionDtos(ids, path);
+        return getQuestionDtos(ids, "notArchivedAll");
 
     }
 
