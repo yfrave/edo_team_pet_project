@@ -29,7 +29,8 @@ public class AuthorServiceController {
     @GetMapping("/{id}")
     public AuthorDto showById(@PathVariable("id") Long id) {
         Application application = eurekaClient.getApplication("edo-service");
-        InstanceInfo instanceInfo = application.getInstances().get(0);
+        InstanceInfo instanceInfo = application.getInstances()
+                .get((int) (application.getInstances().size() * Math.random()));
         int port = instanceInfo.getPort();
 
         String url = "http://localhost" + ":" + port + "/api/service/author/" + id;
@@ -41,7 +42,8 @@ public class AuthorServiceController {
     @PostMapping("/findAll")
     public ResponseEntity<List<AuthorDto>> showAllById(@RequestBody List<String> ids) {
         Application application = eurekaClient.getApplication("edo-service");
-        InstanceInfo instanceInfo = application.getInstances().get(0);
+        InstanceInfo instanceInfo = application.getInstances()
+                .get((int) (application.getInstances().size() * Math.random()));
         int port = instanceInfo.getPort();
 
         String url = "http://localhost" + ":" + port + "/api/service/author/findAll";
@@ -54,7 +56,8 @@ public class AuthorServiceController {
     @PostMapping
     public ResponseEntity<AuthorDto> saveAuthor(@RequestBody AuthorDto author) {
         Application application = eurekaClient.getApplication("edo-service");
-        InstanceInfo instanceInfo = application.getInstances().get(0);
+        InstanceInfo instanceInfo = application.getInstances()
+                .get((int) (application.getInstances().size() * Math.random()));
         int port = instanceInfo.getPort();
 
         String url = "http://localhost" + ":" + port + "/api/service/author";
@@ -68,7 +71,8 @@ public class AuthorServiceController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteAuthor(@PathVariable("id") Long id) {
         Application application = eurekaClient.getApplication("edo-service");
-        InstanceInfo instanceInfo = application.getInstances().get(0);
+        InstanceInfo instanceInfo = application.getInstances()
+                .get((int) (application.getInstances().size() * Math.random()));
         int port = instanceInfo.getPort();
 
         String url = "http://localhost" + ":" + port + "/api/service/author/" + id;

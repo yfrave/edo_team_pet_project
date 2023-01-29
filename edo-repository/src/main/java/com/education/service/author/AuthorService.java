@@ -10,6 +10,7 @@ import java.util.List;
  * Сервис
  * Модуль edo-repository
  */
+
 public interface AuthorService {
     // save, delete, findById, findAllById
     void save(AuthorDto author);

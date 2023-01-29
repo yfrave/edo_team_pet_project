@@ -35,7 +35,8 @@ public class AuthorSServiceImpl implements AuthorSService {
     @Override
     public ResponseEntity<AuthorDto> save(AuthorDto author) {
         Application application = eurekaClient.getApplication("edo-repository");
-        InstanceInfo instanceInfo = application.getInstances().get(0);
+        InstanceInfo instanceInfo = application.getInstances()
+                .get((int) (application.getInstances().size() * Math.random()));
         int port = instanceInfo.getPort();
 
         String url = "http://localhost" + ":" + port + "/api/repository/author";
@@ -49,7 +50,8 @@ public class AuthorSServiceImpl implements AuthorSService {
     @Override
     public ResponseEntity<String> delete(Long id) {
         Application application = eurekaClient.getApplication("edo-repository");
-        InstanceInfo instanceInfo = application.getInstances().get(0);
+        InstanceInfo instanceInfo = application.getInstances()
+                .get((int) (application.getInstances().size() * Math.random()));
         int port = instanceInfo.getPort();
 
         String url = "http://localhost" + ":" + port + "/api/repository/author/" + id;
@@ -63,7 +65,8 @@ public class AuthorSServiceImpl implements AuthorSService {
     @Override
     public AuthorDto findById(Long id) {
         Application application = eurekaClient.getApplication("edo-repository");
-        InstanceInfo instanceInfo = application.getInstances().get(0);
+        InstanceInfo instanceInfo = application.getInstances()
+                .get((int) (application.getInstances().size() * Math.random()));
         int port = instanceInfo.getPort();
 
         String url = "http://localhost" + ":" + port + "/api/repository/author/" + id;
@@ -76,7 +79,8 @@ public class AuthorSServiceImpl implements AuthorSService {
     @Override
     public List<AuthorDto> findAllById(List<String> ids) {
         Application application = eurekaClient.getApplication("edo-repository");
-        InstanceInfo instanceInfo = application.getInstances().get(0);
+        InstanceInfo instanceInfo = application.getInstances()
+                .get((int) (application.getInstances().size() * Math.random()));
         int port = instanceInfo.getPort();
 
         String url = "http://localhost" + ":" + port + "/api/repository/author/findAll";
