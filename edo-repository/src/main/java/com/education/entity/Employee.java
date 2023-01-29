@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+
 import java.time.ZonedDateTime;
 
 /**
@@ -18,6 +20,7 @@ import java.time.ZonedDateTime;
 @Entity
 @Getter
 @Setter
+@SuperBuilder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor

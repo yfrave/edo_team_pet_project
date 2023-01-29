@@ -31,3 +31,4 @@ comment on column appeal.archived_date is 'Дата архивирования �
 comment on column appeal.number is 'Номер обращения';
 comment on column appeal.annotation is 'Описание обращения';
 comment on column appeal.creator_id is 'Автор';
+
