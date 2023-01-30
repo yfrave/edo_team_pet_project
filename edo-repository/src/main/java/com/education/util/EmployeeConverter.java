@@ -58,7 +58,7 @@ public class EmployeeConverter {
     }
 
     public static List<EmployeeDto> employeeToDto(List<Employee> employees) {
-        List<EmployeeDto> dtos = new ArrayList<>();
+        List<EmployeeDto> dtos=new ArrayList<>();
         for (Employee employee : employees) {
             dtos.add(employeeToDto(employee));
         }
