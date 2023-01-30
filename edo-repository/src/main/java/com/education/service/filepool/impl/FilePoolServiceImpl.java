@@ -90,13 +90,13 @@ public class FilePoolServiceImpl implements FilePoolService {
     @Override
     public List<FilePoolDto> findAllByIdNotArchived(Iterable<Long> list) {
         List<FilePool> filePools = FILE_POOL_REPOSITORY.findAllByIdNotArchived(list);
-        if (filePools.isEmpty()) {
-            return null;
-        }
-        return filePools
+
+        return filePools != null
+                ? filePools
                 .stream()
                 .map(DtoConverter::convertToDto)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList())
+                : null;
     }
 
 

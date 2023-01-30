@@ -29,8 +29,8 @@ public class FilePoolServiceImpl implements FilePoolService {
     @NotNull
     private EurekaClient eurekaClient;
 
-    private String baseUrl = "/api/repository/file_pool/";
-    private String uriScheme = "http";
+    private static final String BASE_URL = "/api/repository/file_pool/";
+    private static final String URI_SCHEME = "http";
 
 
     /**
@@ -40,7 +40,8 @@ public class FilePoolServiceImpl implements FilePoolService {
      * @return FilePoolDto
      */
     public FilePoolDto findById(Long id) {
-        URI uri = generateUri(this.getInstance(), id);
+        String lastPathName = "/" + id;
+        URI uri = generateUri(this.getInstance(), lastPathName);
         RequestEntity<Object> request = new RequestEntity<>(null, HttpMethod.GET, uri);
         return restTemplate.exchange(request, FilePoolDto.class).getBody();
     }
@@ -127,24 +128,8 @@ public class FilePoolServiceImpl implements FilePoolService {
         if (app == null) {
             log.warning("EurekaClient  не смогла достучаться до edo-repository");
         }
-        return app.getInstances().get(new Random().nextInt(app.size()));
-    }
-
-    /**
-     * generateUri
-     *
-     * @param instance InstanceInfo
-     * @param id       Long
-     * @return URI
-     */
-    private URI generateUri(InstanceInfo instance, Long id) {
-        String lastPartComponent = "/{id}";
-        return UriComponentsBuilder.fromPath(baseUrl + lastPartComponent)
-                .scheme(uriScheme)
-                .host(instance.getHostName())
-                .port(instance.getPort())
-                .buildAndExpand(id)
-                .toUri();
+        int sizeOfInstances = app.getInstances().size();
+        return app.getInstances().get(new Random().nextInt(sizeOfInstances));
     }
 
     /**
@@ -155,12 +140,13 @@ public class FilePoolServiceImpl implements FilePoolService {
      * @return URI
      */
     private URI generateUri(InstanceInfo instance, String path) {
-        return UriComponentsBuilder.fromPath(baseUrl + path)
-                .scheme(uriScheme)
+        return UriComponentsBuilder.fromPath(BASE_URL + path)
+                .scheme(URI_SCHEME)
                 .host(instance.getHostName())
                 .port(instance.getPort())
                 .build()
                 .toUri();
     }
+
 
 }
