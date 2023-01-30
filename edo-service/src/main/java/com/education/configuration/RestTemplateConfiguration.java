@@ -11,3 +11,4 @@ public class RestTemplateConfiguration {
         return new RestTemplate();
     }
 }
+

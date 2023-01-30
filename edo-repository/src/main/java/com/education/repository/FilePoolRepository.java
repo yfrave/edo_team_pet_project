@@ -1,6 +1,7 @@
 package com.education.repository;
 
 import com.education.entity.FilePool;
+import com.education.entity.Nomenclature;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,12 +13,28 @@ import java.util.Optional;
 
 @Repository
 public interface FilePoolRepository extends JpaRepository<FilePool, Long> {
+    /**
+     * Метод предоставляет не заархивированное хранилище файлов по id
+     *
+     * @param id Long
+     * @return Optional of Nomenclature
+     */
+    @Query(value = "SELECT f FROM FilePool f WHERE f.id = :id AND f.archivedDate is null")
+    Optional<FilePool> findByIdNotArchived(@Param("id") Long id);
+
+    /**
+     * Метод предоставляет список не заархивированное хранилище файлов по id
+     *
+     * @param list List of id
+     * @return List of Nomenclature
+     */
+    @Query(value = "SELECT f FROM FilePool f WHERE f.id in :list AND f.archivedDate is null")
+    List<FilePool> findAllByIdNotArchived(@Param("list") Iterable<Long> list);
 
     /**
      * Метод переводит в архив номенклатуру присваивая значение даты архивации
      */
     @Modifying
-//    @Query(value = "UPDATE FilePool f SET f.archivedDate = CURRENT_TIMESTAMP WHERE f.id = :id")
     @Query(value = "UPDATE file_pool SET archived_date = CURRENT_TIMESTAMP WHERE id = :id", nativeQuery = true)
     void moveToArchive(@Param("id") Long id);
 }

@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.Builder;
+
 
 import java.time.ZonedDateTime;
 
@@ -18,6 +20,7 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class EmployeeDto {
     @ApiModelProperty("Id работника")
     private Long id;

@@ -2,6 +2,7 @@ package com.education.controller;
 
 import com.education.entity.FilePool;
 import com.education.model.dto.FilePoolDto;
+import com.education.model.dto.NomenclatureDto;
 import com.education.service.filepool.FilePoolService;
 import com.education.util.DtoConverter;
 import io.swagger.annotations.ApiModel;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 @RestController
@@ -56,9 +58,8 @@ public class FilePoolController {
             @ApiResponse(code = 200, message = "Successfully retrieved"),
             @ApiResponse(code = 404, message = "Not found - The file pools was not found")
     })
-    @GetMapping("/findAll")
-    public ResponseEntity<List<FilePoolDto>> fetchFindAllById(@RequestParam
-                                                              @ApiParam("FilePool list")
+    @PostMapping("/findAll")
+    public ResponseEntity<List<FilePoolDto>> fetchFindAllById(@RequestBody
                                                               List<Long> ids) {
         log.info("Got request to get file pools by ids");
         List<FilePool> filePools = FILE_POOL_SERVICE.findAllById(ids);
@@ -94,6 +95,39 @@ public class FilePoolController {
         log.info("Got request to move file pool to archive");
         FILE_POOL_SERVICE.moveToArchive(id);
         return ResponseEntity.ok().build();
+    }
+    @ApiOperation(value = "Получить не заархивированное хранилище файлов по id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved"),
+            @ApiResponse(code = 404, message = "Not found - FilePool not found")
+    })
+    @GetMapping("/notArchived/{id}")
+    public ResponseEntity<FilePoolDto> findByIdNotArchived(@PathVariable("id") Long id) {
+        FilePoolDto filePoolDto = FILE_POOL_SERVICE.findByIdNotArchived(id);
+
+        if (filePoolDto == null) {
+            log.log(Level.WARNING, "not found not archived NomenclatureDto with id = {0}", id);
+            return new ResponseEntity<>((HttpStatus.NOT_FOUND));
+        }
+        log.log(Level.INFO, "not archived NomenclatureDto find: id = {0}", id);
+        return new ResponseEntity<>(filePoolDto, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "Получить список не заархивированных хранилищ файлов по id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved"),
+            @ApiResponse(code = 404, message = "Not found - FilePool not found")
+    })
+    @PostMapping("/notArchived")
+    public ResponseEntity<List<FilePoolDto>> findAllByIdNotArchived(@RequestBody List<Long> ids) {
+        List<FilePoolDto> filePoolDto = FILE_POOL_SERVICE.findAllByIdNotArchived(ids);
+
+        if (filePoolDto == null || filePoolDto.isEmpty()) {
+            log.log(Level.WARNING, "List of not archived NomenclatureDto not found");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        log.log(Level.INFO, "List of not archived NomenclatureDto find");
+        return new ResponseEntity<>(filePoolDto, HttpStatus.OK);
     }
 
 }

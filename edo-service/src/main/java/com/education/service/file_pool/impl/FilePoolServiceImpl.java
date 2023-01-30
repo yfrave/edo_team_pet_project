@@ -1,16 +1,14 @@
-package com.education.service.impl;
+package com.education.service.file_pool.impl;
 
 import com.education.model.dto.FilePoolDto;
-import com.education.service.FilePoolService;
+import com.education.service.file_pool.FilePoolService;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Service;
@@ -18,7 +16,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -88,6 +85,35 @@ public class FilePoolServiceImpl implements FilePoolService {
         URI uri = generateUri(this.getInstance(), lastPathName);
         var request = new RequestEntity<>(HttpMethod.PUT, uri);
         restTemplate.exchange(request, Void.class);
+    }
+
+
+    /**
+     * Предоставляет не заархивированное FilePoolDto номенклатуры из БД по id
+     *
+     * @param id Long
+     * @return FilePoolDto
+     */
+    public FilePoolDto findByIdNotArchived(Long id) {
+        String lastPathName = "/notArchived" + id;
+        URI uri = generateUri(this.getInstance(), lastPathName);
+        var request = new RequestEntity<>(null, HttpMethod.GET, uri);
+        return restTemplate.exchange(request, FilePoolDto.class).getBody();
+    }
+
+    /**
+     * Предоставляет список не заархивированных FilePoolDto номенклатур из БД по id
+     *
+     * @param list List of id
+     * @return List of FilePoolDto
+     */
+    public List<FilePoolDto> findAllByIdNotArchived(Iterable<Long> list) {
+        String lastPathName = "/notArchived";
+        URI uri = generateUri(this.getInstance(), lastPathName);
+        var request = new RequestEntity<>(list, HttpMethod.POST, uri);
+        var listOfFilePoolDtoType = new ParameterizedTypeReference<List<FilePoolDto>>() {
+        };
+        return restTemplate.exchange(request, listOfFilePoolDtoType).getBody();
     }
 
     /**

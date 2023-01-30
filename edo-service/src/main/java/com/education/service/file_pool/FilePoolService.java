@@ -1,12 +1,11 @@
-package com.education.service.filepool;
+package com.education.service.file_pool;
 
-
-import com.education.entity.FilePool;
 import com.education.model.dto.FilePoolDto;
 
 import java.util.List;
 
 public interface FilePoolService {
+
 
     /**
      * Add in db method
@@ -30,7 +29,7 @@ public interface FilePoolService {
      * @param ids List<Long>
      * @return List<FilePoolDto>
      */
-    List<FilePool> findAllById(List<Long> ids);
+    List<FilePoolDto> findAllById(List<Long> ids);
 
     /**
      * Move to archive in db
@@ -54,4 +53,5 @@ public interface FilePoolService {
      * @return List of FilePoolDto
      */
     List<FilePoolDto> findAllByIdNotArchived(Iterable<Long> list);
+
 }

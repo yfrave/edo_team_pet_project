@@ -32,7 +32,7 @@ public class DtoConverter {
     /**
      * Converted from Employee to EmployeeDto
      *
-     * @param employee
+     * @param employee Employee
      * @return EmployeeDto
      */
     public static EmployeeDto convertToDto(Employee employee) {

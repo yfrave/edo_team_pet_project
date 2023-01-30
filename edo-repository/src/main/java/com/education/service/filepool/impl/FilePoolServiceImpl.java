@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Service for entity FilePool
@@ -41,7 +42,7 @@ public class FilePoolServiceImpl implements FilePoolService {
      * @param id Long
      * @return FilePoolDto
      */
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
     public FilePoolDto findById(Long id) {
         FilePool filePool = FILE_POOL_REPOSITORY.findById(id).orElse(null);
         return filePool != null ? DtoConverter.convertToDto(filePool) : null;
@@ -53,7 +54,7 @@ public class FilePoolServiceImpl implements FilePoolService {
      * @param ids List<Long>
      * @return List<FilePoolDto>
      */
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<FilePool> findAllById(List<Long> ids) {
         return FILE_POOL_REPOSITORY.findAllById(ids);
     }
@@ -66,6 +67,36 @@ public class FilePoolServiceImpl implements FilePoolService {
     @Transactional(rollbackFor = Exception.class)
     public void moveToArchive(Long id) {
         FILE_POOL_REPOSITORY.moveToArchive(id);
+    }
+
+    /**
+     * Предоставляет не заархивированное FilePoolDto номенклатуры из БД по id
+     * @param id Long
+     * @return FilePoolDto
+     */
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    @Override
+    public FilePoolDto findByIdNotArchived(Long id) {
+        FilePool filePool = FILE_POOL_REPOSITORY.findByIdNotArchived(id).orElse(null);
+        return filePool != null ? DtoConverter.convertToDto(filePool) : null;
+    }
+
+    /**
+     * Предоставляет список не заархивированных FilePoolDto номенклатур из БД по id
+     * @param list List of id
+     * @return List of FilePoolDto
+     */
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    @Override
+    public List<FilePoolDto> findAllByIdNotArchived(Iterable<Long> list) {
+        List<FilePool> filePools = FILE_POOL_REPOSITORY.findAllByIdNotArchived(list);
+        if (filePools.isEmpty()) {
+            return null;
+        }
+        return filePools
+                .stream()
+                .map(DtoConverter::convertToDto)
+                .collect(Collectors.toList());
     }
 
 

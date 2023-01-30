@@ -2,7 +2,7 @@ package com.education.controller;
 
 
 import com.education.model.dto.FilePoolDto;
-import com.education.service.FilePoolService;
+import com.education.service.file_pool.FilePoolService;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.logging.Level;
 
 @RestController
 @RequestMapping("/api/service/file_pool")
@@ -49,8 +50,8 @@ public class FilePoolController {
             @ApiResponse(code = 200, message = "Successfully retrieved"),
             @ApiResponse(code = 404, message = "Not found - The file pools was not found")
     })
-    @GetMapping("/findAll")
-    public ResponseEntity<List<FilePoolDto>> getListOfFilePoolByIds(@RequestParam List<Long> ids) {
+    @PostMapping("/findAll")
+    public ResponseEntity<List<FilePoolDto>> getListOfFilePoolByIds(@RequestBody List<Long> ids) {
         log.info("Got request to find list of file pool");
         return new ResponseEntity<>(service.findAllById(ids), HttpStatus.OK);
     }
@@ -74,6 +75,29 @@ public class FilePoolController {
         log.info("Got request to move file pool to archive by id = " + id);
         service.moveToArchive(id);
         return ResponseEntity.ok().build();
+    }
+    @ApiOperation(value = "Получить не заархивированное хранилище файлов по id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved"),
+            @ApiResponse(code = 404, message = "Not found - FilePool not found")
+    })
+    @GetMapping("/notArchived/{id}")
+    public ResponseEntity<FilePoolDto> findByIdNotArchived(@PathVariable("id") Long id) {
+        log.info("Got request to find notArchived FilePool by id = " + id);
+        return new ResponseEntity<>(service.findByIdNotArchived(id), HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "Получить список не заархивированных хранилищ файлов по id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved"),
+            @ApiResponse(code = 404, message = "Not found - FilePool not found")
+    })
+    @PostMapping("/notArchived")
+    public ResponseEntity<List<FilePoolDto>> findAllByIdNotArchived(@RequestBody List<Long> ids) {
+
+        log.info("Got request to find list of FilePool not archived");
+
+        return new ResponseEntity<>(service.findAllByIdNotArchived(ids), HttpStatus.OK);
     }
 
 }
