@@ -39,7 +39,8 @@ public class Department extends BaseEntity {
      * Адрес
      */
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    @MapsId
+    @JoinColumn(name = "address_id")
     private Address address;
 
     /**

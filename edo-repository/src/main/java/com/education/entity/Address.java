@@ -1,8 +1,8 @@
 package com.education.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -22,6 +22,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder
 @Table(name = "address")
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Address extends BaseEntity {
 
     /**
@@ -83,7 +84,4 @@ public class Address extends BaseEntity {
      */
     @Column(name = "flat")
     private String flat;
-
-    @OneToOne(mappedBy = "address")
-    private Department department;
 }
