@@ -15,7 +15,7 @@
                 <artifactId>edo-common</artifactId>
                 <version>0.0.1</version>
                 <scope>compile</scope>
-             </dependency>
+            </dependency>
 
     </dependencies>
     <parent>
