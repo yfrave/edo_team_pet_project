@@ -1,5 +1,8 @@
 package com.education.service.department.impl;
 
+import static com.education.Util.DepartmentConverter.*;
+
+import com.education.entity.Department;
 import com.education.model.dto.DepartmentDto;
 import com.education.repository.DepartmentRepository;
 import com.education.service.department.DepartmentService;
@@ -18,9 +21,9 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public DepartmentDto save(DepartmentDto obj) {
+    public Department save(Department obj) {
         var result = repository.saveAndFlush(obj);
-        return null;
+        return result;
     }
 
     @Override
@@ -31,25 +34,25 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
-    public DepartmentDto findById(Long id) {
+    public Department findById(Long id) {
+        return repository.findById(id).get();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
+    public List<Department> findAllById(List<Long> ids) {
         return null;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
-    public List<DepartmentDto> findAllById(List<Long> ids) {
+    public Department findByIdNotArchived(Long id) {
         return null;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
-    public DepartmentDto findByIdNotArchived(Long id) {
-        return null;
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class, readOnly = true)
-    public List<DepartmentDto> findAllByIdNotArchived(List<Long> ids) {
+    public List<Department> findAllByIdNotArchived(List<Long> ids) {
         return null;
     }
 }
