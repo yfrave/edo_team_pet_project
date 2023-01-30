@@ -47,13 +47,9 @@ public class EmployeeRestTemplateClient {
      * В случае, если объект с заданным id не найден, метод возвращает null.
      */
     public EmployeeDto getEmployeeById(Long id, boolean notArchivedOnly) {
-        InstanceInfo instanceInfo = getRandomInstance(eurekaClient);
         try {
-            return restTemplate.getForObject(UriComponentsBuilder
-                            .fromPath(BASIC_URL + "/{id}")
-                            .scheme(HttpHost.DEFAULT_SCHEME_NAME)
-                            .host(instanceInfo.getHostName())
-                            .port(instanceInfo.getPort())
+            return restTemplate.getForObject(
+                    getDefaultUriComponentBuilder(BASIC_URL + "/{id}")
                             .queryParam("notArchivedOnly", notArchivedOnly)
                             .buildAndExpand(id)
                             .toUri()
@@ -73,14 +69,10 @@ public class EmployeeRestTemplateClient {
      * В случае, если объекты с заданным id не найдены, метод возвращает пустой список.
      */
     public List<EmployeeDto> getAllEmployeeById(List<Long> ids, boolean notArchivedOnly) {
-        InstanceInfo instanceInfo = getRandomInstance(eurekaClient);
         try {
             return Arrays.asList(Objects.requireNonNull(
-                    restTemplate.getForObject(UriComponentsBuilder
-                                    .fromPath(BASIC_URL)
-                                    .scheme(HttpHost.DEFAULT_SCHEME_NAME)
-                                    .host(instanceInfo.getHostName())
-                                    .port(instanceInfo.getPort())
+                    restTemplate.getForObject(
+                            getDefaultUriComponentBuilder(BASIC_URL)
                                     .queryParam("ids", ids)
                                     .queryParam("notArchivedOnly", notArchivedOnly)
                                     .build()
@@ -97,11 +89,7 @@ public class EmployeeRestTemplateClient {
      * @return объект каласса EmployeeDto, соответствующий сохраненной сущности
      */
     public EmployeeDto saveEmployee(EmployeeDto employee) {
-        InstanceInfo instanceInfo = getRandomInstance(eurekaClient);
-        return restTemplate.postForObject(UriComponentsBuilder
-                .fromPath(BASIC_URL).scheme(HttpHost.DEFAULT_SCHEME_NAME)
-                .host(instanceInfo.getHostName())
-                .port(instanceInfo.getPort())
+        return restTemplate.postForObject(getDefaultUriComponentBuilder(BASIC_URL)
                 .build()
                 .toUri()
                 , employee
@@ -113,25 +101,37 @@ public class EmployeeRestTemplateClient {
      * @param id id сущности
      */
     public void moveEmployeeToArchive(Long id) {
-        InstanceInfo instanceInfo = getRandomInstance(eurekaClient);
-        restTemplate.exchange(UriComponentsBuilder
-                        .fromPath(BASIC_URL + "/{id}")
-                        .scheme(HttpHost.DEFAULT_SCHEME_NAME)
-                        .host(instanceInfo.getHostName())
-                        .port(instanceInfo.getPort())
-                .buildAndExpand(id).toUri()
-                , HttpMethod.DELETE, null, EmployeeDto.class);
+        restTemplate.exchange(getDefaultUriComponentBuilder(BASIC_URL + "/{id}")
+                        .buildAndExpand(id)
+                        .toUri()
+                , HttpMethod.DELETE
+                , null
+                , EmployeeDto.class);
     }
 
     /**
-     *
-     * @param eurekaClient объект класса EurekaClient
+     * Метод, возвращающий случайный экземпляр сервиса edo-repository
      * @return Случайный экземпляр сервиса edo-repository
      */
-    private InstanceInfo getRandomInstance(EurekaClient eurekaClient) {
+    private InstanceInfo getRandomInstance() {
         var instances = eurekaClient
                 .getApplication("edo-repository")
                 .getInstances();
         return instances.get((int)(instances.size() * Math.random()));
     }
+
+    /**
+     * Метод, возвращающий общий для всех методов класса объект UriComponentBuilder
+     * @param path адрес api
+     * @return объект UriComponentsBuilder
+     */
+    private UriComponentsBuilder getDefaultUriComponentBuilder(String path) {
+        InstanceInfo instanceInfo = getRandomInstance();
+        return UriComponentsBuilder
+                .fromPath(path)
+                .scheme(HttpHost.DEFAULT_SCHEME_NAME)
+                .host(instanceInfo.getHostName())
+                .port(instanceInfo.getPort());
+    }
 }
+
