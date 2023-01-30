@@ -52,7 +52,7 @@ public class Appeal extends BaseEntity {
      */
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "signer_id",
+    @JoinTable(name = "appeal_signer",
             joinColumns = @JoinColumn(name = "appeal_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"))
     private List<Employee> signer;
