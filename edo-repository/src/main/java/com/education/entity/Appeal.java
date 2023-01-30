@@ -2,6 +2,7 @@ package com.education.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "appeal")
+@SuperBuilder
 /**
  *  Класс "Обращения"
  */
@@ -50,7 +52,7 @@ public class Appeal extends BaseEntity {
      */
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "appeal_signer",
+    @JoinTable(name = "signer_id",
             joinColumns = @JoinColumn(name = "appeal_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"))
     private List<Employee> signer;

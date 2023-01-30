@@ -11,8 +11,9 @@ import java.util.List;
 @ApiModel("Класс AppealDTO, dto для класса appeal.class")
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class AppealDto {
-    @ApiModelProperty("Id обращения")
+    @ApiModelProperty("Id")
     private Long id;
 
     @ApiModelProperty("Дата создания обращения")
