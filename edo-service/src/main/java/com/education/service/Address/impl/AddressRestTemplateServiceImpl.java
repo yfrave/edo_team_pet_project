@@ -8,6 +8,7 @@ import com.netflix.discovery.shared.Application;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
+import org.apache.http.HttpHost;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -41,9 +42,7 @@ public class AddressRestTemplateServiceImpl implements AddressService {
     /**
      * путь до рест контроллера репозитория
      */
-    private String baseUrl = "/api/repository/address";
-
-    private String uriScheme = "http";
+    private static final String BASE_URL = "/api/repository/address";
 
     /**
      * get addresses By Id
@@ -104,6 +103,7 @@ public class AddressRestTemplateServiceImpl implements AddressService {
 
     /**
      * getInstance
+     *
      * @return InstanceInfo
      */
     private InstanceInfo getInstance() {
@@ -117,14 +117,15 @@ public class AddressRestTemplateServiceImpl implements AddressService {
 
     /**
      * generateUri
+     *
      * @param instance InstanceInfo
-     * @param id Long
+     * @param id       Long
      * @return URI
      */
     private URI generateUri(InstanceInfo instance, Long id) {
         String lastPartComponent = "/{id}";
-        return UriComponentsBuilder.fromPath(baseUrl + lastPartComponent)
-                .scheme(uriScheme)
+        return UriComponentsBuilder.fromPath(BASE_URL + lastPartComponent)
+                .scheme(HttpHost.DEFAULT_SCHEME_NAME)
                 .host(instance.getHostName())
                 .port(instance.getPort())
                 .buildAndExpand(id)
@@ -133,13 +134,14 @@ public class AddressRestTemplateServiceImpl implements AddressService {
 
     /**
      * generateUri
+     *
      * @param instance InstanceInfo
-     * @param path String
+     * @param path     String
      * @return URI
      */
     private URI generateUri(InstanceInfo instance, String path) {
-        return UriComponentsBuilder.fromPath(baseUrl + path)
-                .scheme(uriScheme)
+        return UriComponentsBuilder.fromPath(BASE_URL + path)
+                .scheme(HttpHost.DEFAULT_SCHEME_NAME)
                 .host(instance.getHostName())
                 .port(instance.getPort())
                 .build()
