@@ -29,7 +29,7 @@ public class EmployeeConverter {
     }
 
     public static List<Employee> dtoToEmployee(List<EmployeeDto> dtos) {
-        List<Employee> employees = new ArrayList<>();
+        List<Employee> employees=new ArrayList<>();
         for (EmployeeDto dto : dtos) {
             employees.add(dtoToEmployee(dto));
         }
@@ -56,7 +56,6 @@ public class EmployeeConverter {
                 .archivedDate(employee.getArchivedDate())
                 .build();
     }
-
     public static List<EmployeeDto> employeeToDto(List<Employee> employees) {
         List<EmployeeDto> dtos=new ArrayList<>();
         for (Employee employee : employees) {
