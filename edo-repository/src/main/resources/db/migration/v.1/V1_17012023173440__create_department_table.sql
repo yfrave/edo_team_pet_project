@@ -1,6 +1,6 @@
 create table if not exists department
 (
-    id            bigint primary key,
+    id            bigserial primary key,
     short_name    text,                                               --Короткое имя, возможно аббревиатура
     full_name     text,                                               --Полное имя
     address_id    bigint references address (id),                     --ключ адреса

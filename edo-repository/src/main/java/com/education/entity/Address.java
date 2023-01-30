@@ -2,6 +2,8 @@ package com.education.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -19,6 +21,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
+@Table(name = "address")
 public class Address extends BaseEntity {
 
     /**
@@ -80,4 +83,7 @@ public class Address extends BaseEntity {
      */
     @Column(name = "flat")
     private String flat;
+
+    @OneToOne(mappedBy = "address")
+    private Department department;
 }
