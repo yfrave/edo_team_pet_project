@@ -5,18 +5,24 @@
     <modelVersion>4.0.0</modelVersion>
     <dependencies>
 
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-openfeign</artifactId>
-                <version>4.0.0</version>
-            </dependency>
-            <dependency>
-                <groupId>com.education</groupId>
-                <artifactId>edo-common</artifactId>
-                <version>0.0.1</version>
-                <scope>compile</scope>
-            </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.education</groupId>
+            <artifactId>edo-common</artifactId>
+            <version>0.0.1</version>
+            <scope>compile</scope>
+        </dependency>
 
+        <dependency>
+            <groupId>com.education</groupId>
+            <artifactId>edo-common</artifactId>
+            <version>0.0.1</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
     <parent>
         <groupId>com.education</groupId>
@@ -27,13 +33,5 @@
 
     <artifactId>edo-service</artifactId>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.education</groupId>
-            <artifactId>edo-common</artifactId>
-            <version>0.0.1</version>
-            <scope>compile</scope>
-        </dependency>
-    </dependencies>
 
 </project>
