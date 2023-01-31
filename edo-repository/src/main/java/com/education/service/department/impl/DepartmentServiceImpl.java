@@ -1,9 +1,6 @@
 package com.education.service.department.impl;
 
-import static com.education.Util.DepartmentConverter.*;
-
 import com.education.entity.Department;
-import com.education.model.dto.DepartmentDto;
 import com.education.repository.DepartmentRepository;
 import com.education.service.department.DepartmentService;
 import lombok.NonNull;
@@ -12,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,20 +20,19 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Department save(Department obj) {
-        var result = repository.saveAndFlush(obj);
-        return result;
+        return repository.saveAndFlush(obj);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void moveToArchive(Long id) {
-
+        repository.moveToArchive(id);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
-    public Department findById(Long id) {
-        return repository.findById(id).get();
+    public Optional<Department> findById(Long id) {
+        return repository.findById(id);
     }
 
     @Override
