@@ -3,7 +3,9 @@ package com.education.service.question.impl;
 import com.education.model.dto.QuestionDto;
 import com.education.service.question.QuestionService;
 import com.netflix.appinfo.InstanceInfo;
+import com.netflix.discovery.EurekaClient;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
@@ -21,9 +23,10 @@ import java.util.List;
  */
 @Service
 @AllArgsConstructor
+@Log4j2
 public class QuestionServiceImpl implements QuestionService {
     private RestTemplate rest;
-    private InstanceInfo instance;
+    private EurekaClient client;
     private final String BASE_URL = "/api/repository/question/";
     private final String HTTP = "http";
 
@@ -124,6 +127,7 @@ public class QuestionServiceImpl implements QuestionService {
      * @return URI
      */
     private URI getUri(String path) {
+        InstanceInfo instance = getInstance();
         return UriComponentsBuilder
                 .fromPath(BASE_URL + path)
                 .scheme(HTTP)
@@ -131,5 +135,21 @@ public class QuestionServiceImpl implements QuestionService {
                 .port(instance.getPort())
                 .buildAndExpand(path)
                 .toUri();
+    }
+
+    /**
+     * Метод для получения Instance
+     * @return InstanceInfo
+     */
+    public InstanceInfo getInstance() {
+        String SERVICE_NAME = "edo-repository";
+        List<InstanceInfo> instances
+                = client.getApplication(SERVICE_NAME).getInstances();
+
+        InstanceInfo instance = instances.get((int) (Math.random() * instances.size()));
+
+        log.info(instance.getPort());
+
+        return instance;
     }
 }
