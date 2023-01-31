@@ -12,30 +12,30 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ThemeServiceImpl implements ThemeService {
 
-    private final ThemeRestTemplateClient CLIENT;
+    private final ThemeRestTemplateClient client;
 
 
     public ThemeDto save(ThemeDto nomenclature) {
-        return CLIENT.save(nomenclature);
+        return client.save(nomenclature);
     }
 
     public ThemeDto findById(Long id) {
-        return CLIENT.findById(id);
+        return client.findById(id);
     }
 
     public List<ThemeDto> findAllById(List<Long> list) {
-        return CLIENT.findAllById(list);
+        return client.findAllById(list);
     }
 
     public ThemeDto findByIdNotArchived(Long id) {
-        return CLIENT.findByIdNotArchived(id);
+        return client.findByIdNotArchived(id);
     }
     
     public List<ThemeDto> findAllByIdNotArchived(List<Long> list) {
-        return CLIENT.findAllByIdNotArchived(list);
+        return client.findAllByIdNotArchived(list);
     }
     
     public void moveToArchive(Long id) {
-        CLIENT.moveToArchive(id);
+        client.moveToArchive(id);
     }
 }

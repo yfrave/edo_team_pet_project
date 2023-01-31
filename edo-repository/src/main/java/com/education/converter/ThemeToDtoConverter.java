@@ -20,16 +20,17 @@ public class ThemeToDtoConverter {
      */
     public ThemeDto convertThemeToDto(Theme theme) {
 
-        Long parentThemeId = theme.getParentTheme() == null
+        Theme parentTheme = theme.getParentTheme();
+        ThemeDto parentThemeDto = parentTheme == null
                 ? null
-                : theme.getParentTheme().getId();
+                : convertThemeToDto(parentTheme);
 
         return new ThemeDto(theme.getId(),
                 theme.getName(),
                 theme.getCreationDate(),
                 theme.getArchivedDate(),
                 theme.getCode(),
-                parentThemeId);
+                parentThemeDto);
     }
 
     /**
@@ -37,9 +38,9 @@ public class ThemeToDtoConverter {
      */
     public Theme convertDtoToTheme(ThemeDto themeDto) {
 
-        Theme parentTheme = themeDto.getIdParentTheme() == null
+        Theme parentTheme = themeDto.getParentThemeDto() == null
                 ? null
-                : themeRepository.findById(themeDto.getIdParentTheme()).orElse(null);
+                : themeRepository.findById(themeDto.getParentThemeDto().getId()).orElse(null);
 
         return new Theme(themeDto.getName(),
                 themeDto.getCreationDate(),
@@ -48,3 +49,4 @@ public class ThemeToDtoConverter {
                 parentTheme);
     }
 }
+

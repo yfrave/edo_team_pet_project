@@ -9,9 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Сервис для темы обращения
@@ -20,8 +18,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ThemeServiceImpl implements ThemeService {
 
-    private final ThemeRepository THEME_REPOSITORY;
-    private final ThemeToDtoConverter CONV;
+    private final ThemeRepository themeRepository;
+    private final ThemeToDtoConverter conv;
 
     /**
      * Получает ThemeDto и сохраняет тему
@@ -30,9 +28,9 @@ public class ThemeServiceImpl implements ThemeService {
      */
     @Transactional(rollbackFor = Exception.class)
     public ThemeDto save(ThemeDto themeDto) {
-        Theme theme = CONV.convertDtoToTheme(themeDto);
+        Theme theme = conv.convertDtoToTheme(themeDto);
 
-        return CONV.convertThemeToDto(THEME_REPOSITORY.save(theme));
+        return conv.convertThemeToDto(themeRepository.save(theme));
     }
 
     /**
@@ -40,7 +38,7 @@ public class ThemeServiceImpl implements ThemeService {
      */
     @Transactional(rollbackFor = Exception.class)
     public Integer moveToArchive(Long id) {
-        return THEME_REPOSITORY.moveToArchive(id);
+        return themeRepository.moveToArchive(id);
     }
 
     /**
@@ -48,11 +46,11 @@ public class ThemeServiceImpl implements ThemeService {
      */
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public ThemeDto findById(Long id) {
-        Theme theme = THEME_REPOSITORY.findById(id).orElse(null);
+        Theme theme = themeRepository.findById(id).orElse(null);
         if (theme == null) {
             return null;
         } else {
-            return CONV.convertThemeToDto(theme);
+            return conv.convertThemeToDto(theme);
         }
     }
 
@@ -62,7 +60,7 @@ public class ThemeServiceImpl implements ThemeService {
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<ThemeDto> findAllById(List<Long> ids) {
 
-        return THEME_REPOSITORY.findAllById(ids).stream().map(CONV::convertThemeToDto).toList();
+        return themeRepository.findAllById(ids).stream().map(conv::convertThemeToDto).toList();
         }
 
     /**
@@ -71,9 +69,9 @@ public class ThemeServiceImpl implements ThemeService {
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public ThemeDto findByIdNotArchived(Long id) {
 
-        return THEME_REPOSITORY.findByIdAndArchivedDateIsNull(id) == null
+        return themeRepository.findByIdAndArchivedDateIsNull(id) == null
                 ? null
-                : CONV.convertThemeToDto(THEME_REPOSITORY.findByIdAndArchivedDateIsNull(id));
+                : conv.convertThemeToDto(themeRepository.findByIdAndArchivedDateIsNull(id));
         }
 
     /**
@@ -82,6 +80,6 @@ public class ThemeServiceImpl implements ThemeService {
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<ThemeDto> findAllByIdNotArchived(List<Long> ids) {
 
-        return THEME_REPOSITORY.findAllNotArchived(ids).stream().map(CONV::convertThemeToDto).toList();
+        return themeRepository.findAllNotArchived(ids).stream().map(conv::convertThemeToDto).toList();
     }
 }
