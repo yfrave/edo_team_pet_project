@@ -43,17 +43,14 @@ public class ThemeRestTemplateClient {
 
     private String SCHEME = "http";
 
+    /**
+     * Сохраняет тему обращения
+     */
     public ThemeDto save(ThemeDto themeDto) {
         InstanceInfo instance = getInstance();
         log.log(Level.INFO, "В классе ThemeRestTemplateClient используется порт {0}", instance.getPort());
 
-        var request = new RequestEntity(themeDto, HttpMethod.POST,
-                UriComponentsBuilder.fromPath(BASE_URL + "/")
-                        .scheme(SCHEME)
-                        .host(instance.getHostName())
-                        .port(instance.getPort())
-                        .build()
-                        .toUri());
+        var request = new RequestEntity(themeDto, HttpMethod.POST, buildUri(instance, "/"));
 
         var response = REST_TEMPLATE.exchange(request, ThemeDto.class);
 
@@ -63,61 +60,14 @@ public class ThemeRestTemplateClient {
         return response.getBody();
     }
 
+    /**
+     * Получает тему обращения по id
+     */
     public ThemeDto findById(Long id) {
         InstanceInfo instance = getInstance();
         log.log(Level.INFO, "В классе ThemeRestTemplateClient используется порт {0}", instance.getPort());
 
-        var request = new RequestEntity(null, HttpMethod.GET,
-                UriComponentsBuilder.fromPath(BASE_URL + "/{id}")
-                        .scheme(SCHEME)
-                        .host(instance.getHostName())
-                        .port(instance.getPort())
-                        .buildAndExpand(id)
-                        .toUri());
-
-        var response = REST_TEMPLATE.exchange(request, ThemeDto.class);
-
-        if (!response.getStatusCode().is2xxSuccessful()) {
-            throw new RuntimeException("Can't get the theme");
-        }
-        return response.getBody();
-    }
-
-    public List<ThemeDto> findAllById(List<Long> ids) {
-        InstanceInfo instance = getInstance();
-        log.log(Level.INFO, "В классе ThemeRestTemplateClient используется порт {0}", instance.getPort());
-
-
-        var request = new RequestEntity(null, HttpMethod.GET,
-                UriComponentsBuilder.fromPath(BASE_URL)
-                        .scheme(SCHEME)
-                        .host(instance.getHostName())
-                        .port(instance.getPort())
-                        .queryParam("ids", ids)
-                        .build()
-                        .toUri());
-
-        var response = REST_TEMPLATE.exchange(request, new ParameterizedTypeReference<List<ThemeDto>>() {
-        });
-
-        if (!response.getStatusCode().is2xxSuccessful()) {
-            throw new RuntimeException("Can't get the themes");
-        }
-        return response.getBody();
-    }
-
-    public ThemeDto findByIdNotArchived(Long id) {
-        InstanceInfo instance = getInstance();
-        log.log(Level.INFO, "В классе ThemeRestTemplateClient используется порт {0}", instance.getPort());
-
-
-        var request = new RequestEntity(null, HttpMethod.GET,
-                UriComponentsBuilder.fromPath(BASE_URL + "/notArchived/{id}")
-                        .scheme(SCHEME)
-                        .host(instance.getHostName())
-                        .port(instance.getPort())
-                        .buildAndExpand(id)
-                        .toUri());
+        var request = new RequestEntity(null, HttpMethod.GET, buildUri(instance, "/{id}", id));
 
         var response = REST_TEMPLATE.exchange(request, ThemeDto.class);
 
@@ -128,22 +78,13 @@ public class ThemeRestTemplateClient {
     }
 
     /**
-     * Отправляет запрос для предоставления списка не заархивированных ThemeDto номенклатур по id
-     * принимает список id искомых номенклатуру
+     * Получает тему обращения по набору id
      */
-    public List<ThemeDto> findAllByIdNotArchived(List<Long> ids) {
+    public List<ThemeDto> findAllById(List<Long> ids) {
         InstanceInfo instance = getInstance();
         log.log(Level.INFO, "В классе ThemeRestTemplateClient используется порт {0}", instance.getPort());
 
-
-        var request = new RequestEntity(null, HttpMethod.GET,
-                UriComponentsBuilder.fromPath(BASE_URL + "/notArchived")
-                        .scheme(SCHEME)
-                        .host(instance.getHostName())
-                        .port(instance.getPort())
-                        .queryParam("ids", ids)
-                        .build()
-                        .toUri());
+        var request = new RequestEntity(null, HttpMethod.GET, buildUri(instance, "", ids));
 
         var response = REST_TEMPLATE.exchange(request, new ParameterizedTypeReference<List<ThemeDto>>() {
         });
@@ -154,18 +95,51 @@ public class ThemeRestTemplateClient {
         return response.getBody();
     }
 
+    /**
+     * @param id
+     * @return Тему обращения не перемещенную в архив
+     */
+    public ThemeDto findByIdNotArchived(Long id) {
+        InstanceInfo instance = getInstance();
+        log.log(Level.INFO, "В классе ThemeRestTemplateClient используется порт {0}", instance.getPort());
+
+        var request = new RequestEntity(null, HttpMethod.GET, buildUri(instance, "/notArchived/{id}", id));
+
+        var response = REST_TEMPLATE.exchange(request, ThemeDto.class);
+
+        if (!response.getStatusCode().is2xxSuccessful()) {
+            throw new RuntimeException("Can't get the theme");
+        }
+        return response.getBody();
+    }
+
+    /**
+     * @param ids
+     * @return Список тем обращения не помещенных в архив по набору id
+     */
+    public List<ThemeDto> findAllByIdNotArchived(List<Long> ids) {
+        InstanceInfo instance = getInstance();
+        log.log(Level.INFO, "В классе ThemeRestTemplateClient используется порт {0}", instance.getPort());
+
+        var request = new RequestEntity(null, HttpMethod.GET, buildUri(instance, "/notArchived", ids));
+
+        var response = REST_TEMPLATE.exchange(request, new ParameterizedTypeReference<List<ThemeDto>>() {
+        });
+
+        if (!response.getStatusCode().is2xxSuccessful()) {
+            throw new RuntimeException("Can't get the themes");
+        }
+        return response.getBody();
+    }
+
+    /**
+     * @param id Помещает тему в архив
+     */
     public Long moveToArchive(Long id) {
         InstanceInfo instance = getInstance();
         log.log(Level.INFO, "В классе ThemeRestTemplateClient используется порт {0}", instance.getPort());
 
-
-        var request = new RequestEntity(null, HttpMethod.DELETE,
-                UriComponentsBuilder.fromPath(BASE_URL + "/{id}")
-                        .scheme(SCHEME)
-                        .host(instance.getHostName())
-                        .port(instance.getPort())
-                        .buildAndExpand(id)
-                        .toUri());
+        var request = new RequestEntity(null, HttpMethod.DELETE, buildUri(instance, "/{id}", id));
 
         var response = REST_TEMPLATE.exchange(request, Long.class);
 
@@ -175,17 +149,16 @@ public class ThemeRestTemplateClient {
         return response.getBody();
     }
 
+    /**
+     * Получает инстанс случайным методом
+     */
     private InstanceInfo getInstance() {
         List<InstanceInfo> instances = EUREKA_CLIENT.getApplication(SERVICE_NAME).getInstances();
         return instances.get((int) (instances.size() * Math.random()));
     }
 
     /**
-     * Build URI
-     *
-     * @param instance InstanceInfo
-     * @param path     This is the request path
-     * @return URI
+     * строит Uri
      */
     private URI buildUri(InstanceInfo instance, String path) {
         return UriComponentsBuilder.fromPath(BASE_URL + path)
@@ -197,12 +170,7 @@ public class ThemeRestTemplateClient {
     }
 
     /**
-     * Build uri with id
-     *
-     * @param instance InstanceInfo
-     * @param path     This is the request path
-     * @param id       Long
-     * @return URI
+     * строит Uri
      */
     private URI buildUri(InstanceInfo instance, String path, Long id) {
         return UriComponentsBuilder.fromPath(BASE_URL + path)
@@ -213,5 +181,16 @@ public class ThemeRestTemplateClient {
                 .toUri();
     }
 
-
+    /**
+     * строит Uri
+     */
+    private URI buildUri(InstanceInfo instance, String path, List<Long> ids) {
+        return UriComponentsBuilder.fromPath(BASE_URL + path)
+                .scheme(SCHEME)
+                .host(instance.getHostName())
+                .port(instance.getPort())
+                .queryParam("ids", ids)
+                .build()
+                .toUri();
+    }
 }
