@@ -6,8 +6,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.Builder;
-
+import lombok.ToString;
 
 import java.time.ZonedDateTime;
 
@@ -15,7 +14,9 @@ import java.time.ZonedDateTime;
  * @author Степан Ритман
  */
 @ApiModel("DTO для класса Employee")
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
