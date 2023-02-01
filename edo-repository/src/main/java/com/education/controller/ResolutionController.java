@@ -29,32 +29,8 @@ import java.util.List;
 @RequestMapping("api/repository/resolution")
 public class ResolutionController {
 
-
-
     final private ResolutionMapper mapper;
     final private ResolutionService resolutionService;
-
-    Resolution resolution=Resolution.builder()
-            .id(new Long(0))
-            .creationDate(ZonedDateTime.now())
-            .archivedDate(ZonedDateTime.now())
-            .lastActionDate(ZonedDateTime.now())
-            .enumResolution(EnumResolution.RESOLUTION)
-            .creator(new Employee())
-            .signer(new Employee())
-            .executors(new ArrayList<Employee>())
-            .curator(new Employee())
-            .build();
-    //ResolutionDto dto=mappable.toDto(resolution);
-
-    @GetMapping("/test")
-    public void Test(){
-        ResolutionDto dto=mapper.toDto(resolution);
-        System.out.println(resolution);
-        System.out.println(dto);
-    }
-
-
 
     @ApiOperation(value = "Сохранение сущности в БД")
     @ApiResponses(value = {
@@ -66,10 +42,10 @@ public class ResolutionController {
         resolutionService.save(resolution);
         if (resolutionService.findById(resolution.getId()) != null) {
             log.log(Level.INFO, "Сущность сохранена или обновлена");
-            return new ResponseEntity<>(ResolutionConverter.resolutionToDto(resolution), HttpStatus.CREATED);
+            return new ResponseEntity<>(mapper.toDto(resolution), HttpStatus.CREATED);
         }
         log.log(Level.WARN, "Сущность не сохранена и не обновлена");
-        return new ResponseEntity<>(ResolutionConverter.resolutionToDto(resolution), HttpStatus.CONFLICT);
+        return new ResponseEntity<>(mapper.toDto(resolution), HttpStatus.CONFLICT);
     }
 
     @ApiOperation(value = "Обновление даты архивации")
@@ -80,7 +56,7 @@ public class ResolutionController {
     public ResponseEntity<ResolutionDto> moveToArchiveResolution(@PathVariable Long id) {
         resolutionService.moveToArchive(id);
         log.log(Level.INFO, "Дата архивации обновлена");
-        return new ResponseEntity<>(ResolutionConverter.resolutionToDto(resolutionService.findById(id)), HttpStatus.OK);
+        return new ResponseEntity<>(mapper.toDto(resolutionService.findById(id)), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Получение сущности по id")
@@ -96,7 +72,7 @@ public class ResolutionController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         log.log(Level.INFO, "Сущность найдена");
-        return new ResponseEntity<>(ResolutionConverter.resolutionToDto(resolution), HttpStatus.OK);
+        return new ResponseEntity<>(mapper.toDto(resolution), HttpStatus.OK);
 
     }
 
@@ -113,7 +89,7 @@ public class ResolutionController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         log.log(Level.INFO, "Сущности найдены");
-        return new ResponseEntity<>(ResolutionConverter.resolutionToDto(resolution), HttpStatus.OK);
+        return new ResponseEntity<>(mapper.toDto(resolution), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Получение сущностей без даты архивации по id ")
@@ -129,7 +105,7 @@ public class ResolutionController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         log.log(Level.INFO, "Сущность найдена");
-        return new ResponseEntity<>(ResolutionConverter.resolutionToDto(resolution), HttpStatus.OK);
+        return new ResponseEntity<>(mapper.toDto(resolution), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Получение сущностей без даты архивации по списку id (/1, 2) ")
@@ -145,6 +121,6 @@ public class ResolutionController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         log.log(Level.INFO, "Сущности найдены");
-        return new ResponseEntity<>(ResolutionConverter.resolutionToDto(resolution), HttpStatus.OK);
+        return new ResponseEntity<>(mapper.toDto(resolution), HttpStatus.OK);
     }
 }
