@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -43,8 +44,7 @@ public class ThemeRestTemplateClient {
     private String SCHEME = "http";
 
     public ThemeDto save(ThemeDto themeDto) {
-        List<InstanceInfo> instances = EUREKA_CLIENT.getApplication(SERVICE_NAME).getInstances();
-        InstanceInfo instance = instances.get((int) (instances.size() * Math.random()));
+        InstanceInfo instance = getInstance();
         log.log(Level.INFO, "В классе ThemeRestTemplateClient используется порт {0}", instance.getPort());
 
         var request = new RequestEntity(themeDto, HttpMethod.POST,
@@ -64,10 +64,8 @@ public class ThemeRestTemplateClient {
     }
 
     public ThemeDto findById(Long id) {
-        List<InstanceInfo> instances = EUREKA_CLIENT.getApplication(SERVICE_NAME).getInstances();
-        InstanceInfo instance = instances.get((int) (instances.size() * Math.random()));
+        InstanceInfo instance = getInstance();
         log.log(Level.INFO, "В классе ThemeRestTemplateClient используется порт {0}", instance.getPort());
-
 
         var request = new RequestEntity(null, HttpMethod.GET,
                 UriComponentsBuilder.fromPath(BASE_URL + "/{id}")
@@ -86,8 +84,7 @@ public class ThemeRestTemplateClient {
     }
 
     public List<ThemeDto> findAllById(List<Long> ids) {
-        List<InstanceInfo> instances = EUREKA_CLIENT.getApplication(SERVICE_NAME).getInstances();
-        InstanceInfo instance = instances.get((int) (instances.size() * Math.random()));
+        InstanceInfo instance = getInstance();
         log.log(Level.INFO, "В классе ThemeRestTemplateClient используется порт {0}", instance.getPort());
 
 
@@ -110,8 +107,7 @@ public class ThemeRestTemplateClient {
     }
 
     public ThemeDto findByIdNotArchived(Long id) {
-        List<InstanceInfo> instances = EUREKA_CLIENT.getApplication(SERVICE_NAME).getInstances();
-        InstanceInfo instance = instances.get((int) (instances.size() * Math.random()));
+        InstanceInfo instance = getInstance();
         log.log(Level.INFO, "В классе ThemeRestTemplateClient используется порт {0}", instance.getPort());
 
 
@@ -136,8 +132,7 @@ public class ThemeRestTemplateClient {
      * принимает список id искомых номенклатуру
      */
     public List<ThemeDto> findAllByIdNotArchived(List<Long> ids) {
-        List<InstanceInfo> instances = EUREKA_CLIENT.getApplication(SERVICE_NAME).getInstances();
-        InstanceInfo instance = instances.get((int) (instances.size() * Math.random()));
+        InstanceInfo instance = getInstance();
         log.log(Level.INFO, "В классе ThemeRestTemplateClient используется порт {0}", instance.getPort());
 
 
@@ -160,8 +155,7 @@ public class ThemeRestTemplateClient {
     }
 
     public Long moveToArchive(Long id) {
-        List<InstanceInfo> instances = EUREKA_CLIENT.getApplication(SERVICE_NAME).getInstances();
-        InstanceInfo instance = instances.get((int) (instances.size() * Math.random()));
+        InstanceInfo instance = getInstance();
         log.log(Level.INFO, "В классе ThemeRestTemplateClient используется порт {0}", instance.getPort());
 
 
@@ -180,4 +174,44 @@ public class ThemeRestTemplateClient {
         }
         return response.getBody();
     }
+
+    private InstanceInfo getInstance() {
+        List<InstanceInfo> instances = EUREKA_CLIENT.getApplication(SERVICE_NAME).getInstances();
+        return instances.get((int) (instances.size() * Math.random()));
+    }
+
+    /**
+     * Build URI
+     *
+     * @param instance InstanceInfo
+     * @param path     This is the request path
+     * @return URI
+     */
+    private URI buildUri(InstanceInfo instance, String path) {
+        return UriComponentsBuilder.fromPath(BASE_URL + path)
+                .scheme(SCHEMA_NAME)
+                .host(instance.getHostName())
+                .port(instance.getPort())
+                .build()
+                .toUri();
+    }
+
+    /**
+     * Build uri with id
+     *
+     * @param instance InstanceInfo
+     * @param path     This is the request path
+     * @param id       Long
+     * @return URI
+     */
+    private URI buildUri(InstanceInfo instance, String path, Long id) {
+        return UriComponentsBuilder.fromPath(BASE_URL + path)
+                .scheme(SCHEMA_NAME)
+                .host(instance.getHostName())
+                .port(instance.getPort())
+                .buildAndExpand(id)
+                .toUri();
+    }
+
+
 }
