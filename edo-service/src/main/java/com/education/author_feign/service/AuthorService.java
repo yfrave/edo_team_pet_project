@@ -10,7 +10,7 @@ import java.util.List;
  * Сервис
  * Модуль edo-service
  */
-public interface AuthorSService {
+public interface AuthorService {
     ResponseEntity<AuthorDto> save(AuthorDto author);
     ResponseEntity<String> delete(Long id);
     AuthorDto findById(Long id);
