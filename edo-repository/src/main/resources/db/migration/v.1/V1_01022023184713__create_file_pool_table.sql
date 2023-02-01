@@ -8,7 +8,7 @@ CREATE TABLE if not exists file_pool
     page_count      int,                            --Количество страниц файла
     upload_date     TIMESTAMPTZ,                    --Дата загрузки файла
     archived_date   TIMESTAMPTZ,                    --Дата архивирования файла
-    creator_id      bigint references employee(id)      --Автор файла
+    creator_id      bigint references employee(id)  --Автор файла
 );
 comment on column file_pool.id is 'ID';
 comment on column file_pool.storage_file_id is 'ID хранилища файла';

@@ -32,6 +32,8 @@ public class FilePoolServiceImpl implements FilePoolService {
     private static final String BASE_URL = "/api/repository/file_pool/";
     private static final String URI_SCHEME = "http";
 
+    private static final String SERVICE_NAME = "edo-repository";
+
 
     /**
      * findById in db
@@ -123,13 +125,12 @@ public class FilePoolServiceImpl implements FilePoolService {
      * @return InstanceInfo
      */
     private InstanceInfo getInstance() {
-        String serviceName = "edo-repository";
-        Application app = eurekaClient.getApplication(serviceName);
+        Application app = eurekaClient.getApplication(SERVICE_NAME);
         if (app == null) {
             log.warning("EurekaClient  не смогла достучаться до edo-repository");
         }
-        int sizeOfInstances = app.getInstances().size();
-        return app.getInstances().get(new Random().nextInt(sizeOfInstances));
+        List<InstanceInfo> instanceInfos = app.getInstances();
+        return instanceInfos.get(new Random().nextInt(instanceInfos.size()));
     }
 
     /**
