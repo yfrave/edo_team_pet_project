@@ -4,16 +4,16 @@ import java.util.List;
 
 /**
  * Base interface for mappers
- * @param <T> entity class
- * @param <E> dto class
+ * @param <Entity>> entity class
+ * @param <Dto> dto class
  * @author Dmitii Ermolenko
  */
-public interface Mappable<T, E> {
-    E toDto(T entity);
+public interface Mappable<Entity, Dto> {
+    Dto toDto(Entity entity);
 
-    T toEntity(E dto);
+    Entity toEntity(Dto dto);
 
-    List<E> toDto(List<T> entities);
+    List<Dto> toDto(List<Entity> entities);
 
-    List<T> toEntity(List<E> dtos);
+    List<Entity> toEntity(List<Dto> dtos);
 }
