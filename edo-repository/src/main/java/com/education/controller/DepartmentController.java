@@ -102,7 +102,8 @@ public class DepartmentController {
 
     @ApiOperation(value = "Сохранить сущность в БД")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successfully created")
+            @ApiResponse(code = 201, message = "Successfully created"),
+            @ApiResponse(code = 422, message = "Unprocessable Entity")
     })
     @PostMapping("/")
     public ResponseEntity<DepartmentDto> save(@RequestBody @ApiParam("DepartmentDto") Department obj) {
