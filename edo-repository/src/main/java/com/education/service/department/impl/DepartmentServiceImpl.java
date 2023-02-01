@@ -5,11 +5,11 @@ import com.education.entity.Department;
 import com.education.repository.AddressRepository;
 import com.education.repository.DepartmentRepository;
 import com.education.service.department.DepartmentService;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,20 +23,14 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Transactional(rollbackFor = Exception.class)
     public Department save(Department obj) {
         Long addressId = obj.getAddress().getId();
-
         if (addressId == null) {
             addressRepository.save(obj.getAddress());
             return repository.saveAndFlush(obj);
         }
-
         Optional<Address> address = addressRepository.findById(addressId);
-        if (address.isPresent()) {
-            Optional<Department> isAddressTaken = repository.findDepartmentByAddressId(addressId);
-            if (isAddressTaken.isPresent()) {
-                return null;
-            } else {
-                return repository.saveAndFlush(obj);
-            }
+        boolean isAddressTaken = repository.findDepartmentByAddressId(addressId).isPresent();
+        if (address.isPresent() || !isAddressTaken) {
+            return repository.saveAndFlush(obj);
         } else {
             return null;
         }
@@ -57,18 +51,23 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<Department> findAllById(List<Long> ids) {
-        return null;
+        return repository.findAllById(ids);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
-    public Department findByIdNotArchived(Long id) {
-        return null;
+    public Optional<Department> findByIdNotArchived(Long id) {
+        return repository.findDepartmentByIdAndArchivedDateIsNull(id);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<Department> findAllByIdNotArchived(List<Long> ids) {
-        return null;
+        List<Department> result = new ArrayList<>();
+        for (Long n : ids) {
+            repository.findDepartmentByIdAndArchivedDateIsNull(n)
+                    .ifPresent(result::add);
+        }
+        return result;
     }
 }
