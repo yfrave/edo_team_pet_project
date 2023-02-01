@@ -32,7 +32,7 @@ public class AppealServiceImpl implements AppealService {
 
     private InstanceInfo getInstance() {
         Application application = EUREKA_CLIENT.getApplication(SERVICE_NAME);
-        InstanceInfo instance = application.getInstances().get(new Random().nextInt(application.size()));
+        InstanceInfo instance = application.getInstances().get(new Random().nextInt(1));
         return instance;
     }
 
