@@ -189,7 +189,7 @@ public class ThemeRestTemplateClient {
      */
     private URI buildUri(InstanceInfo instance, String path) {
         return UriComponentsBuilder.fromPath(BASE_URL + path)
-                .scheme(SCHEMA_NAME)
+                .scheme(SCHEME)
                 .host(instance.getHostName())
                 .port(instance.getPort())
                 .build()
@@ -206,7 +206,7 @@ public class ThemeRestTemplateClient {
      */
     private URI buildUri(InstanceInfo instance, String path, Long id) {
         return UriComponentsBuilder.fromPath(BASE_URL + path)
-                .scheme(SCHEMA_NAME)
+                .scheme(SCHEME)
                 .host(instance.getHostName())
                 .port(instance.getPort())
                 .buildAndExpand(id)
