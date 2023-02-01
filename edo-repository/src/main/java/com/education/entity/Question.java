@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.sql.Date;
 import java.time.ZonedDateTime;
@@ -14,6 +15,7 @@ import java.time.ZonedDateTime;
  * Класс Question.
  * Хранит краткое содержание обращений.
  */
+@SuperBuilder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor

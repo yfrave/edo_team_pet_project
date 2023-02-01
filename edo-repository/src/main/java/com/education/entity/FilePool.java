@@ -11,6 +11,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
@@ -19,6 +21,7 @@ import java.util.UUID;
  * @author Рамазан Гаджиев
  */
 
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
