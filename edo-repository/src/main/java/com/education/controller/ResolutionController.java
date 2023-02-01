@@ -1,12 +1,8 @@
 package com.education.controller;
 
-import com.education.entity.Employee;
 import com.education.model.dto.ResolutionDto;
-import com.education.model.enumEntity.EnumResolution;
 import com.education.service.resolution.ResolutionService;
-import com.education.util.Mapper.Mappable;
 import com.education.util.Mapper.impl.ResolutionMapper;
-import com.education.util.ResolutionConverter;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -18,8 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.education.entity.Resolution;
 
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @ApiOperation("Resolution API")
