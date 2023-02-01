@@ -4,7 +4,7 @@ import com.education.entity.FilePool;
 import com.education.model.dto.FilePoolDto;
 import com.education.repository.FilePoolRepository;
 import com.education.service.filepool.FilePoolService;
-import com.education.util.DtoConverter;
+import com.education.util.FilePoolConverter;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +32,7 @@ public class FilePoolServiceImpl implements FilePoolService {
      */
     @Transactional(rollbackFor = Exception.class)
     public FilePoolDto add(FilePoolDto filePool) {
-        FILE_POOL_REPOSITORY.save(DtoConverter.convertFromDto(filePool));
+        FILE_POOL_REPOSITORY.save(FilePoolConverter.convertFromDto(filePool));
         return filePool;
     }
 
@@ -45,7 +45,7 @@ public class FilePoolServiceImpl implements FilePoolService {
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public FilePoolDto findById(Long id) {
         FilePool filePool = FILE_POOL_REPOSITORY.findById(id).orElse(null);
-        return filePool != null ? DtoConverter.convertToDto(filePool) : null;
+        return filePool != null ? FilePoolConverter.convertToDto(filePool) : null;
     }
 
     /**
@@ -78,7 +78,7 @@ public class FilePoolServiceImpl implements FilePoolService {
     @Override
     public FilePoolDto findByIdNotArchived(Long id) {
         FilePool filePool = FILE_POOL_REPOSITORY.findByIdNotArchived(id).orElse(null);
-        return filePool != null ? DtoConverter.convertToDto(filePool) : null;
+        return filePool != null ? FilePoolConverter.convertToDto(filePool) : null;
     }
 
     /**
@@ -94,7 +94,7 @@ public class FilePoolServiceImpl implements FilePoolService {
         return filePools != null
                 ? filePools
                 .stream()
-                .map(DtoConverter::convertToDto)
+                .map(FilePoolConverter::convertToDto)
                 .collect(Collectors.toList())
                 : null;
     }

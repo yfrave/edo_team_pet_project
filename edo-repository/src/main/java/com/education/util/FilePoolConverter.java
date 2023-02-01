@@ -9,7 +9,7 @@ import com.education.model.dto.FilePoolDto;
  * Converter of Dto
  */
 
-public class DtoConverter {
+public class FilePoolConverter {
 
     /**
      * Converted from FilePoolDto to FilePoolDto

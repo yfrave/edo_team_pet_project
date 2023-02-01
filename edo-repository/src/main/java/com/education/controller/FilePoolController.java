@@ -2,9 +2,8 @@ package com.education.controller;
 
 import com.education.entity.FilePool;
 import com.education.model.dto.FilePoolDto;
-import com.education.model.dto.NomenclatureDto;
 import com.education.service.filepool.FilePoolService;
-import com.education.util.DtoConverter;
+import com.education.util.FilePoolConverter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.ZonedDateTime;
@@ -66,7 +64,7 @@ public class FilePoolController {
         return filePools != null && !filePools.isEmpty()
                 ? new ResponseEntity<>(filePools.
                 stream().
-                map(DtoConverter::convertToDto).
+                map(FilePoolConverter::convertToDto).
                 collect(Collectors.toList()), HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
