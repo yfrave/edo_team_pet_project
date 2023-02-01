@@ -1,7 +1,11 @@
 package com.education.controller;
 
+import com.education.entity.Employee;
 import com.education.model.dto.ResolutionDto;
+import com.education.model.enumEntity.EnumResolution;
 import com.education.service.resolution.ResolutionService;
+import com.education.util.Mapper.Mappable;
+import com.education.util.Mapper.impl.ResolutionMapper;
 import com.education.util.ResolutionConverter;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -14,6 +18,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.education.entity.Resolution;
 
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @ApiOperation("Resolution API")
@@ -23,7 +29,31 @@ import java.util.List;
 @RequestMapping("api/repository/resolution")
 public class ResolutionController {
 
+
+
+    final private ResolutionMapper mapper;
     final private ResolutionService resolutionService;
+
+    Resolution resolution=Resolution.builder()
+            .id(new Long(0))
+            .creationDate(ZonedDateTime.now())
+            .archivedDate(ZonedDateTime.now())
+            .lastActionDate(ZonedDateTime.now())
+            .enumResolution(EnumResolution.RESOLUTION)
+            .creator(new Employee())
+            .signer(new Employee())
+            .executors(new ArrayList<Employee>())
+            .curator(new Employee())
+            .build();
+    //ResolutionDto dto=mappable.toDto(resolution);
+
+    @GetMapping("/test")
+    public void Test(){
+        ResolutionDto dto=mapper.toDto(resolution);
+        System.out.println(resolution);
+        System.out.println(dto);
+    }
+
 
 
     @ApiOperation(value = "Сохранение сущности в БД")
