@@ -24,4 +24,5 @@
     <description>Модуль для бизнес логики</description>
 
     <artifactId>edo-service</artifactId>
+
 </project>
