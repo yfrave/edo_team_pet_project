@@ -7,8 +7,8 @@ create table if not exists department
     archived_date timestamp with time zone,                                         --дата закрытия
     creation_date timestamp with time zone not null default current_timestamp,      --дата открытия
     external_id   bigint,                                                           --ключ внешней таблицы
-    phone         varchar(255),                                                     --номер телефона
-    department_id bigint references department (id)                                 --ключ вышестоящего отдела
+    phone         varchar(255)                                                     --номер телефона
+--     department_id bigint references department (id)                                 --ключ вышестоящего отдела
 
 );
 
@@ -20,4 +20,4 @@ comment on column department.archived_date is 'дата закрытия';
 comment on column department.creation_date is 'дата основания';
 comment on column department.external_id is 'ключ внешней таблицы';
 comment on column department.phone is 'номер телефона';
-comment on column department.department_id is 'ключ вышестоящего отдела';
+-- comment on column department.department_id is 'ключ вышестоящего отдела';

@@ -56,8 +56,19 @@ public class DepartmentController {
     })
     @PostMapping("/")
     public ResponseEntity<Department> save(@RequestBody @ApiParam("DepartmentDto") Department obj) {
-        var result = service.save(obj);
-        log.info("Successfully created");
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
+        Department result = null;
+        try {
+            result = service.save(obj);
+        } catch (RuntimeException ignore) {
+            log.warning("Сущности address с таким id в базе данных нет");
+            return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
+        if (result == null) {
+            return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
+        } else {
+            log.info("Successfully created");
+            return new ResponseEntity<>(result, HttpStatus.CREATED);
+        }
     }
 }

@@ -1,6 +1,8 @@
 package com.education.service.department.impl;
 
+import com.education.entity.Address;
 import com.education.entity.Department;
+import com.education.repository.AddressRepository;
 import com.education.repository.DepartmentRepository;
 import com.education.service.department.DepartmentService;
 import lombok.NonNull;
@@ -14,13 +16,30 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class DepartmentServiceImpl implements DepartmentService {
-    @NonNull
-    private DepartmentRepository repository;
+    private final DepartmentRepository repository;
+    private final AddressRepository addressRepository;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Department save(Department obj) {
-        return repository.saveAndFlush(obj);
+        Long addressId = obj.getAddress().getId();
+
+        if (addressId == null) {
+            addressRepository.save(obj.getAddress());
+            return repository.saveAndFlush(obj);
+        }
+
+        Optional<Address> address = addressRepository.findById(addressId);
+        if (address.isPresent()) {
+            Optional<Department> isAddressTaken = repository.findDepartmentByAddressId(addressId);
+            if (isAddressTaken.isPresent()) {
+                return null;
+            } else {
+                return repository.saveAndFlush(obj);
+            }
+        } else {
+            return null;
+        }
     }
 
     @Override
