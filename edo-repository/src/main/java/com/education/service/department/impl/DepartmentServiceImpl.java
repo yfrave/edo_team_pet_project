@@ -29,7 +29,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         }
         Optional<Address> address = addressRepository.findById(addressId);
         boolean isAddressTaken = repository.findDepartmentByAddressId(addressId).isPresent();
-        if (address.isPresent() || !isAddressTaken) {
+        if (address.isPresent() && !isAddressTaken) {
             return repository.saveAndFlush(obj);
         } else {
             return null;

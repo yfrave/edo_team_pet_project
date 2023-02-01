@@ -61,8 +61,11 @@ public class DepartmentRestTemplateServiceImpl implements DepartmentService {
     public DepartmentDto findById(Long id) {
         URI uri = generateUri(this.getInstance(), id);
         var request = new RequestEntity<>(null, HttpMethod.GET, uri);
-
-        return template.exchange(request, DepartmentDto.class).getBody();
+        var response = template.exchange(request, DepartmentDto.class);
+        if (!response.getStatusCode().is2xxSuccessful()) {
+            throw new RuntimeException("Can't get the theme");
+        }
+        return response.getBody();
     }
 
     @Override
@@ -73,12 +76,16 @@ public class DepartmentRestTemplateServiceImpl implements DepartmentService {
                 .scheme(HttpHost.DEFAULT_SCHEME_NAME)
                 .host(instance.getHostName())
                 .port(instance.getPort())
-                .buildAndExpand()
+                .buildAndExpand(id)
                 .toUri();
 
         var request = new RequestEntity<>(null, HttpMethod.GET, uri);
+        var response = template.exchange(request, DepartmentDto.class);
+        if (!response.getStatusCode().is2xxSuccessful()) {
+            throw new RuntimeException("Can't get the theme");
+        }
 
-        return template.exchange(request, DepartmentDto.class).getBody();
+        return response.getBody();
     }
 
     @Override
@@ -86,9 +93,12 @@ public class DepartmentRestTemplateServiceImpl implements DepartmentService {
         String lastPathComponent = "/findAll";
         URI uri = generateUri(this.getInstance(), lastPathComponent);
         var request = new RequestEntity<>(ids, HttpMethod.POST, uri);
-        var myBean = new ParameterizedTypeReference<List<DepartmentDto>>() {};
+        var myBean = new ParameterizedTypeReference<List<DepartmentDto>>() {
+        };
         var response = template.exchange(request, myBean);
-
+        if (!response.getStatusCode().is2xxSuccessful()) {
+            throw new RuntimeException("Can't get the theme");
+        }
         return response.getBody();
     }
 
@@ -97,9 +107,12 @@ public class DepartmentRestTemplateServiceImpl implements DepartmentService {
         String lastPathComponent = "/findAll/notArchived";
         URI uri = generateUri(this.getInstance(), lastPathComponent);
         var request = new RequestEntity<>(ids, HttpMethod.POST, uri);
-        var myBean = new ParameterizedTypeReference<List<DepartmentDto>>() {};
+        var myBean = new ParameterizedTypeReference<List<DepartmentDto>>() {
+        };
         var response = template.exchange(request, myBean);
-
+        if (!response.getStatusCode().is2xxSuccessful()) {
+            throw new RuntimeException("Can't get the theme");
+        }
         return response.getBody();
     }
 

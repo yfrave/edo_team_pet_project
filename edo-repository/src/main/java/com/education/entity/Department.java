@@ -57,9 +57,9 @@ public class Department extends BaseEntity {
     /**
      * Вышестоящий департамент
      */
-//    @OneToOne
-//    @JoinColumn(name = "department_id")
-//    private Department department;
+    @OneToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
 
     /**
      * Дата создания отдела
