@@ -1,5 +1,8 @@
 package com.education.entity;
 
+import com.education.model.enumEntity.EnumAppealStatus;
+import com.education.model.enumEntity.EnumWayToReceive;
+import io.swagger.annotations.Authorization;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,13 +27,13 @@ public class Appeal extends BaseEntity {
     /**
      * Дата создания обращения
      */
-    @Column(name = "creationDate", nullable = false)
+    @Column(name = "creation_date", nullable = false)
     private ZonedDateTime creationDate;
 
     /**
      * Дата архивирования обращения
      */
-    @Column(name = "archivedDate", nullable = false)
+    @Column(name = "archived_date", nullable = false)
     private ZonedDateTime archivedDate;
 
     /**
@@ -71,5 +74,50 @@ public class Appeal extends BaseEntity {
             joinColumns = @JoinColumn(name = "appeal_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"))
     private List<Employee> addressee;
+
+    /**
+     * номенклатура, связанная с обращением
+     */
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "nomenclature_id")
+    private Nomenclature nomenclature;
+
+    /**
+     * Авторы обращения
+     */
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "appeal_author",
+            joinColumns = @JoinColumn(name = "appeal_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id"))
+    private List<Author> author;
+
+    /**
+     * хранилища файлов, связанных с обращением
+     */
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "appeal_file_pool", joinColumns = @JoinColumn(name = "appeal_id", referencedColumnName = "id")
+            , inverseJoinColumns = @JoinColumn(name = "file_pool_id", referencedColumnName = "id"))
+    private List<FilePool> filePool;
+
+    /**
+     * Вопросы, связанные с обращением
+     */
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "appeal_question",
+            joinColumns = @JoinColumn(name = "appeal_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "question_id", referencedColumnName = "id"))
+    private List<Question> question;
+
+    /**
+     * Способ получения обращения
+     */
+    @Column(name = "way_to_receive")
+    private EnumWayToReceive wayToReceive;
+
+    /**
+     * Статус обращения
+     */
+    @Column(name = "appeal_status")
+    private EnumAppealStatus appealStatus;
 }
 
