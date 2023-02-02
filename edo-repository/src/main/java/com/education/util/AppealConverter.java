@@ -2,9 +2,14 @@ package com.education.util;
 
 import com.education.entity.Appeal;
 import com.education.model.dto.AppealDto;
+import org.apache.el.stream.Stream;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
+
 
 public class AppealConverter {
 
@@ -25,10 +30,7 @@ public class AppealConverter {
     }
 
     public static List<Appeal> dtoToAppeal(List<AppealDto> dtos) {
-        List<Appeal> appeal = new ArrayList<>();
-        for (AppealDto dto : dtos) {
-            appeal.add(dtoToAppeal(dto));
-        }
+        List<Appeal> appeal = dtos.stream().map(AppealConverter::dtoToAppeal).collect(Collectors.toList());
         return appeal;
     }
 
@@ -49,11 +51,9 @@ public class AppealConverter {
     }
 
     public static List<AppealDto> appealToDto(List<Appeal> appeals) {
-        List<AppealDto> dtos = new ArrayList<>();
-        for (Appeal appeal : appeals) {
-            dtos.add(appealToDto(appeal));
-        }
+        List<AppealDto> dtos = appeals.stream().map(AppealConverter::appealToDto).collect(Collectors.toList());
         return dtos;
     }
+
 
 }
