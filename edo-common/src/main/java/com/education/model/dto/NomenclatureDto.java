@@ -15,6 +15,10 @@ import java.time.ZonedDateTime;
 @Getter
 @Setter
 public class NomenclatureDto {
+
+    @ApiModelProperty("ID")
+    private Long id;
+
     @ApiModelProperty("Дата создания номенклатуры")
     private ZonedDateTime creationDate;
 
