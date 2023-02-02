@@ -30,8 +30,7 @@ public class AppealConverter {
     }
 
     public static List<Appeal> dtoToAppeal(List<AppealDto> dtos) {
-        List<Appeal> appeal = dtos.stream().map(AppealConverter::dtoToAppeal).collect(Collectors.toList());
-        return appeal;
+        return dtos.stream().map(AppealConverter::dtoToAppeal).collect(Collectors.toList());
     }
 
     public static AppealDto appealToDto(Appeal appeal) {
@@ -51,8 +50,7 @@ public class AppealConverter {
     }
 
     public static List<AppealDto> appealToDto(List<Appeal> appeals) {
-        List<AppealDto> dtos = appeals.stream().map(AppealConverter::appealToDto).collect(Collectors.toList());
-        return dtos;
+        return appeals.stream().map(AppealConverter::appealToDto).collect(Collectors.toList());
     }
 
 
