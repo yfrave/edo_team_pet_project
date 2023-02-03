@@ -3,6 +3,7 @@ package com.education.model.dto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.ZonedDateTime;
 
@@ -11,7 +12,7 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 public class QuestionDto {
     @ApiModelProperty("Id обращения")
     private Long id;
