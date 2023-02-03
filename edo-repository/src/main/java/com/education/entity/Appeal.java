@@ -111,12 +111,14 @@ public class Appeal extends BaseEntity {
      * Способ получения обращения
      */
     @Column(name = "way_to_receive")
+    @Enumerated(EnumType.STRING)
     private EnumWayToReceive wayToReceive;
 
     /**
      * Статус обращения
      */
     @Column(name = "appeal_status")
+    @Enumerated(EnumType.STRING)
     private EnumAppealStatus appealStatus;
 }
 
