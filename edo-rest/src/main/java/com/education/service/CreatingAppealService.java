@@ -1,5 +1,9 @@
 package com.education.service;
 
+import com.education.model.dto.AppealDto;
+
 public interface CreatingAppealService {
-    void createAppeal();
+
+    AppealDto createAppeal();
+
 }
