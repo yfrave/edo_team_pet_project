@@ -31,9 +31,8 @@ public class AppealServiceImpl implements AppealService {
 
 
     private InstanceInfo getInstance() {
-        Application application = EUREKA_CLIENT.getApplication(SERVICE_NAME);
-        InstanceInfo instance = application.getInstances().get(new Random().nextInt(1));
-        return instance;
+        List<InstanceInfo> instances = EUREKA_CLIENT.getApplication(SERVICE_NAME).getInstances();
+        return instances.get((int) (instances.size() * Math.random()));
     }
 
     private URI getURIByInstance(InstanceInfo instanceInfo, String pathVariable) {
