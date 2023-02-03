@@ -55,8 +55,11 @@ public class FilePoolServiceImpl implements FilePoolService {
      * @return List<FilePoolDto>
      */
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public List<FilePool> findAllById(List<Long> ids) {
-        return FILE_POOL_REPOSITORY.findAllById(ids);
+    public List<FilePoolDto> findAllById(List<Long> ids) {
+        return FILE_POOL_REPOSITORY
+                .findAllById(ids).stream()
+                .map(FilePoolConverter::convertToDto)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -78,7 +81,9 @@ public class FilePoolServiceImpl implements FilePoolService {
     @Override
     public FilePoolDto findByIdNotArchived(Long id) {
         FilePool filePool = FILE_POOL_REPOSITORY.findByIdNotArchived(id).orElse(null);
-        return filePool != null ? FilePoolConverter.convertToDto(filePool) : null;
+        return filePool != null
+                ? FilePoolConverter.convertToDto(filePool)
+                : null;
     }
 
     /**

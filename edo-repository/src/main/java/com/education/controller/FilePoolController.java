@@ -60,12 +60,12 @@ public class FilePoolController {
     public ResponseEntity<List<FilePoolDto>> fetchFindAllById(@RequestBody
                                                               List<Long> ids) {
         log.info("Got request to get file pools by ids");
-        List<FilePool> filePools = FILE_POOL_SERVICE.findAllById(ids);
-        return filePools != null && !filePools.isEmpty()
-                ? new ResponseEntity<>(filePools.
-                stream().
-                map(FilePoolConverter::convertToDto).
-                collect(Collectors.toList()), HttpStatus.OK)
+        List<FilePoolDto> filePools = FILE_POOL_SERVICE.findAllById(ids);
+        if (filePools == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return !filePools.isEmpty()
+                ? new ResponseEntity<>(filePools, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 

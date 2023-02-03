@@ -98,7 +98,7 @@ public class FilePoolServiceImpl implements FilePoolService {
      * @return FilePoolDto
      */
     public FilePoolDto findByIdNotArchived(Long id) {
-        String lastPathName = "/notArchived" + id;
+        String lastPathName = "/notArchived/" + id;
         URI uri = generateUri(this.getInstance(), lastPathName);
         var request = new RequestEntity<>(null, HttpMethod.GET, uri);
         return restTemplate.exchange(request, FilePoolDto.class).getBody();

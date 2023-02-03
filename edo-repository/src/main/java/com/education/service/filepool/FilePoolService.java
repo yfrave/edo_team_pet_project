@@ -30,7 +30,7 @@ public interface FilePoolService {
      * @param ids List<Long>
      * @return List<FilePoolDto>
      */
-    List<FilePool> findAllById(List<Long> ids);
+    List<FilePoolDto> findAllById(List<Long> ids);
 
     /**
      * Move to archive in db
