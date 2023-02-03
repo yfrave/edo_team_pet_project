@@ -2,7 +2,6 @@ package com.education.entity;
 
 import com.education.model.enumEntity.EnumAppealStatus;
 import com.education.model.enumEntity.EnumWayToReceive;
-import io.swagger.annotations.Authorization;
 import jakarta.persistence.*;
 import lombok.*;
 
