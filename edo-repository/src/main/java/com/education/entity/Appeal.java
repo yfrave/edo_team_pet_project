@@ -18,7 +18,6 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "appeal")
-@SuperBuilder
 /**
  *  Класс "Обращения"
  */
