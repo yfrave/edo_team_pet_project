@@ -6,7 +6,6 @@ import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.sql.Date;
 import java.time.ZonedDateTime;
 
 /**
@@ -21,6 +20,7 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
+@SuperBuilder
 @Table(name = "question")
 public class Question extends BaseEntity{
     /**

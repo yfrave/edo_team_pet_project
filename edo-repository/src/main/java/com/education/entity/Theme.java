@@ -2,19 +2,18 @@ package com.education.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.CreationTimestamp;
 
-import java.sql.Date;
 import java.time.ZonedDateTime;
 
 /**
@@ -44,6 +43,7 @@ public class Theme extends BaseEntity {
      * Дата создания
      */
     @Column(name = "creation_date")
+    @CreationTimestamp
     private ZonedDateTime creationDate;
 
     /**
@@ -61,7 +61,7 @@ public class Theme extends BaseEntity {
     /**
      * Родительская тема
      */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private Theme parentTheme;
 }
