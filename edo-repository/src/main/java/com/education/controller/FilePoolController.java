@@ -104,10 +104,10 @@ public class FilePoolController {
         FilePoolDto filePoolDto = FILE_POOL_SERVICE.findByIdNotArchived(id);
 
         if (filePoolDto == null) {
-            log.log(Level.WARNING, "not found not archived NomenclatureDto with id = {0}", id);
+            log.log(Level.WARNING, "not found not archived FilePoolDto with id = {0}", id);
             return new ResponseEntity<>((HttpStatus.NOT_FOUND));
         }
-        log.log(Level.INFO, "not archived NomenclatureDto find: id = {0}", id);
+        log.log(Level.INFO, "not archived FilePoolDto find: id = {0}", id);
         return new ResponseEntity<>(filePoolDto, HttpStatus.OK);
     }
 
@@ -121,10 +121,10 @@ public class FilePoolController {
         List<FilePoolDto> filePoolDto = FILE_POOL_SERVICE.findAllByIdNotArchived(ids);
 
         if (filePoolDto == null || filePoolDto.isEmpty()) {
-            log.log(Level.WARNING, "List of not archived NomenclatureDto not found");
+            log.log(Level.WARNING, "List of not archived FilePoolDto not found");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        log.log(Level.INFO, "List of not archived NomenclatureDto find");
+        log.log(Level.INFO, "List of not archived FilePoolDto find");
         return new ResponseEntity<>(filePoolDto, HttpStatus.OK);
     }
 

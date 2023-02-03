@@ -74,6 +74,7 @@ public class FilePoolServiceImpl implements FilePoolService {
 
     /**
      * Предоставляет не заархивированное FilePoolDto номенклатуры из БД по id
+     *
      * @param id Long
      * @return FilePoolDto
      */
@@ -88,6 +89,7 @@ public class FilePoolServiceImpl implements FilePoolService {
 
     /**
      * Предоставляет список не заархивированных FilePoolDto номенклатур из БД по id
+     *
      * @param list List of id
      * @return List of FilePoolDto
      */
@@ -97,8 +99,7 @@ public class FilePoolServiceImpl implements FilePoolService {
         List<FilePool> filePools = FILE_POOL_REPOSITORY.findAllByIdNotArchived(list);
 
         return filePools != null
-                ? filePools
-                .stream()
+                ? filePools.stream()
                 .map(FilePoolConverter::convertToDto)
                 .collect(Collectors.toList())
                 : null;

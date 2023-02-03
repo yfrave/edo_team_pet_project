@@ -57,7 +57,8 @@ public class FilePoolServiceImpl implements FilePoolService {
     public FilePoolDto add(FilePoolDto filePoolDto) {
         URI uri = generateUri(this.getInstance(), "/");
         RequestEntity<Object> request = new RequestEntity(filePoolDto, HttpMethod.POST, uri);
-        return restTemplate.exchange(request, FilePoolDto.class).getBody();
+        return restTemplate.exchange(request, FilePoolDto.class)
+                .getBody();
 
     }
 
@@ -73,8 +74,7 @@ public class FilePoolServiceImpl implements FilePoolService {
         var listOfFilePoolDtoType = new ParameterizedTypeReference<List<FilePoolDto>>() {
         };
 
-        return restTemplate
-                .exchange(request, listOfFilePoolDtoType)
+        return restTemplate.exchange(request, listOfFilePoolDtoType)
                 .getBody();
     }
 
@@ -101,7 +101,8 @@ public class FilePoolServiceImpl implements FilePoolService {
         String lastPathName = "/notArchived/" + id;
         URI uri = generateUri(this.getInstance(), lastPathName);
         var request = new RequestEntity<>(null, HttpMethod.GET, uri);
-        return restTemplate.exchange(request, FilePoolDto.class).getBody();
+        return restTemplate.exchange(request, FilePoolDto.class)
+                .getBody();
     }
 
     /**
@@ -116,7 +117,8 @@ public class FilePoolServiceImpl implements FilePoolService {
         var request = new RequestEntity<>(list, HttpMethod.POST, uri);
         var listOfFilePoolDtoType = new ParameterizedTypeReference<List<FilePoolDto>>() {
         };
-        return restTemplate.exchange(request, listOfFilePoolDtoType).getBody();
+        return restTemplate.exchange(request, listOfFilePoolDtoType)
+                .getBody();
     }
 
     /**

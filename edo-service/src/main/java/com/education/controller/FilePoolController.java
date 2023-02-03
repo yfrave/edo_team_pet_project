@@ -76,6 +76,7 @@ public class FilePoolController {
         service.moveToArchive(id);
         return ResponseEntity.ok().build();
     }
+
     @ApiOperation(value = "Получить не заархивированное хранилище файлов по id")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved"),
