@@ -29,7 +29,9 @@ public class AppealServiceImpl implements AppealService {
 
     private final String SERVICE_NAME = "edo-repository";
 
-
+    /**
+     * Получает инстанс случайным методом
+     */
     private InstanceInfo getInstance() {
         List<InstanceInfo> instances = EUREKA_CLIENT.getApplication(SERVICE_NAME).getInstances();
         return instances.get((int) (instances.size() * Math.random()));
