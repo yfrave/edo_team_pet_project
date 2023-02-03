@@ -20,7 +20,6 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
-@SuperBuilder
 @Table(name = "question")
 public class Question extends BaseEntity{
     /**
