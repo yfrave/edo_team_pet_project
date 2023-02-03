@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class AppealDto {
-    @ApiModelProperty("Id")
+    @ApiModelProperty("Id обращения")
     private Long id;
 
     @ApiModelProperty("Дата создания обращения")
