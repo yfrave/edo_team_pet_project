@@ -13,9 +13,6 @@ spring:
           auth: true
           starttls:
             enable: true
-    sender: # Отправитель письма (почта и имя), как видит получатель
-      email: no-replay@example.com
-      text: no-replay
 server:
   port: 0
 eureka:
