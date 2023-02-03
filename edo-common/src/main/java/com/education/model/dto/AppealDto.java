@@ -3,6 +3,7 @@ package com.education.model.dto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 @ApiModel("Класс AppealDTO, dto для класса appeal.class")
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
 public class AppealDto {
     @ApiModelProperty("Id обращения")
     private Long id;
