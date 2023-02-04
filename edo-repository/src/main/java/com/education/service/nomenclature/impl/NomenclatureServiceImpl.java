@@ -1,16 +1,15 @@
 package com.education.service.nomenclature.impl;
 
-import com.education.converter.NomenclatureToDtoConverter;
 import com.education.entity.Nomenclature;
 import com.education.model.dto.NomenclatureDto;
 import com.education.repository.NomenclatureRepository;
 import com.education.service.nomenclature.NomenclatureService;
+import com.education.util.Mapper.impl.NomenclatureMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Представляет реализацию операций над номенклатурой
@@ -28,6 +27,8 @@ public class NomenclatureServiceImpl implements NomenclatureService {
      */
     private final NomenclatureRepository nomenclatureRepository;
 
+    private final NomenclatureMapper mapper;
+
     /**
      * Сохраняет номенклатуру в БД
      * @param nomenclature NomenclatureDto
@@ -36,8 +37,8 @@ public class NomenclatureServiceImpl implements NomenclatureService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public NomenclatureDto save(NomenclatureDto nomenclature) {
-        Nomenclature newNomenclature = NomenclatureToDtoConverter.convertToNomenclature(nomenclature);
-        return NomenclatureToDtoConverter.convertToDto(nomenclatureRepository.saveAndFlush(newNomenclature));
+        Nomenclature newNomenclature = mapper.toEntity(nomenclature);
+        return mapper.toDto(nomenclatureRepository.saveAndFlush(newNomenclature));
     }
 
     /**
@@ -59,7 +60,7 @@ public class NomenclatureServiceImpl implements NomenclatureService {
     @Override
     public NomenclatureDto findById(Long id) {
         Nomenclature nomenclature = nomenclatureRepository.findById(id).orElse(null);
-        return nomenclature != null ? NomenclatureToDtoConverter.convertToDto(nomenclature) : null;
+        return nomenclature != null ? mapper.toDto(nomenclature) : null;
     }
 
     /**
@@ -74,10 +75,7 @@ public class NomenclatureServiceImpl implements NomenclatureService {
         if (nomenclatures.isEmpty()) {
             return null;
         }
-        return nomenclatures
-                .stream()
-                .map(NomenclatureToDtoConverter::convertToDto)
-                .collect(Collectors.toList());
+        return mapper.toDto(nomenclatures);
     }
 
     /**
@@ -89,7 +87,7 @@ public class NomenclatureServiceImpl implements NomenclatureService {
     @Override
     public NomenclatureDto findByIdNotArchived(Long id) {
         Nomenclature nomenclature = nomenclatureRepository.findByIdNotArchived(id).orElse(null);
-        return nomenclature != null ? NomenclatureToDtoConverter.convertToDto(nomenclature) : null;
+        return nomenclature != null ? mapper.toDto(nomenclature) : null;
     }
 
     /**
@@ -104,9 +102,6 @@ public class NomenclatureServiceImpl implements NomenclatureService {
         if (nomenclatures.isEmpty()) {
             return null;
         }
-        return nomenclatures
-                .stream()
-                .map(NomenclatureToDtoConverter::convertToDto)
-                .collect(Collectors.toList());
+        return mapper.toDto(nomenclatures);
     }
 }

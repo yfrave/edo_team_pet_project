@@ -4,7 +4,7 @@ import com.education.entity.Question;
 import com.education.model.dto.QuestionDto;
 import com.education.repository.QuestionRepository;
 import com.education.service.question.QuestionService;
-import com.education.util.QuestionDtoConverter;
+import com.education.util.Mapper.impl.QuestionMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +27,7 @@ public class QuestionServiceImpl implements QuestionService {
     /**
      * Конвертер ДТО в Энтити и наоборот
      */
-    private final QuestionDtoConverter converter;
+    private final QuestionMapper mapper;
 
     /**
      * Метод для сохранения объекта Question в БД.
@@ -36,7 +36,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void save(QuestionDto question) {
-        questionRepository.saveAndFlush(converter.toEntity(question));
+        questionRepository.saveAndFlush(mapper.toEntity(question));
     }
 
     /**
@@ -58,7 +58,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public QuestionDto findById(Long id) {
         Optional<Question> question = questionRepository.findById(id);
-        return question.map(converter::toDto).orElse(null);
+        return question.map(mapper::toDto).orElse(null);
     }
 
     /**
@@ -73,7 +73,7 @@ public class QuestionServiceImpl implements QuestionService {
         return !questions.isEmpty()
                 ? questions
                 .stream()
-                .map(converter::toDto)
+                .map(mapper::toDto)
                 .toList()
                 : null;
     }
@@ -88,7 +88,7 @@ public class QuestionServiceImpl implements QuestionService {
     public QuestionDto findByIdNotArchived(Long id) {
         Question question = questionRepository.findByIdNotArchived(id);
         return question != null
-                ? converter.toDto(questionRepository.findByIdNotArchived(id))
+                ? mapper.toDto(questionRepository.findByIdNotArchived(id))
                 : null;
     }
 
@@ -104,7 +104,7 @@ public class QuestionServiceImpl implements QuestionService {
         return questions != null && !questions.isEmpty()
                 ? questions
                 .stream()
-                .map(converter::toDto)
+                .map(mapper::toDto)
                 .toList()
                 : null;
     }
