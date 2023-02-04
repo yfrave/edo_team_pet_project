@@ -20,10 +20,10 @@ import java.time.ZonedDateTime;
 @Entity
 @Getter
 @Setter
-@SuperBuilder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
 @Table(name = "employee")
 public class Employee extends BaseEntity {
 
