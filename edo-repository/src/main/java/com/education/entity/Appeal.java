@@ -11,13 +11,13 @@ import java.util.List;
 /**
  * @author Alik Karibov.
  */
+@SuperBuilder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Table(name = "appeal")
-@SuperBuilder
 /**
  *  Класс "Обращения"
  */

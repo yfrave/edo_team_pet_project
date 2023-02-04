@@ -14,12 +14,12 @@ import java.time.ZonedDateTime;
  * Класс Question.
  * Хранит краткое содержание обращений.
  */
+@SuperBuilder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@SuperBuilder
 @Table(name = "question")
 public class Question extends BaseEntity{
     /**

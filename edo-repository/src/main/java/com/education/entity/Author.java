@@ -3,11 +3,13 @@ package com.education.entity;
 import com.education.model.enumEntity.EnumEmployment;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 /**
  * Класс сущности автора
  */
 
+@SuperBuilder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor

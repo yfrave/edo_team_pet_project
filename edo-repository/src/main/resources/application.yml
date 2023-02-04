@@ -13,10 +13,6 @@ spring:
     out-of-order: true
   application:
     name: edo-repository
-  jpa:
-    properties:
-      hibernate:
-        default_schema: edo
 server:
   port: 0
 eureka:

@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.ZonedDateTime;
@@ -22,6 +23,7 @@ import java.time.ZonedDateTime;
  * @version 1.0
  * @since 1.0
  */
+@SuperBuilder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
