@@ -16,7 +16,7 @@ create table if not exists appeal_signer
 create table if not exists appeal_addressee
 (
     appeal_id    bigint references appeal (id),
-    employee_id  bigint references employee (id)
+    employee_id  bigint references address (id)
 ); --Таблица one to many appeal_addressee
 
 comment on column appeal_signer.appeal_id is 'id appeal';
