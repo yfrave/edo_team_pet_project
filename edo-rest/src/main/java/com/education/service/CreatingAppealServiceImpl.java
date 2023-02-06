@@ -11,17 +11,17 @@ import org.springframework.stereotype.Service;
 public class CreatingAppealServiceImpl implements CreatingAppealService {
 
     private final CreateAppealRestTemplateClient client;
+    private final EnumAppealStatus STATUS_FOR_NEW_APPEAL = EnumAppealStatus.NEW;
 
     @Override
     public AppealWithRelationsDto createAppeal(AppealWithRelationsDto appealDto) {
 
-        client.saveAuthor(appealDto.getAuthors());
+        client.saveAuthors(appealDto.getAuthors());
         client.saveQuestion(appealDto.getQuestions());
         client.saveFilePool(appealDto.getFile());
-        appealDto.setAppealStatus(EnumAppealStatus.NEW);
-        client.saveAppeal(appealDto);
+        appealDto.setAppealStatus(STATUS_FOR_NEW_APPEAL);
 
-        return client.getAppeal();
+        return client.saveAppeal(appealDto);
 
     }
 }
