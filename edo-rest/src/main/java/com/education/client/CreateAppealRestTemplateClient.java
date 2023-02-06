@@ -5,7 +5,7 @@ import com.education.model.dto.AppealWithRelationsDto;
 import com.education.model.dto.AuthorDto;
 import com.education.model.dto.EmployeeDto;
 import com.education.model.dto.FilePoolDto;
-import com.education.model.dto.QuestionDto;
+import com.education.model.dto.NomenclatureDto;
 import com.education.model.dto.QuestionWithRelationsDto;
 import com.education.model.dto.ResolutionDto;
 import com.education.model.dto.ThemeDto;
@@ -41,6 +41,10 @@ public class CreateAppealRestTemplateClient {
 
     public AppealWithRelationsDto saveAppeal(AppealDto appealDto) {
         return (AppealWithRelationsDto) save(appealDto, "appeal");
+    }
+
+    public NomenclatureDto saveNomenclature(NomenclatureDto nomenclatureDto) {
+        return (NomenclatureDto) save(nomenclatureDto, "nomenclature/");
     }
 
     //На момент создания ее еще нет, нужно будет перепроверить после МРа

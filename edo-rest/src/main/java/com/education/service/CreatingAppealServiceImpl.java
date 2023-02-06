@@ -19,6 +19,7 @@ public class CreatingAppealServiceImpl implements CreatingAppealService {
         client.saveAuthors(appealDto.getAuthors());
         client.saveQuestion(appealDto.getQuestions());
         client.saveFilePool(appealDto.getFile());
+        client.saveNomenclature(appealDto.getNomenclature());
         appealDto.setAppealStatus(STATUS_FOR_NEW_APPEAL);
 
         return client.saveAppeal(appealDto);
