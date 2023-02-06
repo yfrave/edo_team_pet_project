@@ -4,9 +4,7 @@ import com.education.entity.Address;
 import com.education.model.dto.AddressDto;
 import com.education.service.address.AddressService;
 
-import static com.education.util.DtoConverter.convertTo;
-
-import com.education.util.DtoConverter;
+import com.education.util.Mapper.impl.AddressMapper;
 import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
@@ -27,6 +25,8 @@ public class AddressRestController {
     @ApiModelProperty("service")
     private AddressService addressService;
 
+    private AddressMapper mapper;
+
     @ApiOperation(value = "Получить адрес по d", notes = "Returns an address as per the id")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved"),
@@ -41,7 +41,7 @@ public class AddressRestController {
         log.info("Address is received");
         return address.isEmpty()
                 ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
-                : new ResponseEntity<>(convertTo(address.get()), HttpStatus.OK);
+                : new ResponseEntity<>(mapper.toDto(address.get()), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Получить список адресов", notes = "Находит адреса по их id. Возвращает списком List<Address>")
@@ -57,7 +57,7 @@ public class AddressRestController {
         List<Address> list = addressService.findAllById(idList);
         return list != null && !list.isEmpty()
                 ? new ResponseEntity<>(list.stream()
-                .map(DtoConverter::convertTo).collect(Collectors.toList()), HttpStatus.OK)
+                .map(mapper::toDto).collect(Collectors.toList()), HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 

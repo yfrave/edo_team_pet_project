@@ -2,7 +2,7 @@ package com.education.controller;
 
 import com.education.model.dto.AppealDto;
 import com.education.service.appeal.AppealService;
-import com.education.util.AppealConverter;
+import com.education.util.Mapper.impl.AppealMapper;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -25,6 +25,8 @@ import java.util.List;
 public class AppealController {
     final private AppealService appealService;
 
+    final private AppealMapper mapper;
+
 
     @ApiOperation(value = "Сохранение сущности в БД")
     @ApiResponses(value = {
@@ -36,10 +38,10 @@ public class AppealController {
         appealService.save(appeal);
         if (appealService.findById(appeal.getId()) != null) {
             log.log(Level.INFO, "Сущность сохранена или обновлена");
-            return new ResponseEntity<>(AppealConverter.appealToDto(appeal), HttpStatus.CREATED);
+            return new ResponseEntity<>(mapper.toDto(appeal), HttpStatus.CREATED);
         }
         log.log(Level.WARN, "Сущность не сохранена и не обновлена");
-        return new ResponseEntity<>(AppealConverter.appealToDto(appeal), HttpStatus.CONFLICT);
+        return new ResponseEntity<>(mapper.toDto(appeal), HttpStatus.CONFLICT);
     }
 
     @ApiOperation(value = "Обновление даты архивации")
@@ -50,7 +52,7 @@ public class AppealController {
     public ResponseEntity<AppealDto> moveToArchiveAppeal(@PathVariable Long id) {
         appealService.moveToArchive(id);
         log.log(Level.INFO, "Дата архивации обновлена");
-        return new ResponseEntity<>(AppealConverter.appealToDto(appealService.findById(id)), HttpStatus.OK);
+        return new ResponseEntity<>(mapper.toDto(appealService.findById(id)), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Получение сущности по id")
@@ -66,7 +68,7 @@ public class AppealController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         log.log(Level.INFO, "Сущность найдена");
-        return new ResponseEntity<>(AppealConverter.appealToDto(appeal), HttpStatus.OK);
+        return new ResponseEntity<>(mapper.toDto(appeal), HttpStatus.OK);
 
     }
 
@@ -83,7 +85,7 @@ public class AppealController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         log.log(Level.INFO, "Сущности найдены");
-        return new ResponseEntity<>(AppealConverter.appealToDto(appeal), HttpStatus.OK);
+        return new ResponseEntity<>(mapper.toDto(appeal), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Получение сущностей без даты архивации по id ")
@@ -99,7 +101,7 @@ public class AppealController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         log.log(Level.INFO, "Сущность найдена");
-        return new ResponseEntity<>(AppealConverter.appealToDto(appeal), HttpStatus.OK);
+        return new ResponseEntity<>(mapper.toDto(appeal), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Получение сущностей без даты архивации по списку id (/1, 2) ")
@@ -115,6 +117,6 @@ public class AppealController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         log.log(Level.INFO, "Сущности найдены");
-        return new ResponseEntity<>(AppealConverter.appealToDto(appeal), HttpStatus.OK);
+        return new ResponseEntity<>(mapper.toDto(appeal), HttpStatus.OK);
     }
 }
