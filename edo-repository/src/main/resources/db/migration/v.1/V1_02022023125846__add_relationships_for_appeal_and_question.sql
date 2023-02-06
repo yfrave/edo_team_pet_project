@@ -1,25 +1,25 @@
 ALTER TABLE IF EXISTS appeal
     ADD COLUMN IF NOT EXISTS way_to_receive VARCHAR(20),
     ADD COLUMN IF NOT EXISTS appeal_status VARCHAR(20),
-    ADD COLUMN IF NOT EXISTS nomenclature_id BIGSERIAL REFERENCES nomenclature (id);
+    ADD COLUMN IF NOT EXISTS nomenclature_id BIGINT REFERENCES nomenclature (id);
 
 ALTER TABLE IF EXISTS question
-    ADD COLUMN IF NOT EXISTS resolution_id BIGSERIAL REFERENCES resolution (id),
-    ADD COLUMN IF NOT EXISTS theme_id BIGSERIAL REFERENCES theme (id);
+    ADD COLUMN IF NOT EXISTS resolution_id BIGINT REFERENCES resolution (id),
+    ADD COLUMN IF NOT EXISTS theme_id BIGINT REFERENCES theme (id);
 
 CREATE TABLE IF NOT EXISTS appeal_author (
-    appeal_id BIGSERIAL REFERENCES appeal (id),
-    author_id bigint references author (id)
+    appeal_id BIGINT REFERENCES appeal (id),
+    author_id BIGINT references author (id)
 );
 
 CREATE TABLE IF NOT EXISTS appeal_file_pool (
-    appeal_id BIGSERIAL REFERENCES appeal (id),
-    file_pool_id BIGSERIAL REFERENCES file_pool (id)
+    appeal_id BIGINT REFERENCES appeal (id),
+    file_pool_id BIGINT REFERENCES file_pool (id)
 );
 
 CREATE TABLE IF NOT EXISTS appeal_question (
-    appeal_id BIGSERIAL REFERENCES appeal (id),
-    question_id BIGSERIAL REFERENCES question (id)
+    appeal_id BIGINT REFERENCES appeal (id),
+    question_id BIGINT REFERENCES question (id)
 );
 
 COMMENT ON COLUMN appeal.way_to_receive IS 'способ получения обращения';
