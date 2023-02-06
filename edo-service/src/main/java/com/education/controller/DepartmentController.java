@@ -29,7 +29,7 @@ public class DepartmentController {
     public ResponseEntity<DepartmentDto> getDepartmentById(@PathVariable Long id) {
         DepartmentDto dto = service.findById(id);
         if (dto == null) {
-            log.info("Did not receive department-dto");
+            log.warning("Did not receive department-dto");
         }
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
@@ -43,7 +43,7 @@ public class DepartmentController {
     public ResponseEntity<DepartmentDto> getDepartmentByIdNotArchived(@PathVariable Long id) {
         DepartmentDto dto = service.findByIdNotArchived(id);
         if (dto == null) {
-            log.info("Did not receive department-dto NotArchived");
+            log.warning("Did not receive department-dto NotArchived");
         }
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
@@ -57,7 +57,7 @@ public class DepartmentController {
     public ResponseEntity<List<DepartmentDto>> getDepartmentList(@RequestBody List<Long> idList) {
         var list = service.findAllById(idList);
         if (list == null) {
-            log.info("Did not receive department-dto list");
+            log.warning("Did not receive department-dto list");
         }
         return ResponseEntity.ok(list);
     }
@@ -71,7 +71,7 @@ public class DepartmentController {
     public ResponseEntity<List<DepartmentDto>> getDepartmentListNotArchived(@RequestBody List<Long> idList) {
         var list = service.findAllByIdNotArchived(idList);
         if (list == null) {
-            log.info("отправил list DepartmentDto.class NotArchived");
+            log.warning("отправил list DepartmentDto.class NotArchived");
         }
         return ResponseEntity.ok(list);
     }
@@ -88,7 +88,7 @@ public class DepartmentController {
             log.info("Saved DepartmentDto.class");
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
         } else {
-            log.info("Failed to save DepartmentDto.class");
+            log.warning("Failed to save DepartmentDto.class");
             return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }

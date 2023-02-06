@@ -32,7 +32,7 @@ public class DepartmentController {
     public ResponseEntity<DepartmentDto> getById(@PathVariable Long id) {
         var result = service.findById(id);
         if (result.isEmpty()) {
-            log.info("Department — not found!");
+            log.warning("Department — not found!");
         } else {
             log.info("Department — found!");
         }
@@ -50,7 +50,7 @@ public class DepartmentController {
     public ResponseEntity<DepartmentDto> getByIdWhereArchivedIsNull(@PathVariable Long id) {
         Optional<Department> result = service.findByIdNotArchived(id);
         if (result.isEmpty()) {
-            log.info("Department — not found!");
+            log.warning("Department — not found!");
         } else {
             log.info("Department — found!");
         }
@@ -70,7 +70,7 @@ public class DepartmentController {
                                                              List<Long> idList) {
         List<Department> departmentList = service.findAllById(idList);
         if (departmentList == null) {
-            log.info("Department — not found!");
+            log.warning("Department — not found!");
         } else {
             log.info("Department — found!");
         }
@@ -90,7 +90,7 @@ public class DepartmentController {
                                                                                  List<Long> idList) {
         List<Department> departmentList = service.findAllByIdNotArchived(idList);
         if (departmentList == null) {
-            log.info("Department — not found!");
+            log.warning("Department — not found!");
         } else {
             log.info("Department — found!");
         }
@@ -119,6 +119,7 @@ public class DepartmentController {
     public ResponseEntity<DepartmentDto> save(@RequestBody @ApiParam("Department") Department obj) {
         Department result = service.save(obj);
         if (result == null) {
+            log.warning("Object could not be saved");
             return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
         } else {
             log.info("Successfully created");
