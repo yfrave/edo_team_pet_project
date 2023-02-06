@@ -17,4 +17,3 @@ public interface Mappable<Entity, Dto> {
 
     List<Entity> toEntity(List<Dto> dtos);
 }
-

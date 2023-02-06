@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+
 import java.time.ZonedDateTime;
 
 /**
@@ -21,6 +23,7 @@ import java.time.ZonedDateTime;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
 @Table(name = "employee")
 public class Employee extends BaseEntity {
 
