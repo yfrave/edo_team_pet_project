@@ -4,6 +4,7 @@ import com.education.model.enumEntity.EnumAppealStatus;
 import com.education.model.enumEntity.EnumWayToReceive;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 /**
  * @author Alik Karibov.
  */
+@SuperBuilder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
