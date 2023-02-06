@@ -1,10 +1,12 @@
 package com.education.client;
 
 import com.education.model.dto.AppealDto;
+import com.education.model.dto.AppealWithRelationsDto;
 import com.education.model.dto.AuthorDto;
 import com.education.model.dto.EmployeeDto;
 import com.education.model.dto.FilePoolDto;
 import com.education.model.dto.QuestionDto;
+import com.education.model.dto.QuestionWithRelationsDto;
 import com.education.model.dto.ResolutionDto;
 import com.education.model.dto.ThemeDto;
 import com.netflix.appinfo.InstanceInfo;
@@ -20,6 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -36,22 +39,31 @@ public class CreateAppealRestTemplateClient {
 
     static final String SCHEMA_NAME = "http";
 
-    public AppealDto saveAppeal(AppealDto appealDto) {
-        return (AppealDto) save(appealDto, "appeal");
+    public AppealWithRelationsDto saveAppeal(AppealDto appealDto) {
+        return (AppealWithRelationsDto) save(appealDto, "appeal");
     }
 
     //На момент создания ее еще нет, нужно будет перепроверить после МРа
-    public AuthorDto saveAuthor(AuthorDto authorDto) {
-        return (AuthorDto) save(authorDto, "author");
+    public List<AuthorDto> saveAuthors(List<AuthorDto> authorDtos) {
+        return authorDtos
+                .stream()
+                .map(authorDto -> (AuthorDto) save(authorDto, "author"))
+                .collect(Collectors.toList());
     }
 
     //На момент создания ее еще нет, нужно будет перепроверить после МРа
-    public FilePoolDto saveFilePool(FilePoolDto filePoolDto) {
-        return (FilePoolDto) save(filePoolDto, "filePool");
+    public List<FilePoolDto> saveFilePool(List<FilePoolDto> filePoolDtos) {
+        return filePoolDtos
+                .stream()
+                .map(filePoolDto -> (FilePoolDto)save(filePoolDto,"filePool"))
+                .collect(Collectors.toList());
     }
 
-    public QuestionDto saveQuestion(QuestionDto questionDto) {
-        return (QuestionDto) save(questionDto, "question/");
+    public List<QuestionWithRelationsDto> saveQuestion(List<QuestionWithRelationsDto> questionDtos) {
+        return questionDtos
+                .stream()
+                .map(questionDto ->(QuestionWithRelationsDto)save(questionDto, "question/"))
+                .collect(Collectors.toList());
     }
 
     public ThemeDto saveTheme(ThemeDto themeDto) {
