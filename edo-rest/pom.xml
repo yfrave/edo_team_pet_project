@@ -17,6 +17,8 @@
         <version>0.0.1</version>
     </parent>
 
+
+
     <artifactId>edo-rest</artifactId>
 
 </project>

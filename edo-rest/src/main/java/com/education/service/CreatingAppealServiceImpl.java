@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 public class CreatingAppealServiceImpl implements CreatingAppealService {
 
     @Override
-    public void createAppeal(AppealWithRelationsDto json) {
+    public AppealWithRelationsDto createAppeal(AppealWithRelationsDto appealDto) {
+        return appealDto;
 
     }
 }
