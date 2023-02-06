@@ -16,9 +16,9 @@ public class CreatingAppealServiceImpl implements CreatingAppealService {
     @Override
     public AppealWithRelationsDto createAppeal(AppealWithRelationsDto appealDto) {
 
-        client.saveAuthors(appealDto.getAuthors());
+//        client.saveAuthors(appealDto.getAuthors());
         client.saveQuestion(appealDto.getQuestions());
-        client.saveFilePool(appealDto.getFile());
+//        client.saveFilePool(appealDto.getFile());
         appealDto.setAppealStatus(STATUS_FOR_NEW_APPEAL);
 
         return client.saveAppeal(appealDto);
