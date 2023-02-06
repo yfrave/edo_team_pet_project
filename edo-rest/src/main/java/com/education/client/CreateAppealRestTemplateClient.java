@@ -1,12 +1,16 @@
 package com.education.client;
 
 import com.education.model.dto.AppealDto;
-import com.education.model.dto.NomenclatureDto;
+import com.education.model.dto.AuthorDto;
+import com.education.model.dto.EmployeeDto;
+import com.education.model.dto.FilePoolDto;
+import com.education.model.dto.QuestionDto;
+import com.education.model.dto.ResolutionDto;
+import com.education.model.dto.ThemeDto;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Component;
@@ -14,7 +18,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Random;
 
@@ -27,24 +30,53 @@ public class CreateAppealRestTemplateClient {
 
     private final EurekaClient eurekaClient;
 
-    static final String BASE_URL = "api/repository/appeal";
+    static final String BASE_URL = "api/service/";
 
-    static final String SERVICE_NAME = "edo-repository";
+    static final String SERVICE_NAME = "edo-service";
 
     static final String SCHEMA_NAME = "http";
 
+    public AppealDto saveAppeal(AppealDto appealDto) {
+        return (AppealDto) save(appealDto, "appeal");
+    }
 
-    public AppealDto save(AppealDto appealDto) {
-        appealDto.setCreationDate(ZonedDateTime.now());
-        var request = new RequestEntity(appealDto, HttpMethod.POST,
-                buildUri(getInstance(), "/"));
+    //На момент создания ее еще нет, нужно будет перепроверить после МРа
+    public AuthorDto saveAuthor(AuthorDto authorDto) {
+        return (AuthorDto) save(authorDto, "author");
+    }
 
-        var response = restTemplate.exchange(request, AppealDto.class);
+    //На момент создания ее еще нет, нужно будет перепроверить после МРа
+    public FilePoolDto saveFilePool(FilePoolDto filePoolDto) {
+        return (FilePoolDto) save(filePoolDto, "filePool");
+    }
+
+    public QuestionDto saveQuestion(QuestionDto questionDto) {
+        return (QuestionDto) save(questionDto, "question/");
+    }
+
+    public ThemeDto saveTheme(ThemeDto themeDto) {
+        return (ThemeDto) save(themeDto, "theme/");
+    }
+
+    //Нужен или нет будет зависеть от того как мы будем сохранять Resolution
+    public ResolutionDto saveResolution(ResolutionDto resolutionDto) {
+        return (ResolutionDto) save(resolutionDto, "resolution");
+    }
+
+    //Нужен или нет будет зависеть от того как мы будем сохранять Resolution
+    public EmployeeDto saveEmployee(EmployeeDto employeeDto) {
+        return (EmployeeDto) save(employeeDto, "employee");
+    }
+
+    private Object save(Object dto, String entityName) {
+        var request = new RequestEntity<>(dto, HttpMethod.POST,
+                buildUri(getInstance(), entityName));
+
+        var response = restTemplate.exchange(request, Object.class);
 
         if (!response.getStatusCode().is2xxSuccessful()) {
-            throw new RuntimeException("Can't save nomenclature");
+            throw new RuntimeException("Can't save" + entityName.replace("/", ""));
         }
-
         return response.getBody();
     }
 
