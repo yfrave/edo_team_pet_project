@@ -8,6 +8,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.ZonedDateTime;
 
@@ -29,6 +30,7 @@ public class Question extends BaseEntity{
      * Дата создания обращения.
      */
     @Column(name = "creation_date", nullable = false)
+    @CreationTimestamp
     private ZonedDateTime creationDate;
 
     /**
