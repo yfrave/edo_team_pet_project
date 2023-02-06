@@ -1,5 +1,6 @@
 package com.education.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -59,6 +60,7 @@ public class Department extends BaseEntity {
      */
     @OneToOne
     @JoinColumn(name = "department_id")
+    @JsonIgnore
     private Department department;
 
     /**

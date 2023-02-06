@@ -69,6 +69,11 @@ public class DepartmentController {
                                                              @ApiParam(name = "Department list")
                                                              List<Long> idList) {
         List<Department> departmentList = service.findAllById(idList);
+        if (departmentList == null) {
+            log.info("Department — not found!");
+        } else {
+            log.info("Department — found!");
+        }
         return departmentList != null && !departmentList.isEmpty()
                 ? new ResponseEntity<>(mapper.toDto(departmentList), HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -84,6 +89,11 @@ public class DepartmentController {
                                                                                  @ApiParam(name = "Department list")
                                                                                  List<Long> idList) {
         List<Department> departmentList = service.findAllByIdNotArchived(idList);
+        if (departmentList == null) {
+            log.info("Department — not found!");
+        } else {
+            log.info("Department — found!");
+        }
         return departmentList != null && !departmentList.isEmpty()
                 ? new ResponseEntity<>(mapper.toDto(departmentList), HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -106,7 +116,7 @@ public class DepartmentController {
             @ApiResponse(code = 422, message = "Unprocessable Entity")
     })
     @PostMapping("/")
-    public ResponseEntity<DepartmentDto> save(@RequestBody @ApiParam("DepartmentDto") Department obj) {
+    public ResponseEntity<DepartmentDto> save(@RequestBody @ApiParam("Department") Department obj) {
         Department result = service.save(obj);
         if (result == null) {
             return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);

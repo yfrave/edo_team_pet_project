@@ -70,15 +70,8 @@ public class DepartmentRestTemplateServiceImpl implements DepartmentService {
 
     @Override
     public DepartmentDto findByIdNotArchived(Long id) {
-        InstanceInfo instance = getInstance();
-        String path = "/notArchived/{id}";
-        URI uri = UriComponentsBuilder.fromPath(BASE_URL + path)
-                .scheme(HttpHost.DEFAULT_SCHEME_NAME)
-                .host(instance.getHostName())
-                .port(instance.getPort())
-                .buildAndExpand(id)
-                .toUri();
-
+        String lastPathComponent = "/notArchived/" + id;
+        URI uri = generateUri(this.getInstance(), lastPathComponent);
         var request = new RequestEntity<>(null, HttpMethod.GET, uri);
         var response = template.exchange(request, DepartmentDto.class);
         if (!response.getStatusCode().is2xxSuccessful()) {
