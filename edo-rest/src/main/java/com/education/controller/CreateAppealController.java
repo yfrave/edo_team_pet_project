@@ -25,6 +25,8 @@ public class CreateAppealController {
 
 // Deserialization into the `Employee` class
         AppealWithRelationsDto appealDto = objectMapper.readValue(json, AppealWithRelationsDto.class);
+        appealDto.getSendingMethod();
+
 
 
 //        UserStory:

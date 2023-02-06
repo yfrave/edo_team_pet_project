@@ -26,14 +26,5 @@ public class AppealWithRelationsDto extends AppealDto {
     private EnumAppealStatus appealStatus;
     private EnumWayToReceive sendingMethod;
 
-    @JsonCreator
-    public AppealWithRelationsDto(Long id, ZonedDateTime creationDate, ZonedDateTime archivedDate, String number, String annotation, @JsonProperty("signers") List<EmployeeDto> signers, EmployeeDto creator, List<EmployeeDto> addressee, List<AuthorDto> authors, List<FilePoolDto> file, List<QuestionWithRelationsDto> questions, NomenclatureDto nomenclature, EnumAppealStatus appealStatus, EnumWayToReceive sendingMethod) {
-        super(id, creationDate, archivedDate, number, annotation, signers, creator, addressee);
-        this.authors = authors;
-        this.file = file;
-        this.questions = questions;
-        this.nomenclature = nomenclature;
-        this.appealStatus = appealStatus;
-        this.sendingMethod = sendingMethod;
-    }
+
 }
