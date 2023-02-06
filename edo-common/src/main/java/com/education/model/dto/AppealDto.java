@@ -1,5 +1,7 @@
 package com.education.model.dto;
 
+import com.education.model.enumEntity.EnumAppealStatus;
+import com.education.model.enumEntity.EnumWayToReceive;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -37,4 +39,11 @@ public class AppealDto {
 
     @ApiModelProperty("Получатели")
     private List<EmployeeDto> addressee;
+
+    private List<AuthorDto> authors;
+    private List<FilePoolDto> file;
+    private List<QuestionDto> questions;
+    private NomenclatureDto nomenclature;
+    private EnumAppealStatus appealStatus;
+    private EnumWayToReceive sendingMethod;
 }

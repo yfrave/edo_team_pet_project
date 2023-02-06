@@ -1,6 +1,6 @@
 package com.education.controller;
 
-import com.education.model.dto.AppealWithRelationsDto;
+import com.education.model.dto.AppealDto;
 import com.education.service.CreatingAppealService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,10 +20,10 @@ public class CreateAppealController {
     private final CreatingAppealService service;
 
     @PostMapping("/")
-    public ResponseEntity<AppealWithRelationsDto> createNewAppeal(@RequestBody String json) throws JsonProcessingException {
+    public ResponseEntity<AppealDto> createNewAppeal(@RequestBody String json) throws JsonProcessingException {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        AppealWithRelationsDto appealDto = objectMapper.readValue(json, AppealWithRelationsDto.class);
+        AppealDto appealDto = objectMapper.readValue(json, AppealDto.class);
         return new ResponseEntity<>(service.createAppeal(appealDto), HttpStatus.CREATED);
     }
 }

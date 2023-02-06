@@ -1,7 +1,7 @@
 package com.education.service;
 
 import com.education.client.CreateAppealRestTemplateClient;
-import com.education.model.dto.AppealWithRelationsDto;
+import com.education.model.dto.AppealDto;
 import com.education.model.enumEntity.EnumAppealStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,11 +14,12 @@ public class CreatingAppealServiceImpl implements CreatingAppealService {
     private final EnumAppealStatus STATUS_FOR_NEW_APPEAL = EnumAppealStatus.NEW;
 
     @Override
-    public AppealWithRelationsDto createAppeal(AppealWithRelationsDto appealDto) {
+    public AppealDto createAppeal(AppealDto appealDto) {
 
-        client.saveAuthors(appealDto.getAuthors());
+        //client.saveAuthors(appealDto.getAuthors());
         client.saveQuestion(appealDto.getQuestions());
-        client.saveFilePool(appealDto.getFile());
+        System.out.println(appealDto.getQuestions().get(0).getTheme().getId());
+        //client.saveFilePool(appealDto.getFile());
         appealDto.setAppealStatus(STATUS_FOR_NEW_APPEAL);
 
         return client.saveAppeal(appealDto);

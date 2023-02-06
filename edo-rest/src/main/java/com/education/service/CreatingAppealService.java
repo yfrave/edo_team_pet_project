@@ -1,7 +1,8 @@
 package com.education.service;
 
-import com.education.model.dto.AppealWithRelationsDto;
+import com.education.model.dto.AppealDto;
+
 
 public interface CreatingAppealService {
-    AppealWithRelationsDto createAppeal(AppealWithRelationsDto json);
+    AppealDto createAppeal(AppealDto json);
 }

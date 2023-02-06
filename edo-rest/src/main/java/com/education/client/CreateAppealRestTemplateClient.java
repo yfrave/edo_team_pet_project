@@ -1,12 +1,10 @@
 package com.education.client;
 
 import com.education.model.dto.AppealDto;
-import com.education.model.dto.AppealWithRelationsDto;
 import com.education.model.dto.AuthorDto;
 import com.education.model.dto.EmployeeDto;
 import com.education.model.dto.FilePoolDto;
 import com.education.model.dto.QuestionDto;
-import com.education.model.dto.QuestionWithRelationsDto;
 import com.education.model.dto.ResolutionDto;
 import com.education.model.dto.ThemeDto;
 import com.netflix.appinfo.InstanceInfo;
@@ -39,8 +37,8 @@ public class CreateAppealRestTemplateClient {
 
     static final String SCHEMA_NAME = "http";
 
-    public AppealWithRelationsDto saveAppeal(AppealDto appealDto) {
-        return (AppealWithRelationsDto) save(appealDto, "appeal");
+    public AppealDto saveAppeal(AppealDto appealDto) {
+        return (AppealDto) save(appealDto, "appeal");
     }
 
     //На момент создания ее еще нет, нужно будет перепроверить после МРа
@@ -59,10 +57,10 @@ public class CreateAppealRestTemplateClient {
                 .collect(Collectors.toList());
     }
 
-    public List<QuestionWithRelationsDto> saveQuestion(List<QuestionWithRelationsDto> questionDtos) {
+    public List<QuestionDto> saveQuestion(List<QuestionDto> questionDtos) {
         return questionDtos
                 .stream()
-                .map(questionDto ->(QuestionWithRelationsDto)save(questionDto, "question/"))
+                .map(questionDto ->(QuestionDto)save(questionDto, "question/"))
                 .collect(Collectors.toList());
     }
 

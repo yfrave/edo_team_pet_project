@@ -25,4 +25,7 @@ public class QuestionDto {
 
     @ApiModelProperty("Краткое содержание обращения")
     private String summary;
+
+    private ResolutionDto resolution;
+    private ThemeDto theme;
 }
