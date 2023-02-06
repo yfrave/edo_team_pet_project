@@ -74,4 +74,3 @@ public class Appeal extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"))
     private List<Employee> addressee;
 }
-
