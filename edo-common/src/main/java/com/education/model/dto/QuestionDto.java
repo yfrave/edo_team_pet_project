@@ -27,5 +27,6 @@ public class QuestionDto {
     private String summary;
 
     private ResolutionDto resolution;
+
     private ThemeDto theme;
 }

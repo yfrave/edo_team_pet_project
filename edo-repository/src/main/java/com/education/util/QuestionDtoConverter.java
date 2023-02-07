@@ -1,9 +1,11 @@
 package com.education.util;
 
+import com.education.converter.ThemeToDtoConverter;
 import com.education.entity.Question;
 import com.education.model.dto.QuestionDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,7 +13,9 @@ import org.springframework.stereotype.Component;
  * предназначен для конвертации Entity в DTO и наоборот
  */
 @Component
+@RequiredArgsConstructor
 public class QuestionDtoConverter {
+    private final ThemeToDtoConverter themeConverter;
     /**
      * Метод конвертации для конвертации Entity в DTO
      * @param question
@@ -24,6 +28,8 @@ public class QuestionDtoConverter {
                 .creationDate(question.getCreationDate())
                 .archivedDate(question.getArchivedDate())
                 .summary(question.getSummary())
+                .theme(themeConverter.convertThemeToDto(question.getTheme()))
+                .resolution(ResolutionConverter.resolutionToDto(question.getResolution()))
                 .build();
     }
 
@@ -39,6 +45,8 @@ public class QuestionDtoConverter {
                 .creationDate(questionDto.getCreationDate())
                 .archivedDate(questionDto.getArchivedDate())
                 .summary(questionDto.getSummary())
+                .theme(themeConverter.convertDtoToTheme(questionDto.getTheme()))
+                .resolution(ResolutionConverter.dtoToResolution(questionDto.getResolution()))
                 .build();
     }
 }
