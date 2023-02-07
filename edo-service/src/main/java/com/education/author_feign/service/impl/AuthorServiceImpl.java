@@ -29,9 +29,9 @@ import java.util.List;
 public class AuthorServiceImpl implements AuthorService {
 
     private final RestTemplate restTemplate;
-    private final EurekaClient eurekaClient;
     private final String BASE_URL = "/api/repository/author/";
     private final String HTTP = "http";
+    private final String SERVICE_NAME = "edo-repository";
     private EurekaClient client;
 
     /**
@@ -94,7 +94,6 @@ public class AuthorServiceImpl implements AuthorService {
      * @return InstanceInfo
      */
     public InstanceInfo getInstance() {
-        String SERVICE_NAME = "edo-repository";
         List<InstanceInfo> instances
                 = client.getApplication(SERVICE_NAME).getInstances();
 

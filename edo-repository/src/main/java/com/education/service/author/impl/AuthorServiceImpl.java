@@ -1,5 +1,6 @@
 package com.education.service.author.impl;
 
+import com.education.converter.NomenclatureToDtoConverter;
 import com.education.entity.Author;
 import com.education.model.dto.AuthorDto;
 import com.education.repository.author.AuthorRepository;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Имплементация интерфейса методов для работы в БД с сущностью Автора
@@ -55,9 +57,14 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     @Transactional(readOnly = true, rollbackFor=Exception.class)
     public List<AuthorDto> findAllById(List<Long> ids) {
-        List<AuthorDto> authorDtoList = new ArrayList<>();
-        for(Author author : authorRepository.findAllById(ids))
-            authorDtoList.add(Author.authorToDto(author));
-        return authorDtoList;
+        List<Author> authorList = authorRepository.findAllById(ids);
+
+        if (authorList.isEmpty()) {
+            return null;
+        }
+        return authorList
+                .stream()
+                .map(Author::authorToDto)
+                .collect(Collectors.toList());
     }
 }
