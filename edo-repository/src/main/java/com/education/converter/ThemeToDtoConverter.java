@@ -37,15 +37,18 @@ public class ThemeToDtoConverter {
      * Метод конвертирует ДТО в тему
      */
     public Theme convertDtoToTheme(ThemeDto themeDto) {
-        Theme parentTheme = themeDto.getParentThemeDto().getId() == null
+        Theme parentTheme = themeDto.getParentThemeDto() == null
                 ? null
                 : themeRepository.findById(themeDto.getParentThemeDto().getId()).orElse(null);
 
-        return new Theme(themeDto.getName(),
-                themeDto.getCreationDate(),
-                themeDto.getArchivedDate(),
-                themeDto.getCode(),
-                parentTheme);
+        return Theme.builder()
+                .id(themeDto.getId())
+                .name(themeDto.getName())
+                .creationDate(themeDto.getCreationDate())
+                .archivedDate(themeDto.getArchivedDate())
+                .code(themeDto.getCode())
+                .parentTheme(parentTheme)
+                .build();
     }
 }
 
