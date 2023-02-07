@@ -39,6 +39,8 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public void save(QuestionDto question) {
         question.setCreationDate(ZonedDateTime.now(ZoneId.of("Europe/Moscow")));
+        System.out.println("QuestionDTO theme id: " + question.getTheme().getId());
+        System.out.println("Question theme id: " + converter.toEntity(question).getTheme().getId());
         questionRepository.saveAndFlush(converter.toEntity(question));
     }
 

@@ -9,6 +9,7 @@ import java.util.List;
 public class ResolutionConverter {
 
     public static Resolution dtoToResolution(ResolutionDto dto) {
+        if(dto.getId() == null) return null;
         return Resolution.builder()
                 .id(dto.getId())
                 .creationDate(dto.getCreationDate())
