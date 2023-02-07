@@ -4,7 +4,7 @@ import com.education.entity.FilePool;
 import com.education.model.dto.FilePoolDto;
 import com.education.repository.FilePoolRepository;
 import com.education.service.filepool.FilePoolService;
-import com.education.util.FilePoolConverter;
+import com.education.util.Mapper.impl.FilePoolMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +24,8 @@ public class FilePoolServiceImpl implements FilePoolService {
      */
     private final FilePoolRepository FILE_POOL_REPOSITORY;
 
+    private final FilePoolMapper mapper;
+
     /**
      * Add in db method
      *
@@ -32,7 +34,7 @@ public class FilePoolServiceImpl implements FilePoolService {
      */
     @Transactional(rollbackFor = Exception.class)
     public FilePoolDto add(FilePoolDto filePool) {
-        FILE_POOL_REPOSITORY.save(FilePoolConverter.convertFromDto(filePool));
+        FILE_POOL_REPOSITORY.save( mapper.toEntity(filePool));
         return filePool;
     }
 
@@ -45,7 +47,7 @@ public class FilePoolServiceImpl implements FilePoolService {
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public FilePoolDto findById(Long id) {
         FilePool filePool = FILE_POOL_REPOSITORY.findById(id).orElse(null);
-        return filePool != null ? FilePoolConverter.convertToDto(filePool) : null;
+        return filePool != null ?  mapper.toDto(filePool) : null;
     }
 
     /**
@@ -58,7 +60,7 @@ public class FilePoolServiceImpl implements FilePoolService {
     public List<FilePoolDto> findAllById(List<Long> ids) {
         return FILE_POOL_REPOSITORY
                 .findAllById(ids).stream()
-                .map(FilePoolConverter::convertToDto)
+                .map(mapper::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -83,7 +85,7 @@ public class FilePoolServiceImpl implements FilePoolService {
     public FilePoolDto findByIdNotArchived(Long id) {
         FilePool filePool = FILE_POOL_REPOSITORY.findByIdNotArchived(id).orElse(null);
         return filePool != null
-                ? FilePoolConverter.convertToDto(filePool)
+                ? mapper.toDto(filePool)
                 : null;
     }
 
@@ -100,7 +102,7 @@ public class FilePoolServiceImpl implements FilePoolService {
 
         return filePools != null
                 ? filePools.stream()
-                .map(FilePoolConverter::convertToDto)
+                .map(mapper::toDto)
                 .collect(Collectors.toList())
                 : null;
     }
