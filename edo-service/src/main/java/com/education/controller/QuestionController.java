@@ -26,7 +26,7 @@ public class QuestionController {
     @PostMapping("/")
     public ResponseEntity<QuestionDto> save(@RequestBody QuestionDto question) {
         log.info("Creating new Question");
-        questionService.save(question);
+        QuestionDto questionDto = questionService.save(question);
         return question != null
                 ? new ResponseEntity<>(HttpStatus.CREATED)
                 : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);

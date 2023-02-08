@@ -35,6 +35,8 @@ public class ResolutionConverter {
     }
 
     public static ResolutionDto resolutionToDto(Resolution resolution) {
+        if(resolution == null) return null;
+
         return ResolutionDto.builder()
                 .id(resolution.getId())
                 .creationDate(resolution.getCreationDate())

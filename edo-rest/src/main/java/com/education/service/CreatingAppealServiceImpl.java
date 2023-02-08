@@ -20,7 +20,9 @@ public class CreatingAppealServiceImpl implements CreatingAppealService {
     public AppealDto createAppeal(AppealDto appealDto) {
 
         //client.saveAuthors(appealDto.getAuthors());
+        System.out.println("questions before: " + appealDto.getQuestions().get(0).getId());
         List<QuestionDto> questions = client.saveQuestion(appealDto.getQuestions());
+//               System.out.println("questions after: " + questions.get(0).getId());
         appealDto.setQuestions(questions);
         //client.saveFilePool(appealDto.getFile());
         appealDto.setAppealStatus(STATUS_FOR_NEW_APPEAL);
