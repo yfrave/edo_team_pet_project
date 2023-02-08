@@ -1,6 +1,7 @@
 package com.education.controller;
 
 import com.education.model.dto.AppealDto;
+import com.education.model.dto.QuestionDto;
 import com.education.service.CreatingAppealService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,6 +25,7 @@ public class CreateAppealController {
 
         ObjectMapper objectMapper = new ObjectMapper();
         AppealDto appealDto = objectMapper.readValue(json, AppealDto.class);
-        return new ResponseEntity<>(service.createAppeal(appealDto), HttpStatus.CREATED);
+        service.createAppeal(appealDto);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

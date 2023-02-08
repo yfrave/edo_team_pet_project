@@ -26,12 +26,12 @@ public class AppealConverter {
                 .annotation(dto.getAnnotation())
                 .signer(EmployeeConverter
                         .dtoToEmployee(dto.getSigner()))
-                .wayToReceive(dto.getSendingMethod())
+                .sendingMethod(dto.getSendingMethod())
                 .creator(EmployeeConverter
                         .dtoToEmployee(dto.getCreator()))
                 .addressee(EmployeeConverter
                         .dtoToEmployee(dto.getAddressee()))
-                .question(dto
+                .questions(dto
                         .getQuestions()
                         .stream()
                         .map(questionConverter::toEntity)
@@ -57,12 +57,13 @@ public class AppealConverter {
                 .annotation(appeal.getAnnotation())
                 .signer(EmployeeConverter
                         .employeeToDto(appeal.getSigner()))
+                .sendingMethod(appeal.getSendingMethod())
                 .creator(EmployeeConverter
                         .employeeToDto(appeal.getCreator()))
                 .addressee(EmployeeConverter
                         .employeeToDto(appeal.getAddressee()))
                 .questions(appeal
-                        .getQuestion()
+                        .getQuestions()
                         .stream()
                         .map(questionConverter::toDto)
                         .collect(Collectors.toList()))

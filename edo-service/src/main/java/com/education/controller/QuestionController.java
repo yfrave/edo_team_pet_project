@@ -28,7 +28,7 @@ public class QuestionController {
         log.info("Creating new Question");
         QuestionDto questionDto = questionService.save(question);
         return question != null
-                ? new ResponseEntity<>(HttpStatus.CREATED)
+                ? new ResponseEntity<>(questionDto, HttpStatus.CREATED)
                 : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 

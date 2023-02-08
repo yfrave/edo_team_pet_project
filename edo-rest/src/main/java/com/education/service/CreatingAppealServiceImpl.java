@@ -4,6 +4,7 @@ import com.education.client.CreateAppealRestTemplateClient;
 import com.education.model.dto.AppealDto;
 import com.education.model.dto.QuestionDto;
 import com.education.model.enumEntity.EnumAppealStatus;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,11 @@ public class CreatingAppealServiceImpl implements CreatingAppealService {
         //client.saveFilePool(appealDto.getFile());
         appealDto.setAppealStatus(STATUS_FOR_NEW_APPEAL);
 
-        return client.saveAppeal(appealDto);
+        try {
+            return client.saveAppeal(appealDto);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 }

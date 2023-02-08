@@ -7,6 +7,11 @@ import com.education.model.dto.FilePoolDto;
 import com.education.model.dto.QuestionDto;
 import com.education.model.dto.ResolutionDto;
 import com.education.model.dto.ThemeDto;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
@@ -26,7 +31,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CreateAppealRestTemplateClient {
 
-
+    private final XmlMapper objectMapper = new XmlMapper();
     private final RestTemplate restTemplate;
 
     private final EurekaClient eurekaClient;
@@ -37,15 +42,21 @@ public class CreateAppealRestTemplateClient {
 
     static final String SCHEMA_NAME = "http";
 
-    public AppealDto saveAppeal(AppealDto appealDto) {
-        return (AppealDto) save(appealDto, "appeal");
+    public AppealDto saveAppeal(AppealDto appealDto) throws JsonProcessingException {
+        return objectMapper.readValue(save(appealDto, "appeal"), AppealDto.class);
     }
 
     //На момент создания ее еще нет, нужно будет перепроверить после МРа
     public List<AuthorDto> saveAuthors(List<AuthorDto> authorDtos) {
         return authorDtos
                 .stream()
-                .map(authorDto -> (AuthorDto) save(authorDto, "author"))
+                .map(authorDto -> {
+                    try {
+                        return objectMapper.readValue(save(authorDto, "author"), AuthorDto.class);
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
                 .collect(Collectors.toList());
     }
 
@@ -53,36 +64,49 @@ public class CreateAppealRestTemplateClient {
     public List<FilePoolDto> saveFilePool(List<FilePoolDto> filePoolDtos) {
         return filePoolDtos
                 .stream()
-                .map(filePoolDto -> (FilePoolDto)save(filePoolDto,"filePool"))
+                .map(filePoolDto -> {
+                    try {
+                        return objectMapper.readValue(save(filePoolDto,"filePool"), FilePoolDto.class);
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
                 .collect(Collectors.toList());
     }
 
     public List<QuestionDto> saveQuestion(List<QuestionDto> questionDtos) {
+        objectMapper.registerModule(new JavaTimeModule());
         return questionDtos
                 .stream()
-                .map(questionDto ->(QuestionDto)save(questionDto, "question/"))
+                .map(questionDto -> {
+                    try {
+                        return objectMapper.readValue(save(questionDto, "question/"), QuestionDto.class);
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
                 .collect(Collectors.toList());
     }
 
-    public ThemeDto saveTheme(ThemeDto themeDto) {
-        return (ThemeDto) save(themeDto, "theme/");
+    public ThemeDto saveTheme(ThemeDto themeDto) throws JsonProcessingException {
+        return objectMapper.readValue(save(themeDto, "theme/"), ThemeDto.class);
     }
 
     //Нужен или нет будет зависеть от того как мы будем сохранять Resolution
-    public ResolutionDto saveResolution(ResolutionDto resolutionDto) {
-        return (ResolutionDto) save(resolutionDto, "resolution");
+    public ResolutionDto saveResolution(ResolutionDto resolutionDto) throws JsonProcessingException {
+        return objectMapper.readValue(save(resolutionDto, "resolution"), ResolutionDto.class);
     }
 
     //Нужен или нет будет зависеть от того как мы будем сохранять Resolution
-    public EmployeeDto saveEmployee(EmployeeDto employeeDto) {
-        return (EmployeeDto) save(employeeDto, "employee");
+    public EmployeeDto saveEmployee(EmployeeDto employeeDto) throws JsonProcessingException {
+        return objectMapper.readValue(save(employeeDto, "employee"), EmployeeDto.class);
     }
 
-    private Object save(Object dto, String entityName) {
+    private String save(Object dto, String entityName) {
         var request = new RequestEntity<>(dto, HttpMethod.POST,
                 buildUri(getInstance(), entityName));
 
-        var response = restTemplate.exchange(request, Object.class);
+        var response = restTemplate.exchange(request, String.class);
 
         if (!response.getStatusCode().is2xxSuccessful()) {
             throw new RuntimeException("Can't save" + entityName.replace("/", ""));

@@ -107,14 +107,14 @@ public class Appeal extends BaseEntity {
     @JoinTable(name = "appeal_question",
             joinColumns = @JoinColumn(name = "appeal_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "question_id", referencedColumnName = "id"))
-    private List<Question> question;
+    private List<Question> questions;
 
     /**
      * Способ получения обращения
      */
     @Column(name = "way_to_receive")
     @Enumerated(EnumType.STRING)
-    private EnumWayToReceive wayToReceive;
+    private EnumWayToReceive sendingMethod;
 
     /**
      * Статус обращения
