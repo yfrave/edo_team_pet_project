@@ -26,6 +26,7 @@ public class AppealConverter {
                 .annotation(dto.getAnnotation())
                 .signer(EmployeeConverter
                         .dtoToEmployee(dto.getSigner()))
+                .wayToReceive(dto.getSendingMethod())
                 .creator(EmployeeConverter
                         .dtoToEmployee(dto.getCreator()))
                 .addressee(EmployeeConverter
