@@ -46,7 +46,10 @@ public class QuestionDtoConverter {
                 .archivedDate(questionDto.getArchivedDate())
                 .summary(questionDto.getSummary())
                 .theme(themeConverter.convertDtoToTheme(questionDto.getTheme()))
-                .resolution(ResolutionConverter.dtoToResolution(questionDto.getResolution()))
+                .resolution(questionDto.getResolution() == null
+                        || questionDto.getResolution().getId() == null
+                        ? null
+                        : ResolutionConverter.dtoToResolution(questionDto.getResolution()))
                 .build();
     }
 }
