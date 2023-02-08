@@ -38,6 +38,7 @@ public class ThemeToDtoConverter {
      */
     public Theme convertDtoToTheme(ThemeDto themeDto) {
         Theme parentTheme = themeDto.getParentThemeDto() == null
+                || themeDto.getParentThemeDto().getId() == null
                 ? null
                 : themeRepository.findById(themeDto.getParentThemeDto().getId()).orElse(null);
 
