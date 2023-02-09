@@ -17,7 +17,6 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @ToString
-@SuperBuilder
 @Table(name = "author")
 public class Author extends BaseEntity {
 
