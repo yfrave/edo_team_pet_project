@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,12 +56,9 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
-    public List<Department> findAllByIdNotArchived(List<Long> ids) {
-        List<Department> result = new ArrayList<>();
-        for (Long n : ids) {
-            departmentRepository.findDepartmentByIdAndArchivedDateIsNull(n)
-                    .ifPresent(result::add);
-        }
+    public List<Department> findAllByIdNotArchived(List<Long> ids) { // test
+        List<Department> result = departmentRepository.findAllById(ids);
+        result.removeIf(element -> element.getArchivedDate() != null);
         return result;
     }
 }

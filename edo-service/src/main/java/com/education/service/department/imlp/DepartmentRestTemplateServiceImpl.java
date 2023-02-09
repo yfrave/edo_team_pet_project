@@ -42,6 +42,11 @@ public class DepartmentRestTemplateServiceImpl implements DepartmentService {
      */
     private static final String BASE_URL = "/api/repository/department";
 
+    /**
+     * Название микросервиса, к которому мы пытаемся получить доступ
+     */
+    private final String serviceName = "edo-repository";
+
     @Override
     public DepartmentDto save(DepartmentDto obj) {
         String lastPathComponent = "/";
@@ -63,7 +68,7 @@ public class DepartmentRestTemplateServiceImpl implements DepartmentService {
         var request = new RequestEntity<>(null, HttpMethod.GET, uri);
         var response = template.exchange(request, DepartmentDto.class);
         if (!response.getStatusCode().is2xxSuccessful()) {
-            throw new RuntimeException("Can't get the theme");
+            log.warning("Can't get the department");
         }
         return response.getBody();
     }
@@ -75,7 +80,7 @@ public class DepartmentRestTemplateServiceImpl implements DepartmentService {
         var request = new RequestEntity<>(null, HttpMethod.GET, uri);
         var response = template.exchange(request, DepartmentDto.class);
         if (!response.getStatusCode().is2xxSuccessful()) {
-            throw new RuntimeException("Can't get the theme");
+            log.warning("Can't get the department");
         }
 
         return response.getBody();
@@ -90,7 +95,7 @@ public class DepartmentRestTemplateServiceImpl implements DepartmentService {
         };
         var response = template.exchange(request, myBean);
         if (!response.getStatusCode().is2xxSuccessful()) {
-            throw new RuntimeException("Can't get the theme");
+            log.warning("Can't get the department");
         }
         return response.getBody();
     }
@@ -115,7 +120,6 @@ public class DepartmentRestTemplateServiceImpl implements DepartmentService {
      * @return InstanceInfo
      */
     private InstanceInfo getInstance() {
-        String serviceName = "edo-repository";
         Application app = eurekaClient.getApplication(serviceName);
         if (app == null) {
             log.warning("EurekaClient  не смогла достучаться до edo-repository");
