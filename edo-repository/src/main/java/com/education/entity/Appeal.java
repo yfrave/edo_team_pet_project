@@ -123,4 +123,3 @@ public class Appeal extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private EnumAppealStatus appealStatus;
 }
-

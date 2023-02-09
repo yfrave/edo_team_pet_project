@@ -4,8 +4,8 @@ import com.education.entity.Address;
 import com.education.model.dto.AddressDto;
 import com.education.repository.AddressRepository;
 import com.education.service.address.AddressService;
-import static com.education.util.DtoConverter.*;
 
+import com.education.util.Mapper.impl.AddressMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +24,8 @@ public class AddressServiceImpl implements AddressService {
      */
     private AddressRepository addressRepository;
 
+    private AddressMapper mapper;
+
     /**
      * Save method
      * @param obj AddressDto
@@ -32,8 +34,8 @@ public class AddressServiceImpl implements AddressService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public AddressDto save(AddressDto obj) {
-        Address address = convertFrom(obj);
-        return convertTo(addressRepository.saveAndFlush(address));
+        Address address = mapper.toEntity(obj);
+        return mapper.toDto(addressRepository.saveAndFlush(address));
     }
 
     /**

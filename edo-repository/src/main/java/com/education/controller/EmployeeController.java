@@ -1,9 +1,9 @@
 package com.education.controller;
 
-import com.education.converter.EmployeeConverters;
 import com.education.entity.Employee;
 import com.education.model.dto.EmployeeDto;
 import com.education.service.employee.EmployeeService;
+import com.education.util.Mapper.impl.EmployeeMapper;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
@@ -36,6 +36,8 @@ public class EmployeeController {
     @ApiModelProperty("Сервис репозитория для сущности Employee")
     private final EmployeeService employeeService;
 
+    private final EmployeeMapper mapper;
+
     @ApiOperation("Получить сущность Employee по id")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Employee was successfully found"),
             @ApiResponse(code = 404, message = "Employee was not found")})
@@ -44,8 +46,8 @@ public class EmployeeController {
             @PathVariable("id") Long id
             , @RequestParam(name = "notArchivedOnly", defaultValue = "true") boolean notArchivedOnly) {
         log.log(Level.INFO, "Получен запрос на поиск сущности с id = {0}", id);
-        EmployeeDto employeeDto = EmployeeConverters
-                .entityToDtoConverter(notArchivedOnly
+        EmployeeDto employeeDto = mapper
+                .toDto(notArchivedOnly
                         ? employeeService.findByIdNotArchived(id)
                         : employeeService.findById(id));
         log.log(employeeDto != null
@@ -66,7 +68,7 @@ public class EmployeeController {
                 ? employeeService.findAllByIdNotArchived(ids)
                 : employeeService.findAllById(ids))
                 .stream()
-                .map(EmployeeConverters::entityToDtoConverter).toList();
+                .map(mapper::toDto).toList();
         log.log(!employeeDtos.isEmpty()
                         ? Level.INFO
                         : Level.WARNING
@@ -80,10 +82,10 @@ public class EmployeeController {
     @PostMapping
     public ResponseEntity<EmployeeDto> saveEmployee(@RequestBody EmployeeDto employeeDto) {
         log.log(Level.INFO, "Получен запрос на сохранение сущности" );
-        Employee employee = EmployeeConverters.dtoToEntityConverter(employeeDto);
+        Employee employee = mapper.toEntity(employeeDto);
         employeeService.save(employee);
         log.log(Level.INFO, "Сущность сохранена");
-        return new ResponseEntity<>(EmployeeConverters.entityToDtoConverter(employee)
+        return new ResponseEntity<>(mapper.toDto(employee)
                 , HttpStatus.CREATED);
     }
 
