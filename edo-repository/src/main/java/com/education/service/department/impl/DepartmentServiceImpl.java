@@ -1,9 +1,10 @@
 package com.education.service.department.impl;
 
 import com.education.entity.Department;
-import com.education.repository.AddressRepository;
 import com.education.repository.DepartmentRepository;
+import com.education.service.address.AddressService;
 import com.education.service.department.DepartmentService;
+import com.education.util.Mapper.impl.AddressMapper;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DepartmentServiceImpl implements DepartmentService {
     private final DepartmentRepository departmentRepository;
-    private final AddressRepository addressRepository;
+    private final AddressService addressService;
+    private final AddressMapper addressMapper;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -24,7 +26,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         if (obj.getAddress() == null) {
             return null;
         } else {
-            addressRepository.save(obj.getAddress());
+            addressService.save(addressMapper.toDto(obj.getAddress()));
             return departmentRepository.saveAndFlush(obj);
         }
 
