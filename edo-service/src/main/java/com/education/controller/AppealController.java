@@ -31,7 +31,7 @@ public class AppealController {
     })
     @PostMapping
     public ResponseEntity<AppealDto> saveAppeal(@ApiParam("appealDto") @RequestBody AppealDto appealDto) {
-        appealService.save(appealDto);
+        AppealDto a = appealService.save(appealDto);
         if (appealService.findById(appealDto.getId()) != null) {
             log.log(Level.INFO, "Сущность сохранена или обновлена");
             return new ResponseEntity<>(appealDto, HttpStatus.CREATED);

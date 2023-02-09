@@ -26,6 +26,7 @@ public class QuestionController {
     @PostMapping("/")
     public ResponseEntity<QuestionDto> save(@RequestBody QuestionDto question) {
         log.info("Creating new Question");
+        if (question.getResolution().getId() == null) question.setResolution(null);
         QuestionDto questionDto = questionService.save(question);
         return questionDto != null
                 ? new ResponseEntity<>(questionDto, HttpStatus.CREATED)
