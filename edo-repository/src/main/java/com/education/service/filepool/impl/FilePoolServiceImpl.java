@@ -22,19 +22,19 @@ public class FilePoolServiceImpl implements FilePoolService {
     /**
      * Repository
      */
-    private final FilePoolRepository FILE_POOL_REPOSITORY;
+    private final FilePoolRepository repository;
 
     private final FilePoolMapper mapper;
 
     /**
      * Add in db method
      *
-     * @param filePool FilePoolDto
-     * @return FilePoolDto
+     * @param filePool FilePool
+     * @return FilePool
      */
     @Transactional(rollbackFor = Exception.class)
-    public FilePoolDto add(FilePoolDto filePool) {
-        FILE_POOL_REPOSITORY.save( mapper.toEntity(filePool));
+    public FilePool add(FilePool filePool) {
+        repository.save(filePool);
         return filePool;
     }
 
@@ -46,7 +46,7 @@ public class FilePoolServiceImpl implements FilePoolService {
      */
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public FilePoolDto findById(Long id) {
-        FilePool filePool = FILE_POOL_REPOSITORY.findById(id).orElse(null);
+        FilePool filePool = repository.findById(id).orElse(null);
         return filePool != null ?  mapper.toDto(filePool) : null;
     }
 
@@ -58,7 +58,7 @@ public class FilePoolServiceImpl implements FilePoolService {
      */
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<FilePoolDto> findAllById(List<Long> ids) {
-        return FILE_POOL_REPOSITORY
+        return repository
                 .findAllById(ids).stream()
                 .map(mapper::toDto)
                 .collect(Collectors.toList());
@@ -71,7 +71,7 @@ public class FilePoolServiceImpl implements FilePoolService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void moveToArchive(Long id) {
-        FILE_POOL_REPOSITORY.moveToArchive(id);
+        repository.moveToArchive(id);
     }
 
     /**
@@ -83,7 +83,7 @@ public class FilePoolServiceImpl implements FilePoolService {
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     @Override
     public FilePoolDto findByIdNotArchived(Long id) {
-        FilePool filePool = FILE_POOL_REPOSITORY.findByIdNotArchived(id).orElse(null);
+        FilePool filePool = repository.findByIdNotArchived(id).orElse(null);
         return filePool != null
                 ? mapper.toDto(filePool)
                 : null;
@@ -98,7 +98,7 @@ public class FilePoolServiceImpl implements FilePoolService {
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     @Override
     public List<FilePoolDto> findAllByIdNotArchived(Iterable<Long> list) {
-        List<FilePool> filePools = FILE_POOL_REPOSITORY.findAllByIdNotArchived(list);
+        List<FilePool> filePools = repository.findAllByIdNotArchived(list);
 
         return filePools != null
                 ? filePools.stream()
