@@ -21,7 +21,7 @@ public class AppealServiceImpl implements AppealService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public Appeal save(Appeal appeal) {
-        appeal.setCreation_date(ZonedDateTime.now(ZoneId.of("Europe/Moscow")));
+        appeal.setCreationDate(ZonedDateTime.now(ZoneId.of("Europe/Moscow")));
         return appealRepository.save(appeal);
     }
 
