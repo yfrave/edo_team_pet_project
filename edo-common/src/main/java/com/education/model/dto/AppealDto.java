@@ -20,10 +20,10 @@ public class AppealDto {
     private Long id;
 
     @ApiModelProperty("Дата создания обращения")
-    private ZonedDateTime creationDate;
+    private ZonedDateTime creation_date;
 
     @ApiModelProperty("Дата архивирования обращения")
-    private ZonedDateTime archivedDate;
+    private ZonedDateTime archived_date;
 
     @ApiModelProperty("Номер обращения")
     private String number;
