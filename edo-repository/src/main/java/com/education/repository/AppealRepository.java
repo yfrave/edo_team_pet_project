@@ -25,11 +25,11 @@ public interface AppealRepository extends JpaRepository<Appeal, Long> {
             nativeQuery = true)
     void moveToArchive(@Param("id") Long id);
 
-    @Query("select r from Appeal r where r.id = :id and r.archivedDate is null")
+    @Query("select r from Appeal r where r.id = :id and r.archived_date is null")
     @EntityGraph(attributePaths = {"creator", "signer", "executors", "curator"})
     Optional<Appeal> findByIdNotArchived(@Param("id") Long id);
 
-    @Query(value = "select r from Appeal r where r.id in :ids and r.archivedDate is null ")
+    @Query(value = "select r from Appeal r where r.id in :ids and r.archived_date is null ")
     @EntityGraph(attributePaths = {"creator", "signer", "executors", "curator"})
     List<Appeal> findAllByIdNotArchived(@Param("ids") Iterable<Long> ids);
 }
