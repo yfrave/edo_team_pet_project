@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CreateAppealRestTemplateClient {
 
-    private final XmlMapper objectMapper = new XmlMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
     private final RestTemplate restTemplate;
 
     private final EurekaClient eurekaClient;

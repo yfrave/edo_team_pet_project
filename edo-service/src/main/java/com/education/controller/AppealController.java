@@ -37,7 +37,7 @@ public class AppealController {
             return new ResponseEntity<>(appealDto, HttpStatus.CREATED);
         }
         log.log(Level.WARN, "Сущность не сохранена и не обновлена");
-        return new ResponseEntity<>(appealDto, HttpStatus.CONFLICT);
+        return new ResponseEntity<>(HttpStatus.CONFLICT);
     }
 
     @ApiOperation(value = "Обновление даты архивации")
