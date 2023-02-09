@@ -31,10 +31,10 @@ public class AppealController {
     })
     @PostMapping
     public ResponseEntity<AppealDto> saveAppeal(@ApiParam("appealDto") @RequestBody AppealDto appealDto) {
-        AppealDto a = appealService.save(appealDto);
-        if (appealService.findById(appealDto.getId()) != null) {
+        AppealDto appealAfter = appealService.save(appealDto);
+        if (appealAfter.getId() != null) {
             log.log(Level.INFO, "Сущность сохранена или обновлена");
-            return new ResponseEntity<>(appealDto, HttpStatus.CREATED);
+            return new ResponseEntity<>(appealAfter, HttpStatus.CREATED);
         }
         log.log(Level.WARN, "Сущность не сохранена и не обновлена");
         return new ResponseEntity<>(HttpStatus.CONFLICT);

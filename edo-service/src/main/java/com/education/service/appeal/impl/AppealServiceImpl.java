@@ -1,13 +1,15 @@
 package com.education.service.appeal.impl;
 
 import com.education.model.dto.AppealDto;
+import com.education.model.dto.ThemeDto;
 import com.education.service.appeal.AppealService;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
-import com.netflix.discovery.shared.Application;
 import lombok.RequiredArgsConstructor;
 
 import org.apache.http.HttpHost;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -15,7 +17,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -48,10 +49,14 @@ public class AppealServiceImpl implements AppealService {
     }
 
     @Override
-    public void save(AppealDto appeal) {
+    public AppealDto save(AppealDto appealDto) {
         InstanceInfo instanceInfo = getInstance();
-        URI uri = getURIByInstance(instanceInfo, "");
-        TEMPLATE.postForObject(uri, appeal, AppealDto.class);
+
+        var request = new RequestEntity(appealDto, HttpMethod.POST, getURIByInstance(instanceInfo, ""));
+
+        var response = TEMPLATE.exchange(request, AppealDto.class);
+
+        return response.getBody();
     }
 
     @Override
