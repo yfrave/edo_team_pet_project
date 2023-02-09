@@ -66,7 +66,7 @@ public class CreateAppealRestTemplateClient {
                 .stream()
                 .map(filePoolDto -> {
                     try {
-                        return objectMapper.readValue(save(filePoolDto,"filePool"), FilePoolDto.class);
+                        return objectMapper.readValue(save(filePoolDto,"file_pool/"), FilePoolDto.class);
                     } catch (JsonProcessingException e) {
                         throw new RuntimeException(e);
                     }
