@@ -90,7 +90,7 @@ public class Appeal extends BaseEntity {
     @JoinTable(name = "appeal_author",
             joinColumns = @JoinColumn(name = "appeal_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id"))
-    private List<Author> author;
+    private List<Author> authors;
 
     /**
      * хранилища файлов, связанных с обращением
@@ -98,7 +98,7 @@ public class Appeal extends BaseEntity {
     @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "appeal_file_pool", joinColumns = @JoinColumn(name = "appeal_id", referencedColumnName = "id")
             , inverseJoinColumns = @JoinColumn(name = "file_pool_id", referencedColumnName = "id"))
-    private List<FilePool> filePool;
+    private List<FilePool> file;
 
     /**
      * Вопросы, связанные с обращением

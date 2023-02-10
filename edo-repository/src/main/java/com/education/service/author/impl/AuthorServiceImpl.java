@@ -26,9 +26,10 @@ public class AuthorServiceImpl implements AuthorService {
      */
     @Override
     @Transactional(rollbackFor=Exception.class)
-    public void save(AuthorDto authorDto) {
+    public AuthorDto save(AuthorDto authorDto) {
         Author author = Author.dtoToAuthor(authorDto);
         authorRepository.save(author);
+        return Author.authorToDto(author);
     }
 
     /**

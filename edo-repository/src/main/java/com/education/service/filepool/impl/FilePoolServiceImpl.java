@@ -34,8 +34,9 @@ public class FilePoolServiceImpl implements FilePoolService {
      */
     @Transactional(rollbackFor = Exception.class)
     public FilePoolDto add(FilePoolDto filePool) {
-        FILE_POOL_REPOSITORY.save( mapper.toEntity(filePool));
-        return filePool;
+        FilePool filePoolEntity = mapper.toEntity(filePool);
+        FILE_POOL_REPOSITORY.save(filePoolEntity);
+        return mapper.toDto(filePoolEntity);
     }
 
     /**
