@@ -24,10 +24,10 @@ import java.util.Random;
 @Log
 public class FilePoolServiceImpl implements FilePoolService {
     @NotNull
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     @NotNull
-    private EurekaClient eurekaClient;
+    private final EurekaClient eurekaClient;
 
     private static final String BASE_URL = "/api/repository/file_pool/";
     private static final String URI_SCHEME = "http";

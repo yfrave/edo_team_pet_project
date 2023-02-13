@@ -10,7 +10,7 @@ import lombok.Setter;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
-@ApiModel("Класс AddressDto, dto для класса Address.class")
+@ApiModel("Класс FilePoolDto, dto для класса FilePool.class")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
