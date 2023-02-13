@@ -26,13 +26,13 @@ public class Appeal extends BaseEntity {
     /**
      * Дата создания обращения
      */
-    @Column(name = "creationDate", nullable = false)
+    @Column(name = "creation_date", nullable = false)
     private ZonedDateTime creationDate;
 
     /**
      * Дата архивирования обращения
      */
-    @Column(name = "archivedDate", nullable = false)
+    @Column(name = "archived_date", nullable = false)
     private ZonedDateTime archivedDate;
 
     /**
