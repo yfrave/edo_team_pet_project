@@ -107,14 +107,22 @@ public class Appeal extends BaseEntity {
     @JoinTable(name = "appeal_question",
             joinColumns = @JoinColumn(name = "appeal_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "question_id", referencedColumnName = "id"))
-    private List<Question> questions;
+    private List<Question> question;
 
     /**
-     * Способ получения обращения
+     * Резолюция по обращению
      */
-    @Column(name = "way_to_receive")
-    @Enumerated(EnumType.STRING)
-    private EnumWayToReceive sendingMethod;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "resolution_id")
+    private Resolution resolution;
+
+
+    /**
+     * Тема обращения
+     */
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "theme_id")
+    private Theme theme;
 
     /**
      * Статус обращения
@@ -122,4 +130,11 @@ public class Appeal extends BaseEntity {
     @Column(name = "appeal_status")
     @Enumerated(EnumType.STRING)
     private EnumAppealStatus appealStatus;
+
+    /**
+     * Способ получения обращения
+     */
+    @Column(name = "way_to_receive")
+    @Enumerated(EnumType.STRING)
+    private EnumWayToReceive sendingMethod;
 }
