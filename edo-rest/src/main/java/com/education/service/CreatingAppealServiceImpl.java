@@ -21,8 +21,8 @@ public class CreatingAppealServiceImpl implements CreatingAppealService {
 
     @Override
     public AppealDto createAppeal(AppealDto appealDto) {
-        List<QuestionDto> questions = client.saveQuestion(appealDto.getQuestions());
-        appealDto.setQuestions(questions);
+        List<QuestionDto> questions = client.saveQuestion(appealDto.getQuestion());
+        appealDto.setQuestion(questions);
         appealDto.setAppealStatus(STATUS_FOR_NEW_APPEAL);
         List<FilePoolDto> file = client.saveFilePool(appealDto.getFile());
         appealDto.setFile(file);

@@ -17,7 +17,7 @@ public interface AppealRepository extends JpaRepository<Appeal, Long> {
     @EntityGraph(attributePaths = {"creator", "signer"})
     Optional<Appeal> findById(Long id);
 
-    @EntityGraph(attributePaths = {"creator", "signer", "executors", "curator"})
+    @EntityGraph(attributePaths = {"creator", "signer"})
     List<Appeal> findAllById(Iterable<Long> ids);
 
     @Modifying
@@ -26,11 +26,11 @@ public interface AppealRepository extends JpaRepository<Appeal, Long> {
     void moveToArchive(@Param("id") Long id);
 
     @Query("select r from Appeal r where r.id = :id and r.archivedDate is null")
-    @EntityGraph(attributePaths = {"creator", "signer", "executors", "curator"})
+    @EntityGraph(attributePaths = {"creator", "signer"})
     Optional<Appeal> findByIdNotArchived(@Param("id") Long id);
 
     @Query(value = "select r from Appeal r where r.id in :ids and r.archivedDate is null ")
-    @EntityGraph(attributePaths = {"creator", "signer", "executors", "curator"})
+    @EntityGraph(attributePaths = {"creator", "signer"})
     List<Appeal> findAllByIdNotArchived(@Param("ids") Iterable<Long> ids);
 }
 

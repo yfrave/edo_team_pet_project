@@ -15,6 +15,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
+@Getter
+@Setter
 public class AppealDto {
     @ApiModelProperty("Id обращения")
     private Long id;
