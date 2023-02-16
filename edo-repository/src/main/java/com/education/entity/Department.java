@@ -1,5 +1,6 @@
 package com.education.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -39,7 +40,6 @@ public class Department extends BaseEntity {
      * Адрес
      */
     @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
     @JoinColumn(name = "address_id")
     private Address address;
 
@@ -60,6 +60,7 @@ public class Department extends BaseEntity {
      */
     @OneToOne
     @JoinColumn(name = "department_id")
+    @JsonIgnore
     private Department department;
 
     /**

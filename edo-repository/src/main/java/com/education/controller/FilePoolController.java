@@ -3,6 +3,7 @@ package com.education.controller;
 import com.education.entity.FilePool;
 import com.education.model.dto.FilePoolDto;
 import com.education.service.filepool.FilePoolService;
+import com.education.util.Mapper.impl.FilePoolMapper;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
@@ -24,7 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.stream.Collectors;
 
 @RestController
 @Log
@@ -33,7 +33,10 @@ import java.util.stream.Collectors;
 @ApiModel("Controller for FilePool")
 public class FilePoolController {
     @ApiModelProperty("service")
-    private final FilePoolService FILE_POOL_SERVICE;
+    private final FilePoolService repository;
+
+    @ApiModelProperty("mapper")
+    private final FilePoolMapper mapper;
 
 
     @ApiOperation(value = "Получить хранилище файлов по id", notes = "Returns an address as per the id")
@@ -44,7 +47,7 @@ public class FilePoolController {
     @GetMapping("/{id}")
     public ResponseEntity<FilePoolDto> fetchFilePool(@PathVariable("id") Long id) {
         log.info("Request to get file pool by id = " + id);
-        FilePoolDto filePoolDto = FILE_POOL_SERVICE.findById(id);
+        FilePoolDto filePoolDto = repository.findById(id);
         return filePoolDto != null
                 ? new ResponseEntity<>(filePoolDto, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -59,7 +62,7 @@ public class FilePoolController {
     public ResponseEntity<List<FilePoolDto>> fetchFindAllById(@RequestBody
                                                               List<Long> ids) {
         log.info("Got request to get file pools by ids");
-        List<FilePoolDto> filePools = FILE_POOL_SERVICE.findAllById(ids);
+        List<FilePoolDto> filePools = repository.findAllById(ids);
         if (filePools == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -75,11 +78,11 @@ public class FilePoolController {
     @PostMapping("/")
     public ResponseEntity<FilePoolDto> add(@RequestBody
                                            @ApiParam("filePool")
-                                           FilePoolDto filePool) {
+                                           FilePool filePool) {
 
         filePool.setUploadDate(ZonedDateTime.now());
         log.info("Got request to add new file pool");
-        ResponseEntity<FilePoolDto> responseEntity = new ResponseEntity<>(FILE_POOL_SERVICE.add(filePool), HttpStatus.CREATED);
+        ResponseEntity<FilePoolDto> responseEntity = new ResponseEntity<>(mapper.toDto(repository.add(filePool)), HttpStatus.CREATED);
         return responseEntity;
     }
 
@@ -90,9 +93,10 @@ public class FilePoolController {
     @PutMapping("/{id}")
     public ResponseEntity<Void> moveToArchived(@PathVariable("id") Long id) {
         log.info("Got request to move file pool to archive");
-        FILE_POOL_SERVICE.moveToArchive(id);
+        repository.moveToArchive(id);
         return ResponseEntity.ok().build();
     }
+
     @ApiOperation(value = "Получить не заархивированное хранилище файлов по id")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved"),
@@ -100,7 +104,7 @@ public class FilePoolController {
     })
     @GetMapping("/notArchived/{id}")
     public ResponseEntity<FilePoolDto> findByIdNotArchived(@PathVariable("id") Long id) {
-        FilePoolDto filePoolDto = FILE_POOL_SERVICE.findByIdNotArchived(id);
+        FilePoolDto filePoolDto = repository.findByIdNotArchived(id);
 
         if (filePoolDto == null) {
             log.log(Level.WARNING, "not found not archived FilePoolDto with id = {0}", id);
@@ -117,7 +121,7 @@ public class FilePoolController {
     })
     @PostMapping("/notArchived")
     public ResponseEntity<List<FilePoolDto>> findAllByIdNotArchived(@RequestBody List<Long> ids) {
-        List<FilePoolDto> filePoolDto = FILE_POOL_SERVICE.findAllByIdNotArchived(ids);
+        List<FilePoolDto> filePoolDto = repository.findAllByIdNotArchived(ids);
 
         if (filePoolDto == null || filePoolDto.isEmpty()) {
             log.log(Level.WARNING, "List of not archived FilePoolDto not found");

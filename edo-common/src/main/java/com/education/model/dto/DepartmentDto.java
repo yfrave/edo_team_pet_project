@@ -3,12 +3,15 @@ package com.education.model.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
+import lombok.*;
 
 import java.time.ZonedDateTime;
 
 @ApiModel("Dto для Department.class")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class DepartmentDto {
     @ApiModelProperty(
             notes = "Department id",
