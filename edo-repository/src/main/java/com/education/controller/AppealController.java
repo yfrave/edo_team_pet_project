@@ -44,13 +44,6 @@ public class AppealController {
         AppealDto appealAfter = mapper.toDto(appealService.save(mapper.toEntity(appealDto)));
         log.info("Создано ОБРАЩЕНИЕ с id {}", appealAfter.getId());
         return new ResponseEntity<>(appealAfter, HttpStatus.CREATED);
-
-//        if (appealService.findById(appeal.getId()) != null) {
-//            log.log(Level.INFO, "Сущность сохранена или обновлена");
-//            return new ResponseEntity<>(mapper.toDto(appeal), HttpStatus.CREATED);
-//        }
-//        log.log(Level.WARN, "Сущность не сохранена и не обновлена");
-//        return new ResponseEntity<>(mapper.toDto(appeal), HttpStatus.CONFLICT);
     }
 
     @ApiOperation(value = "Обновление даты архивации")
