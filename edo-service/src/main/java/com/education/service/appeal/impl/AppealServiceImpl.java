@@ -1,7 +1,6 @@
 package com.education.service.appeal.impl;
 
 import com.education.model.dto.AppealDto;
-import com.education.model.dto.ThemeDto;
 import com.education.service.appeal.AppealService;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;

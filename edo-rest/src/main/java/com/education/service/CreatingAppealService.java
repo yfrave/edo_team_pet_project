@@ -4,5 +4,5 @@ import com.education.model.dto.AppealDto;
 
 
 public interface CreatingAppealService {
-    AppealDto createAppeal(AppealDto json);
+    AppealDto createAppeal(AppealDto appealDto);
 }

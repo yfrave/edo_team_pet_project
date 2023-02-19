@@ -2,8 +2,7 @@ package com.education.controller;
 
 import com.education.model.dto.AppealDto;
 import com.education.service.CreatingAppealService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,17 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/rest/create_appeal")
+@RequestMapping("api/rest/appeal")
 public class CreateAppealController {
 
     private final CreatingAppealService service;
 
-    @PostMapping("/")
-    public ResponseEntity<AppealDto> createNewAppeal(@RequestBody String json) throws JsonProcessingException {
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        AppealDto appealDto = objectMapper.readValue(json, AppealDto.class);
-        AppealDto appealAfter = service.createAppeal(appealDto);
+    @ApiOperation(value = "Сохранение обращения")
+    @PostMapping
+    public ResponseEntity<AppealDto> createNewAppeal(@RequestBody AppealDto appeal) {
+        AppealDto appealAfter = service.createAppeal(appeal);
         return new ResponseEntity<>(appealAfter, HttpStatus.CREATED);
     }
 }
