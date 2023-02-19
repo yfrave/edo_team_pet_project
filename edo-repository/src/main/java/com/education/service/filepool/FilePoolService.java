@@ -11,10 +11,10 @@ public interface FilePoolService {
     /**
      * Add in db method
      *
-     * @param filePool FilePoolDto
-     * @return FilePoolDto
+     * @param filePool FilePool
+     * @return FilePool
      */
-    FilePoolDto add(FilePoolDto filePool);
+    FilePool add(FilePool filePool);
 
     /**
      * findById in db
