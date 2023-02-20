@@ -58,12 +58,13 @@ public class ThemeServiceImpl implements ThemeService {
     /**
      * Выдает темы по списку id
      */
-    @Cacheable
+    @Cacheable(value = "cacheForAllTheme")
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<ThemeDto> findAllById(List<Long> ids) {
 
         return themeRepository.findAllById(ids).stream().map(mapper::toDto).toList();
-        }
+    }
+
 
     /**
      * Выдает тему по id, если она не в архивных (т.е. архивная дата отсутствует)
@@ -76,12 +77,12 @@ public class ThemeServiceImpl implements ThemeService {
         return themeRepository.findByIdAndArchivedDateIsNull(id) == null
                 ? null
                 : mapper.toDto(themeRepository.findByIdAndArchivedDateIsNull(id));
-        }
+    }
 
     /**
      * Выдает по списку id соответствующие темы, которые не являются архивными
      */
-    @Cacheable
+    @Cacheable(value = "сacheForAllThemeNotArchive")
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<ThemeDto> findAllByIdNotArchived(List<Long> ids) {
 
