@@ -1,43 +1,30 @@
---Добавление данных в таблицу theme
-INSERT INTO edo.theme (id, theme_name, creation_date, archived_date, code, parent_id)
-VALUES (1, 'Вопросы по благоустройству', null, null, '1', null)
-ON CONFLICT (id) DO NOTHING;
-INSERT INTO edo.theme (id, theme_name, creation_date, archived_date, code, parent_id)
-VALUES (2, 'благоустройство парков', null, null, '1.1', 1)
-ON CONFLICT (id) DO NOTHING;
-INSERT INTO edo.theme (id, theme_name, creation_date, archived_date, code, parent_id)
-VALUES (3, 'благоустройство улиц', null, null, '1.2', 1)
-ON CONFLICT (id) DO NOTHING;
-INSERT INTO edo.theme (id, theme_name, creation_date, archived_date, code, parent_id)
-VALUES (4, 'пешеходная часть', null, null, '1.2.2ю', 3)
-ON CONFLICT (id) DO NOTHING;
-INSERT INTO edo.theme (id, theme_name, creation_date, archived_date, code, parent_id)
-VALUES (5, 'автомобильная часть', null, null, '1.2.2ю', 3)
-ON CONFLICT (id) DO NOTHING;
-INSERT INTO edo.theme (id, theme_name, creation_date, archived_date, code, parent_id)
-VALUES (6, 'благоустройство дворов', null, null, '1.3', 1)
-ON CONFLICT (id) DO NOTHING;
-INSERT INTO edo.theme (id, theme_name, creation_date, archived_date, code, parent_id)
-VALUES (7, 'Вопросы по работе коммунальных служб', null, null, '2', null)
-ON CONFLICT (id) DO NOTHING;
-INSERT INTO edo.theme (id, theme_name, creation_date, archived_date, code, parent_id)
-VALUES (8, 'обращение с тко', null, null, '2.1', 7)
-ON CONFLICT (id) DO NOTHING;
-INSERT INTO edo.theme (id, theme_name, creation_date, archived_date, code, parent_id)
-VALUES (9, 'содержание придомовых территорий', null, null, '2.2', 7)
-ON CONFLICT (id) DO NOTHING;
-INSERT INTO edo.theme (id, theme_name, creation_date, archived_date, code, parent_id)
-VALUES (10, 'содержание коммунальных сетей', null, null, '2.3', 7)
-ON CONFLICT (id) DO NOTHING;
-INSERT INTO edo.theme (id, theme_name, creation_date, archived_date, code, parent_id)
-VALUES (11, 'Вопросы по социальным льготам', null, null, '3', null)
-ON CONFLICT (id) DO NOTHING;
-INSERT INTO edo.theme (id, theme_name, creation_date, archived_date, code, parent_id)
-VALUES (12, 'социальные льготы для многодетных семей', null, null, '3.1', 11)
-ON CONFLICT (id) DO NOTHING;
-INSERT INTO edo.theme (id, theme_name, creation_date, archived_date, code, parent_id)
-VALUES (13, 'социальные льготы для инвалидов', null, null, '3.2', 11)
-ON CONFLICT (id) DO NOTHING;
-INSERT INTO edo.theme (id, theme_name, creation_date, archived_date, code, parent_id)
-VALUES (14, 'социальные льготы для пенсионеров', null, null, '3.3', 11)
-ON CONFLICT (id) DO NOTHING;
+--Добавление строк в таблицу theme
+INSERT INTO theme (theme_name, code)
+VALUES ('Вопросы по благоустройству', '1'),
+       ('благоустройство парков', '1.1'),
+       ('благоустройство улиц', '1.2'),
+       ('пешеходная часть', '1.2.1'),
+       ('автомобильная часть', '1.2.2'),
+       ('благоустройство дворов', '1.3'),
+       ('Вопросы по работе коммунальных служб', '2'),
+       ('обращение с тко', '2.1'),
+       ('содержание придомовых территорий', '2.2'),
+       ('содержание коммунальных сетей', '2.3'),
+       ('Вопросы по социальным льготам', '3'),
+       ('социальные льготы для многодетных семей', '3.1'),
+       ('социальные льготы для инвалидов', '3.2'),
+       ('социальные льготы для пенсионеров', '3.3');
+
+--Добавление внешнего ключа в таблицу theme
+UPDATE theme
+SET parent_id = (SELECT theme.id FROM edo.theme where code = '1')
+where code in ('1.1', '1.2', '1.3');
+UPDATE theme
+SET parent_id = (SELECT theme.id FROM theme where code = '1.2')
+where code in ('1.2.1', '1.2.2');
+UPDATE theme
+SET parent_id = (SELECT theme.id FROM theme where code = '2')
+where code in ('2.1', '2.2', '2.3');
+UPDATE theme
+SET parent_id = (SELECT theme.id FROM theme where code = '3')
+where code in ('3.1', '3.2', '3.3');
