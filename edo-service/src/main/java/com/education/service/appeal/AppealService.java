@@ -5,7 +5,7 @@ import com.education.model.dto.AppealDto;
 import java.util.List;
 
 public interface AppealService {
-    void save(AppealDto appeal);
+    AppealDto save(AppealDto appeal);
 
     void moveToArchive(Long id);
 

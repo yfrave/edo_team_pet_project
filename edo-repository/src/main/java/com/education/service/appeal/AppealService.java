@@ -6,7 +6,7 @@ import com.education.entity.Appeal;
 import java.util.List;
 
 public interface AppealService {
-    void save(Appeal appeal);
+    Appeal save(Appeal appeal);
 
     void moveToArchive(Long id);
 

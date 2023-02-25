@@ -1,5 +1,6 @@
 package com.education.controller;
 
+import com.education.entity.Appeal;
 import com.education.model.dto.AppealDto;
 import com.education.service.appeal.AppealService;
 import com.education.util.Mapper.impl.AppealMapper;
@@ -11,9 +12,13 @@ import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.Level;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import com.education.entity.Appeal;
-
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -34,14 +39,11 @@ public class AppealController {
             @ApiResponse(code = 409, message = "Сущность не сохранена")
     })
     @PostMapping
-    public ResponseEntity<AppealDto> saveAppeal(@RequestBody Appeal appeal) {
-        appealService.save(appeal);
-        if (appealService.findById(appeal.getId()) != null) {
-            log.log(Level.INFO, "Сущность сохранена или обновлена");
-            return new ResponseEntity<>(mapper.toDto(appeal), HttpStatus.CREATED);
-        }
-        log.log(Level.WARN, "Сущность не сохранена и не обновлена");
-        return new ResponseEntity<>(mapper.toDto(appeal), HttpStatus.CONFLICT);
+    public ResponseEntity<AppealDto> saveAppeal(@RequestBody AppealDto appealDto) {
+
+        AppealDto appealAfter = mapper.toDto(appealService.save(mapper.toEntity(appealDto)));
+        log.info("Создано ОБРАЩЕНИЕ с id {}", appealAfter.getId());
+        return new ResponseEntity<>(appealAfter, HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "Обновление даты архивации")
