@@ -7,7 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Service
@@ -19,8 +20,9 @@ public class AppealServiceImpl implements AppealService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void save(Appeal appeal) {
-        appealRepository.save(appeal);
+    public Appeal save(Appeal appeal) {
+        appeal.setCreationDate(ZonedDateTime.now(ZoneId.of("Europe/Moscow")));
+        return appealRepository.save(appeal);
     }
 
     @Transactional(rollbackFor = Exception.class)
