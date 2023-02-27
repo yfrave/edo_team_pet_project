@@ -98,4 +98,16 @@ public class AppealServiceImpl implements AppealService {
         AppealDto[] response = TEMPLATE.getForObject(uri, AppealDto[].class);
         return Arrays.asList(response);
     }
+
+    @Override
+    public List<AppealDto> findAllByIdEmployee(Long first, Long amount) {
+        InstanceInfo instanceInfo = getInstance();
+
+        String path = "?first=" + first.toString() + "&amount=" + amount.toString();
+
+        URI uri = getURIByInstance(instanceInfo, String.format("/appealsByEmployee/%s", path));
+        AppealDto[] response = TEMPLATE.getForObject(uri, AppealDto[].class);
+        return Arrays.asList(response);
+    }
+
 }

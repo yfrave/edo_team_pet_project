@@ -32,5 +32,10 @@ public interface AppealRepository extends JpaRepository<Appeal, Long> {
     @Query(value = "select r from Appeal r where r.id in :ids and r.archivedDate is null ")
     @EntityGraph(attributePaths = {"creator", "signer"})
     List<Appeal> findAllByIdNotArchived(@Param("ids") Iterable<Long> ids);
+
+    @Query("select a FROM Appeal a LEFT JOIN FETCH a.creator where a.creator.id = :id")
+    @EntityGraph(attributePaths = {"creator","addressee"})
+    List<Appeal> findByIdEmployee(Long id);
+
 }
 

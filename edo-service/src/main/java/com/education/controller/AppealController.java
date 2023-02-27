@@ -116,4 +116,23 @@ public class AppealController {
         log.log(Level.INFO, "Сущности найдены");
         return new ResponseEntity<>(appealDto, HttpStatus.OK);
     }
+
+    @ApiOperation(value = "Получение сущностей Appeal для Employee creator (?first=1&amount=1)")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Сущность найдена"),
+            @ApiResponse(code = 404, message = "Сущность не найдена")
+    })
+
+    @GetMapping(value = "/appealsByEmployee/")
+    public ResponseEntity<List<AppealDto>> findByIdEmployee(@RequestParam ("first") Long first,
+                                                            @RequestParam ("amount")Long amount) {
+        List<AppealDto> appeal = appealService.findAllByIdEmployee(first,amount);
+        if (appeal == null) {
+            log.log(Level.WARN, "Сущности не найдены");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        log.log(Level.INFO, "Сущности найдены");
+        return new ResponseEntity<>(appeal, HttpStatus.OK);
+    }
+
 }
