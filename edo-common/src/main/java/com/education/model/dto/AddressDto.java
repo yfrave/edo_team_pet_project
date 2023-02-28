@@ -33,4 +33,21 @@ public class AddressDto {
     private String country;
     @ApiModelProperty("Этаж")
     private String flat;
+
+    @Override
+    public String toString() {
+        return "AddressDto{" +
+                "id=" + id +
+                ", fullAddress='" + fullAddress + '\'' +
+                ", street='" + street + '\'' +
+                ", house='" + house + '\'' +
+                ", index='" + index + '\'' +
+                ", housing='" + housing + '\'' +
+                ", building='" + building + '\'' +
+                ", city='" + city + '\'' +
+                ", region='" + region + '\'' +
+                ", country='" + country + '\'' +
+                ", flat='" + flat + '\'' +
+                '}';
+    }
 }
