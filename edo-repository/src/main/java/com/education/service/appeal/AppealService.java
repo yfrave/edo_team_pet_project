@@ -2,7 +2,6 @@ package com.education.service.appeal;
 
 
 import com.education.entity.Appeal;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,5 +18,6 @@ public interface AppealService {
 
     List<Appeal> findAllByIdNotArchived(Iterable<Long> ids);
 
-    List<Appeal> findAllByIdEmployee(Long first, Long amount);
+    List<Appeal> findAllByIdEmployee(Long id, Long first, Long amount);
+
 }

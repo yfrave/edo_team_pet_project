@@ -1,10 +1,12 @@
 package com.education.repository;
 
 import com.education.entity.Appeal;
+import com.education.entity.Employee;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +36,7 @@ public interface AppealRepository extends JpaRepository<Appeal, Long> {
     List<Appeal> findAllByIdNotArchived(@Param("ids") Iterable<Long> ids);
 
     @Query("select a FROM Appeal a LEFT JOIN FETCH a.creator where a.creator.id = :id")
-    @EntityGraph(attributePaths = {"creator","addressee"})
+    @EntityGraph(attributePaths = {"creator"})
     List<Appeal> findByIdEmployee(Long id);
 
 }

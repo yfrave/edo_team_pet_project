@@ -1,5 +1,6 @@
 package com.education.controller;
 
+import com.education.model.dto.AppealAbbreviatedDto;
 import com.education.model.dto.AppealDto;
 import com.education.service.appeal.AppealService;
 import io.swagger.annotations.ApiOperation;
@@ -124,9 +125,9 @@ public class AppealController {
     })
 
     @GetMapping(value = "/appealsByEmployee/")
-    public ResponseEntity<List<AppealDto>> findByIdEmployee(@RequestParam ("first") Long first,
-                                                            @RequestParam ("amount")Long amount) {
-        List<AppealDto> appeal = appealService.findAllByIdEmployee(first,amount);
+    public ResponseEntity<List<AppealAbbreviatedDto>> findByIdEmployee(@RequestParam("first") Long first,
+                                                                       @RequestParam("amount") Long amount) {
+        List<AppealAbbreviatedDto> appeal = appealService.findAllByIdEmployee(first, amount);
         if (appeal == null) {
             log.log(Level.WARN, "Сущности не найдены");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

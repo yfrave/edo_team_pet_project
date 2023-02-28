@@ -59,14 +59,15 @@ public class AppealServiceImpl implements AppealService {
         return appealRepository.findAllByIdNotArchived(ids);
 
     }
+
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     @Override
-    public List<Appeal> findAllByIdEmployee(Long first, Long amount) {
+    public List<Appeal> findAllByIdEmployee(Long id, Long first, Long amount) {
 
-        return appealRepository.findByIdEmployee(1L)
+        return appealRepository.findByIdEmployee(id)
                 .stream()
                 .sorted(Comparator.comparingLong(Appeal::getId))
-                .skip(first-1)
+                .skip(first - 1)
                 .limit(amount)
                 .collect(Collectors.toList());
     }
