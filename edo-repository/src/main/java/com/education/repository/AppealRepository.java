@@ -1,12 +1,9 @@
 package com.education.repository;
 
 import com.education.entity.Appeal;
-import com.education.entity.Employee;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 

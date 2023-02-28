@@ -120,7 +120,7 @@ public class AppealController {
     }
 
     /**
-     * В качестве В качестве id объекта Principal используется заглушка (idPrincipal = 1L)
+     * В качестве id объекта Principal используется заглушка (idPrincipal = 1L)
      */
     @ApiOperation(value = "Получение сущностей Appeal для Employee creator (?first=1&amount=1)")
     @ApiResponses(value = {
@@ -132,7 +132,7 @@ public class AppealController {
                                                                        @RequestParam("amount") Long amount) {
         Long idPrincipal = 1L;
         List<Appeal> appeal = appealService.findAllByIdEmployee(idPrincipal, first, amount);
-        if (appeal == null) {
+        if (appeal == null && appeal.isEmpty()) {
             log.log(Level.WARN, "Сущности не найдены");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

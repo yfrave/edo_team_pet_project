@@ -8,7 +8,7 @@ import lombok.experimental.SuperBuilder;
 import java.time.ZonedDateTime;
 
 @Data
-@ApiModel("Класс AppealDTO, dto для класса appeal.class")
+@ApiModel("Класс AppealAbbreviatedDto, dto для класса appeal.class")
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder

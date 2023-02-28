@@ -128,7 +128,7 @@ public class AppealController {
     public ResponseEntity<List<AppealAbbreviatedDto>> findByIdEmployee(@RequestParam("first") Long first,
                                                                        @RequestParam("amount") Long amount) {
         List<AppealAbbreviatedDto> appeal = appealService.findAllByIdEmployee(first, amount);
-        if (appeal == null) {
+        if (appeal == null && appeal.isEmpty()) {
             log.log(Level.WARN, "Сущности не найдены");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
