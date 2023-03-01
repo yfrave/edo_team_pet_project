@@ -1,5 +1,6 @@
 package com.education.model.dto;
 
+import com.education.model.enumEntity.EnumNotification;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -16,7 +17,6 @@ public class NotificationDto {
 
     @ApiModelProperty("Id")
     private Long id;
-
-    @ApiModelProperty("Оповещение пользователя")
-    private EmployeeDto employeeNotice;
+    @ApiModelProperty("Тип оповещения")
+    private EnumNotification enumNotification;
 }

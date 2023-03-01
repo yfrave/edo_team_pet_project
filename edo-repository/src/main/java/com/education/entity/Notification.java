@@ -5,8 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.util.Set;
-
 /**
  * @author Хафизов Ильмир
  * Класс, описывающий оповещения пользователя
@@ -28,12 +26,4 @@ public class Notification extends BaseEntity {
     @Column(name="notification_name")
     @Enumerated(EnumType.STRING)
     private EnumNotification enumNotification;
-
-    /**
-     * Оповещение пользователя
-     */
-    @OneToMany
-    @JoinColumn(name = "employeeNotice_id")
-    private Set<Employee> employeeNotice;
-
 }

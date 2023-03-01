@@ -1,8 +1,6 @@
 package com.education.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,6 +10,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.time.ZonedDateTime;
+import java.util.Set;
 
 /**
  * @author Степан Ритман
@@ -116,4 +115,11 @@ public class Employee extends BaseEntity {
      */
     @Column(name = "archived_date")
     private ZonedDateTime archivedDate;
+
+    /**
+     * Оповещение пользователя
+     */
+    @OneToMany
+    @JoinColumn(name = "notification_id")
+    private Set<Notification> notificationSet;
 }
