@@ -1,8 +1,11 @@
 package com.education.entity;
 
+import com.education.model.enumEntity.EnumNotification;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.Set;
 
 /**
  * @author Хафизов Ильмир
@@ -20,10 +23,17 @@ import lombok.experimental.SuperBuilder;
 public class Notification extends BaseEntity {
 
     /**
+     * Тип оповещения
+     */
+    @Column(name="notification_name")
+    @Enumerated(EnumType.STRING)
+    private EnumNotification enumNotification;
+
+    /**
      * Оповещение пользователя
      */
-    @ManyToOne
+    @OneToMany
     @JoinColumn(name = "employeeNotice_id")
-    private Employee employeeNotice;
+    private Set<Employee> employeeNotice;
 
 }
