@@ -23,7 +23,7 @@ public class Notification extends BaseEntity {
     /**
      * Тип оповещения
      */
-    @Column(name="notification_name")
+    @Column(name = "notification_name")
     @Enumerated(EnumType.STRING)
     private EnumNotification enumNotification;
 }

@@ -1,6 +1,7 @@
 package com.education.model.enumEntity;
 
 public enum EnumNotification {
+
     EMAIL("Электронная почта"),
     PHONE("Номер телефона");
     private String value;
