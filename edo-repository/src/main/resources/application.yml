@@ -14,7 +14,7 @@ spring:
   application:
     name: edo-repository
 server:
-  port: 0
+  port: 11111
 eureka:
   client:
     serviceUrl:
