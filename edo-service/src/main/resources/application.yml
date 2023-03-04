@@ -1,6 +1,11 @@
 spring:
   application:
     name: edo-service
+  rabbitmq:
+    exchange: edo.direct
+    queues:
+      addressCreate: address.create.service
+      addressCreateDB: address.create.DB
 server:
   port: 0
 eureka:
