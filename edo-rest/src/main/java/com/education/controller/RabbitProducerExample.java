@@ -1,5 +1,6 @@
 package com.education.controller;
 
+import com.education.model.constant.RabbitConstant;
 import com.education.model.dto.AddressDto;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -27,16 +28,10 @@ public class RabbitProducerExample {
     @Autowired
     private AmqpTemplate template;
 
-    @Value("${spring.rabbitmq.exchange}")
-    private String exchange;
-
-    @Value("${spring.rabbitmq.queues.addressCreate}")
-    private String queue;
-
     @PostMapping
     public ResponseEntity<String> createObject(@RequestBody AddressDto addressDto) {
 
-        template.convertAndSend(exchange,queue, addressDto);
+        template.convertAndSend(RabbitConstant.exchange,RabbitConstant.addressCreateQueue, addressDto);
         log.log(Level.INFO, "Сущность отправлена " + addressDto.toString());
 
         return ResponseEntity.ok("Message sent to RabbitMQ ...");

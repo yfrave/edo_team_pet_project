@@ -2,14 +2,13 @@ package com.education.service;
 
 import com.education.entity.Address;
 import com.education.model.dto.AddressDto;
+import com.education.model.constant.RabbitConstant;
 import com.education.repository.AddressRepository;
 import com.education.util.Mapper.impl.AddressMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.Level;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 /**
@@ -24,7 +23,7 @@ public class RabbitRepoListenerExample {
     private AddressRepository addressRepository;
 
     private AddressMapper mapper;
-    @RabbitListener(queues ="${rabbitmq.queues.addressCreateDB}")
+    @RabbitListener(queues =RabbitConstant.addressCreateDBQueue)
     public void createAddress(AddressDto addressDto) {
 
         Address address = mapper.toEntity(addressDto);

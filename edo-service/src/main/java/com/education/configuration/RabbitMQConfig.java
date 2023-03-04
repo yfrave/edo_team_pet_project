@@ -1,5 +1,6 @@
 package com.education.configuration;
 
+import com.education.model.constant.RabbitConstant;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -13,25 +14,22 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 public class RabbitMQConfig {
-
-    @Value("${spring.rabbitmq.exchange}")
-    private String exchange;
     @Bean
-    public Queue addressCreateDB(@Value("${spring.rabbitmq.queues.addressCreateDB}") String nameQueue){
-        return new Queue(nameQueue, false);
+    public Queue addressCreateDB(){
+        return new Queue(RabbitConstant.addressCreateDBQueue, false);
     }
 
     @Bean
     public DirectExchange exchange(){
-        return new DirectExchange(exchange);
+         return new DirectExchange(RabbitConstant.exchange);
     }
 
     @Bean
-    public Binding binding(Queue addressCreateDB, DirectExchange exchange, @Value("${spring.rabbitmq.queues.addressCreateDB}") String routingKey){
+    public Binding binding(Queue addressCreateDB, DirectExchange exchange){
         return BindingBuilder
                 .bind(addressCreateDB)
                 .to(exchange)
-                .with(routingKey);
+                .with(RabbitConstant.addressCreateDBQueue);
     }
 
 

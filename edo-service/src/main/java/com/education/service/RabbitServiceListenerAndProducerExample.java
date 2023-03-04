@@ -1,5 +1,6 @@
 package com.education.service;
 
+import com.education.model.constant.RabbitConstant;
 import com.education.model.dto.AddressDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -19,15 +20,10 @@ public class RabbitServiceListenerAndProducerExample {
     @Autowired
     private AmqpTemplate template;
 
-    @Value("${spring.rabbitmq.exchange}")
-    private String exchange;
-    @Value("${spring.rabbitmq.queues.addressCreateDB}")
-    private String queue;
-
-    @RabbitListener(queues ="${spring.rabbitmq.queues.addressCreate}")
+    @RabbitListener(queues =RabbitConstant.addressCreateQueue)
     public void getMessage(AddressDto addressDto) {
 
-        template.convertAndSend(exchange,queue, addressDto);
+        template.convertAndSend(RabbitConstant.exchange,RabbitConstant.addressCreateDBQueue, addressDto);
         log.log(Level.INFO, "Сущность принята и отправлена в DB " + addressDto.toString());
 
 

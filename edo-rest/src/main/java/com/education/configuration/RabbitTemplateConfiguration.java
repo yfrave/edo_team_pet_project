@@ -1,5 +1,6 @@
 package com.education.configuration;
 
+import com.education.model.constant.RabbitConstant;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
@@ -13,24 +14,14 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitTemplateConfiguration {
 
-    @Value(value = "${spring.rabbitmq.exchange}")
-    private String exchange;
-
-    @Value(value = "${spring.rabbitmq.queues.addressCreate}")
-    private String nameQueue;
-
-    @Value("${spring.rabbitmq.queues.addressCreate}")
-    private String routingKey;
-
-
     @Bean
-    public Queue addressCreate(){
-        return new Queue(nameQueue, false);
+    public Queue addressCreate() {
+        return new Queue(RabbitConstant.addressCreateQueue, false);
     }
 
     @Bean
     public DirectExchange exchange(){
-        return new DirectExchange(exchange);
+        return new DirectExchange(RabbitConstant.exchange);
     }
 
     @Bean
@@ -38,7 +29,7 @@ public class RabbitTemplateConfiguration {
         return BindingBuilder
                 .bind(addressCreate)
                 .to(exchange)
-                .with(routingKey);
+                .with(RabbitConstant.addressCreateQueue);
     }
 
     @Bean
