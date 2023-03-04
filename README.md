@@ -317,35 +317,37 @@ Stream.of("a","b","c")
 ````java
 @Bean
 public Queue nameNewQueue() {
-return new Queue("nameNewQueue", false);
+return new Queue(RabbitConstant.nameNewQueue, false);
 }
 ````
 
 И свяжите очередь с routing key
 ````java
 @Bean
-public Binding bindingNew(Queue nameNewQueue, DirectExchange exchange){
+public Binding binding(Queue nameNewQueue, DirectExchange exchange){
 return BindingBuilder
 .bind(nameNewQueue)
 .to(exchange)
-.with("newRoutingKey");
+.with(RabbitConstant.nameRoutingKey);
 }
 ````
 
 Название очереди и routing key можно сделать одинаковым и оно должно отражать суть задачи,
-например "rest.appeal.create"
+например "rest.appeal.create".
+
+Названия очередей создавайте как константы в модуле edo-common
 
 #### Инструкция по созданию Producer
 ````java
 @Autowired
 private AmqpTemplate template;
 
-template.convertAndSend("edo.direct","newRoutingKey", data);
+template.convertAndSend(RabbitConstant.exchange,RabbitConstant.newRoutingKey, data);
 ````
-edo.direct - это название Exchange, он общий для всех очередей.
+RabbitConstant.exchange - это название Exchange, он общий для всех очередей.
 
 #### Инструкция по созданию Listener
-над методом укажите аннотацию с названием очереди
+над методом укажите аннотацию с названием очереди, которую необходимо слушать
 ````java
-@RabbitListener(queues = "nameNewQueue")
+@RabbitListener(queues = RabbitConstant.nameNewQueue)
 ````

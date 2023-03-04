@@ -1,10 +1,6 @@
 spring:
   application:
     name: edo-rest
-  rabbitmq:
-    exchange: edo.direct
-    queues:
-      addressCreate: address.create.service
 server:
   port: 0
 eureka:
