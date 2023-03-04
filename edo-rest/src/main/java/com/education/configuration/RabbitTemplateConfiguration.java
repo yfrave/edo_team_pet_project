@@ -3,6 +3,7 @@ package com.education.configuration;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,37 +13,33 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitTemplateConfiguration {
 
-    @Bean
-    public Queue queue(){
-        return new Queue("address.create.service", false);
-    }
+    @Value(value = "${spring.rabbitmq.exchange}")
+    private String exchange;
+
+    @Value(value = "${spring.rabbitmq.queues.addressCreate}")
+    private String nameQueue;
+
+    @Value("${spring.rabbitmq.queues.addressCreate}")
+    private String routingKey;
+
 
     @Bean
-    public Queue queue1(){
-        return new Queue("address.create.service1", false);
+    public Queue addressCreate(){
+        return new Queue(nameQueue, false);
     }
 
     @Bean
     public DirectExchange exchange(){
-        return new DirectExchange("edo.direct");
+        return new DirectExchange(exchange);
     }
 
     @Bean
-    public Binding binding(Queue queue, DirectExchange exchange){
+    public Binding binding(Queue addressCreate, DirectExchange exchange){
         return BindingBuilder
-                .bind(queue)
+                .bind(addressCreate)
                 .to(exchange)
-                .with("address.create.service");
+                .with(routingKey);
     }
-
-    @Bean
-    public Binding binding1(Queue queue1, DirectExchange exchange){
-        return BindingBuilder
-                .bind(queue1)
-                .to(exchange)
-                .with("address.create.service1");
-    }
-
 
     @Bean
     public MessageConverter jsonMessageConverter(){

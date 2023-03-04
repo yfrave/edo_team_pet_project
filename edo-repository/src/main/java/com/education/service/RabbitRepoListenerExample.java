@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.Level;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 /**
@@ -22,7 +24,7 @@ public class RabbitRepoListenerExample {
     private AddressRepository addressRepository;
 
     private AddressMapper mapper;
-    @RabbitListener(queues = "address.create.DB")
+    @RabbitListener(queues ="${rabbitmq.queues.addressCreateDB}")
     public void createAddress(AddressDto addressDto) {
 
         Address address = mapper.toEntity(addressDto);
