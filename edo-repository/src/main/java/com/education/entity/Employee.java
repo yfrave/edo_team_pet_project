@@ -117,9 +117,11 @@ public class Employee extends BaseEntity {
     private ZonedDateTime archivedDate;
 
     /**
-     * Оповещение пользователя
+     * Типы оповещения, которые выбрали пользователи
      */
     @OneToMany
-    @JoinColumn(name = "notification_id")
-    private Set<Notification> notificationSet;
+    @JoinTable(name = "employees_notifications",
+            joinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "notification_id", referencedColumnName = "id"))
+    private Set<Notification> notification;
 }

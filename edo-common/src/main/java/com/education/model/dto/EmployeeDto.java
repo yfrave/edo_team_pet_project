@@ -70,6 +70,6 @@ public class EmployeeDto {
     @ApiModelProperty("Дата архивирования")
     private ZonedDateTime archivedDate;
 
-    @ApiModelProperty("Оповещение пользователя")
-    private Set<NotificationDto> notificationSet;
+    @ApiModelProperty("Типы оповещения, которые выбрали пользователи")
+    private Set<NotificationDto> notification;
 }

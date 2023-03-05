@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author Хафизов Ильмир
@@ -28,12 +30,21 @@ public class NotificationServiceImpl implements NotificationService {
     /**
      * Сохранение оповещений в БД
      *
-     * @param notificationDto
+     * @param notification
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void save(NotificationDto notificationDto) {
-        notificationRepository.saveAndFlush(mapper.toEntity(notificationDto));
+    public void save(NotificationDto notification) {
+        notificationRepository.saveAndFlush(mapper.toEntity(notification));
+    }
+
+    /**
+     * Сохранение оповещений в БД
+     * @param notificationSet
+     */
+    @Override
+    public void saveAll(Set<Notification> notificationSet) {
+        notificationRepository.saveAllAndFlush(notificationSet);
     }
 
     /**
@@ -59,13 +70,15 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     /**
-     * Предоставляет список NotificationDto оповещений из БД по id
+     * Предоставляет список Notification оповещений из БД по id
      * @param id
      * @return
      */
     @Override
-    public List<NotificationDto> findAllById(List<Long> id) {
-        List<Notification> notifications = notificationRepository.findAllById(id);
+    public Set<NotificationDto> findAllById(List<Long> id) {
+        Set<Notification> notifications = notificationRepository.findAllById(id)
+                .stream()
+                .collect(Collectors.toSet());
         return mapper.toDto(notifications);
     }
 }

@@ -3,19 +3,18 @@ package com.education.model.dto;
 import com.education.model.enumEntity.EnumNotification;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @ApiModel("Класс NotificationDto, dto для класса Notification.class")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
+@Builder
 public class NotificationDto {
 
-    @ApiModelProperty("Id")
+    @ApiModelProperty("Id оповещения")
     private Long id;
 
     @ApiModelProperty("Тип оповещения")

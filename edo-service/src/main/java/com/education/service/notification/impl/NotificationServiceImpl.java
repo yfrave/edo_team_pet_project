@@ -4,10 +4,7 @@ import com.education.model.dto.NotificationDto;
 import com.education.service.notification.NotificationService;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
-import com.netflix.discovery.shared.Application;
-import jakarta.validation.constraints.NotNull;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.apache.http.HttpHost;
 import org.springframework.core.ParameterizedTypeReference;
@@ -19,7 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Random;
+import java.util.Set;
 
 /**
  * @author Хафизов Ильмир
@@ -27,20 +24,18 @@ import java.util.Random;
  * Представляет реализацию операций над оповещением пользователя
  */
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Log
 public class NotificationServiceImpl implements NotificationService {
 
     /**
      * Клиент для отправки и получения запросов
      */
-    @NotNull
     private RestTemplate template;
 
     /**
      * Клиент для получения instance
      */
-    @NotNull
     private EurekaClient eurekaClient;
 
     /**
@@ -63,6 +58,17 @@ public class NotificationServiceImpl implements NotificationService {
         String lastPathComponent = "/";
         URI uri = generateUri(this.getInstance(), lastPathComponent);
         template.postForObject(uri, notificationDto, NotificationDto.class);
+    }
+
+    /**
+     * Сохранение оповещений в БД
+     * @param notificationSet
+     */
+    @Override
+    public void saveAll(Set<NotificationDto> notificationSet) {
+        String lastPathComponent = "/";
+        URI uri = generateUri(this.getInstance(), lastPathComponent);
+        template.postForObject(uri, notificationSet, NotificationDto.class);
     }
 
     /**
@@ -139,7 +145,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     private InstanceInfo getInstance() {
-        Application app = eurekaClient.getApplication(serviceName);
-        return app.getInstances().get((int) Math.random() * (app.size()));
+        List<InstanceInfo> instances = eurekaClient.getApplication(serviceName).getInstances();
+        return instances.get((int) (instances.size() * Math.random()));
     }
 }

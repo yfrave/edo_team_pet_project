@@ -1,8 +1,10 @@
 package com.education.service.notification;
 
+import com.education.entity.Notification;
 import com.education.model.dto.NotificationDto;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Хафизов Ильмир
@@ -12,11 +14,17 @@ import java.util.List;
 public interface NotificationService {
 
     /**
-     * Сохранение оповещений в БД
+     * Сохранение оповещения в БД
      *
-     * @param notificationDto
+     * @param notification
      */
-    void save(NotificationDto notificationDto);
+    void save(NotificationDto notification);
+
+    /**
+     * Сохранение оповещений в БД
+     * @param notificationSet
+     */
+    void saveAll(Set<Notification> notificationSet);
 
     /**
      * Удаление оповещений в БД по id
@@ -39,5 +47,5 @@ public interface NotificationService {
      * @param id
      * @return
      */
-    List<NotificationDto> findAllById(List<Long> id);
+    Set<NotificationDto> findAllById(List<Long> id);
 }
