@@ -2,6 +2,7 @@ package com.education.service.appeal.impl;
 
 import com.education.model.dto.AppealDto;
 import com.education.service.appeal.AppealService;
+import com.education.service.nomenclature.NomenclatureService;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,8 @@ public class AppealServiceImpl implements AppealService {
     private final RestTemplate TEMPLATE;
 
     private final EurekaClient EUREKA_CLIENT;
+
+    private final NomenclatureService nomenclatureService;
 
     private final String BASE_URL = "/api/repository/appeal";
 
@@ -50,6 +53,10 @@ public class AppealServiceImpl implements AppealService {
     @Override
     public AppealDto save(AppealDto appealDto) {
         InstanceInfo instanceInfo = getInstance();
+
+        final String NUMBER = nomenclatureService.getNumberFromTemplate(appealDto.getNomenclature());
+
+        appealDto.setNumber(NUMBER);
 
         var request = new RequestEntity(appealDto, HttpMethod.POST, getURIByInstance(instanceInfo, ""));
 

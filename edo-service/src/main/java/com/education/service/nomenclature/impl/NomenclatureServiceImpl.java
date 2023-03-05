@@ -4,8 +4,10 @@ import com.education.client.NomenclatureRestTemplateClient;
 import com.education.model.dto.NomenclatureDto;
 import com.education.service.nomenclature.NomenclatureService;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -82,5 +84,34 @@ public class NomenclatureServiceImpl implements NomenclatureService {
     @Override
     public List<NomenclatureDto> findAllByIdNotArchived(List<Long> list) {
         return client.findAllByIdNotArchived(list);
+    }
+
+    @Override
+    public String getNumberFromTemplate(NomenclatureDto nomenclatureDto) {
+        var template = nomenclatureDto.getTemplate();
+        if (template == null) {
+            template = "%ЧИС%ГОД-%ЗНАЧ/2";
+        }
+        final String CURRENT_VALUE = nomenclatureDto.getCurrentValue().toString();
+        final String YEAR = String.format("%02d", Calendar.getInstance().get(Calendar.YEAR) % 100);
+        final String DAY = String.format("%02d", Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+
+        return template
+//  убирает больше двух знаков "%" подряд, оставляя один
+                .replaceAll("%{2,}", "%")
+//  заменяет число дня
+                .replaceAll("%чис|%ЧИС|%число|%ЧИСЛО", DAY)
+//  заменяет год
+                .replaceAll("%год|%ГОД", YEAR)
+//  заменяет значение
+                .replaceAll("%знач|%ЗНАЧ|%значение|%ЗНАЧЕНИЕ", StringUtils.isEmpty(CURRENT_VALUE) ? "" : CURRENT_VALUE)
+//  убирает проценты с флагом
+                .replaceAll("%[\\W][^(а-яА-Я)]", "")
+//  убирает больше двух знаков "-" подряд, оставляя один
+                .replaceAll("-{2,}", "-")
+//  убирает больше двух знаков "/" подряд, оставляя один
+                .replaceAll("/{2,}", "/")
+//  убирает знаки "-" и "/" в начале и в конце
+                .replaceAll("(^[-/]+)|([-/]*$)", "");
     }
 }

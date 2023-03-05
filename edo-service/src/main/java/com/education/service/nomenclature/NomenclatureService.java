@@ -55,4 +55,5 @@ public interface NomenclatureService {
      */
     List<NomenclatureDto> findAllByIdNotArchived(List<Long> list);
 
+    String getNumberFromTemplate(NomenclatureDto nomenclatureDto);
 }

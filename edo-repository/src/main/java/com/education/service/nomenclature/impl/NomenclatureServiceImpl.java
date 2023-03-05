@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -31,15 +30,6 @@ public class NomenclatureServiceImpl implements NomenclatureService {
     private final NomenclatureMapper mapper;
 
     /**
-     * Реализует генерацию номера по шаблону 13-12/2022
-     * @return StringBuilder
-     */
-    public StringBuilder dateFormat() {
-        Calendar calendar = Calendar.getInstance();
-        return new StringBuilder("-" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.YEAR));
-    }
-
-    /**
      * Сохраняет номенклатуру в БД
      * @param nomenclature NomenclatureDto
      * @return NomenclatureDto
@@ -48,7 +38,6 @@ public class NomenclatureServiceImpl implements NomenclatureService {
     @Override
     public NomenclatureDto save(NomenclatureDto nomenclature) {
         Nomenclature newNomenclature = mapper.toEntity(nomenclature);
-        newNomenclature.setTemplate(nomenclature.getCurrentValue() + String.valueOf(dateFormat()));
         return mapper.toDto(nomenclatureRepository.saveAndFlush(newNomenclature));
     }
 
