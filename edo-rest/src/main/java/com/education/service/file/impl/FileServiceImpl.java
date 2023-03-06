@@ -18,19 +18,21 @@ import java.io.*;
 public class FileServiceImpl implements FileService {
 
     @Override
-    public void uploadFile(MultipartFile multipartFile) {
-        String fileName = multipartFile.getOriginalFilename();
-        String location = "C:/Users/Dasha/Desktop/test";
-        File file = new File(location);
-        if (!file.exists()) {
-            file.mkdir();
-        }
-
-        file = new File(location + "/" + fileName);
-        try {
-            multipartFile.transferTo(file);
-        } catch (IOException e) {
-            e.printStackTrace();
+    public String uploadFile(MultipartFile multipartFile) {
+        String name = multipartFile.getName();
+        if (!multipartFile.isEmpty()) {
+            try {
+                byte[] bytes = multipartFile.getBytes();
+                BufferedOutputStream stream =
+                        new BufferedOutputStream(new FileOutputStream(new File(name + "-uploaded")));
+                stream.write(bytes);
+                stream.close();
+                return "Вы удачно загрузили " + name + " в " + name + "-uploaded !";
+            } catch (Exception e) {
+                return "Вам не удалось загрузить " + name + " => " + e.getMessage();
+            }
+        } else {
+            return "Вам не удалось загрузить " + name + " потому что файл пустой.";
         }
 
 
