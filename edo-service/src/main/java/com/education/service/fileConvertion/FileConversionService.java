@@ -1,8 +1,11 @@
 package com.education.service.fileConvertion;
 
+import org.jvnet.hk2.annotations.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 
 public interface FileConversionService {
 
-    void convertFile(String extension);
+    void convertFile(MultipartFile multipartFile);
 }
