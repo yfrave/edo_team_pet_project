@@ -4,29 +4,34 @@ import com.education.service.fileConvertion.FileConversionService;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
-import lombok.AllArgsConstructor;
+import io.swagger.annotations.ApiResponses;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
 @RequestMapping("api/service/file")
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Log4j2
 @ApiModel("Контроллер сервиса для конвертации файла")
 public class FileConversionController {
 
-    private FileConversionService fileConversionService;
+    private final FileConversionService fileConversionService;
 
     @ApiOperation("Сконвертировать в pdf полученный из edo-rest файл")
-    @ApiResponse(code = 201, message = "Файл успешно сконвертирован в pdf")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Файл успешно сконвертирован в pdf"),
+            @ApiResponse(code = 404, message = "Not found - The file was not found")
+    })
     @PostMapping()
-    public ResponseEntity<String> convertFile(String extension) {
+    public ResponseEntity<String> convertFile(@RequestPart("file") MultipartFile multipartFile) {
         log.info("Получен запрос конвертацию файла");
-        fileConversionService.convertFile(extension);
+        fileConversionService.convertFile(multipartFile);
         log.info("Файл успешно сконвертирован");
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(multipartFile.getOriginalFilename(), HttpStatus.OK);
     }
 }
