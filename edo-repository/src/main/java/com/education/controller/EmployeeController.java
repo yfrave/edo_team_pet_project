@@ -93,7 +93,7 @@ public class EmployeeController {
     public ResponseEntity<EmployeeDto> saveEmployee(@RequestBody EmployeeDto employeeDto) {
         log.log(Level.INFO, "Получен запрос на сохранение сущности");
         Employee employee = mapper.toEntity(employeeDto);
-        Set<Notification> notifications = notificationMapper.toEntity(employeeDto.getNotification());
+        List<Notification> notifications = notificationMapper.toEntity(employeeDto.getNotification());
         notificationService.saveAll(notifications);
         employee.setNotification(notifications);
         employeeService.save(employee);
@@ -110,14 +110,5 @@ public class EmployeeController {
         employeeService.moveToArchive(id);
         log.log(Level.INFO, "Сущность успешно добавлена в архив");
         return new ResponseEntity<>(id, HttpStatus.OK);
-    }
-
-    @ApiOperation("Поиск пользователя по ФИО")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Employee was successfully found"),
-            @ApiResponse(code = 404, message = "Employee was not found")
-    })
-    public ResponseEntity<List<EmployeeDto>> userSearchLastName(@RequestParam("lastName") String lastName) {
-        return null;
     }
 }

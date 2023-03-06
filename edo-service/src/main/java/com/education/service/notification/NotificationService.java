@@ -3,7 +3,6 @@ package com.education.service.notification;
 import com.education.model.dto.NotificationDto;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Хафизов Ильмир
@@ -24,7 +23,7 @@ public interface NotificationService {
      * Сохранение оповещений в БД
      * @param notificationSet
      */
-    void saveAll(Set<NotificationDto> notificationSet);
+    void saveAll(List<NotificationDto> notificationSet);
 
     /**
      * Удаление оповещений в БД по id

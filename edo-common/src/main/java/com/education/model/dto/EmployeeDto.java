@@ -9,7 +9,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.ZonedDateTime;
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author Степан Ритман
@@ -71,5 +71,5 @@ public class EmployeeDto {
     private ZonedDateTime archivedDate;
 
     @ApiModelProperty("Типы оповещения, которые выбрали пользователи")
-    private Set<NotificationDto> notification;
+    private List<NotificationDto> notification;
 }

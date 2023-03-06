@@ -10,7 +10,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.time.ZonedDateTime;
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author Степан Ритман
@@ -123,5 +123,5 @@ public class Employee extends BaseEntity {
     @JoinTable(name = "employees_notifications",
             joinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "notification_id", referencedColumnName = "id"))
-    private Set<Notification> notification;
+    private List<Notification> notification;
 }

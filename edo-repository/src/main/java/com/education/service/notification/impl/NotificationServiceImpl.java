@@ -43,7 +43,7 @@ public class NotificationServiceImpl implements NotificationService {
      * @param notificationSet
      */
     @Override
-    public void saveAll(Set<Notification> notificationSet) {
+    public void saveAll(List<Notification> notificationSet) {
         notificationRepository.saveAllAndFlush(notificationSet);
     }
 
@@ -75,10 +75,8 @@ public class NotificationServiceImpl implements NotificationService {
      * @return
      */
     @Override
-    public Set<NotificationDto> findAllById(List<Long> id) {
-        Set<Notification> notifications = notificationRepository.findAllById(id)
-                .stream()
-                .collect(Collectors.toSet());
+    public List<NotificationDto> findAllById(List<Long> id) {
+        List<Notification> notifications = notificationRepository.findAllById(id);
         return mapper.toDto(notifications);
     }
 }

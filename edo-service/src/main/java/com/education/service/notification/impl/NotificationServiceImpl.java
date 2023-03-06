@@ -16,7 +16,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Хафизов Ильмир
@@ -65,7 +64,7 @@ public class NotificationServiceImpl implements NotificationService {
      * @param notificationSet
      */
     @Override
-    public void saveAll(Set<NotificationDto> notificationSet) {
+    public void saveAll(List<NotificationDto> notificationSet) {
         String lastPathComponent = "/";
         URI uri = generateUri(this.getInstance(), lastPathComponent);
         template.postForObject(uri, notificationSet, NotificationDto.class);
