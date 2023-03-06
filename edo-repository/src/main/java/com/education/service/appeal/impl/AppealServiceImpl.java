@@ -9,7 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -56,5 +58,11 @@ public class AppealServiceImpl implements AppealService {
     public List<Appeal> findAllByIdNotArchived(Iterable<Long> ids) {
         return appealRepository.findAllByIdNotArchived(ids);
 
+    }
+
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    @Override
+    public List<Appeal> findAllByIdEmployee(Long id, Long first, Long amount) {
+        return appealRepository.findByIdEmployee(id, first, amount);
     }
 }
