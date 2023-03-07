@@ -55,4 +55,10 @@ public interface NomenclatureService {
      */
     List<NomenclatureDto> findAllByIdNotArchived(List<Long> list);
 
+    /**
+     * Предоставляет список номенклатур из БД по индексу
+     *
+     * @return List of NomenclatureDto
+     */
+    List<NomenclatureDto> findByIndex(String index);
 }

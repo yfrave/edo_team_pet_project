@@ -27,6 +27,7 @@ public class NomenclatureServiceImpl implements NomenclatureService {
 
     /**
      * Сохраняет номенклатуру
+     *
      * @param nomenclature NomenclatureDto
      * @return NomenclatureDto
      */
@@ -37,6 +38,7 @@ public class NomenclatureServiceImpl implements NomenclatureService {
 
     /**
      * Переводит номенклатуру в архив
+     *
      * @param id Long
      */
     @Override
@@ -46,6 +48,7 @@ public class NomenclatureServiceImpl implements NomenclatureService {
 
     /**
      * Предоставляет NomenclatureDto номенклатуры по id
+     *
      * @param id Long
      * @return NomenclatureDto
      */
@@ -56,6 +59,7 @@ public class NomenclatureServiceImpl implements NomenclatureService {
 
     /**
      * Предоставляет список NomenclatureDto номенклатур по id
+     *
      * @param list List of id
      * @return List of NomenclatureDto
      */
@@ -66,6 +70,7 @@ public class NomenclatureServiceImpl implements NomenclatureService {
 
     /**
      * Предоставляет не заархивированное NomenclatureDto номенклатуры по id
+     *
      * @param id Long
      * @return NomenclatureDto
      */
@@ -76,11 +81,26 @@ public class NomenclatureServiceImpl implements NomenclatureService {
 
     /**
      * Предоставляет список не заархивированных NomenclatureDto номенклатур из БД по id
+     *
      * @param list List of id
      * @return List of NomenclatureDto
      */
     @Override
     public List<NomenclatureDto> findAllByIdNotArchived(List<Long> list) {
         return client.findAllByIdNotArchived(list);
+    }
+
+    /**
+     * Предоставляет список номенклатур из БД по индексу
+     *
+     * @return List of NomenclatureDto
+     */
+    @Override
+    public List<NomenclatureDto> findByIndex(String index) {
+        if (index.length() < 2) {
+            return null;
+        } else {
+            return client.findByIndex(index);
+        }
     }
 }
