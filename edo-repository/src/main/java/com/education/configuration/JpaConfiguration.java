@@ -22,8 +22,8 @@ public class JpaConfiguration {
     @Bean
     FlywayMigrationStrategy flywayMigrationStrategy() {
         return flyway -> {
-           // flyway.repair();
-          //  flyway.migrate();
+            flyway.repair();
+            flyway.migrate();
         };
     }
 
