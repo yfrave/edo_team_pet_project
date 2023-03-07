@@ -50,6 +50,8 @@ public interface NomenclatureRepository extends JpaRepository<Nomenclature, Long
     /**
      * Метод динамического поиска номенклатур
      */
-    @Query(value = "SELECT n FROM Nomenclature n WHERE n.index like concat(lower(:indexName) ,'%')")
+    @Query(value = "SELECT n FROM Nomenclature n " +
+            "WHERE lower(n.index) " +
+            "LIKE concat(lower(:indexName),'%')")
     List<Nomenclature> findByIndex(String indexName);
 }
