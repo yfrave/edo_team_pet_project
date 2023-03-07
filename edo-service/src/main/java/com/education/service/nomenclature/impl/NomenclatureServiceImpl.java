@@ -88,23 +88,24 @@ public class NomenclatureServiceImpl implements NomenclatureService {
 
     @Override
     public String getNumberFromTemplate(NomenclatureDto nomenclatureDto) {
-        var template = nomenclatureDto.getTemplate();
-        if (template == null) {
-            template = "%ЧИС%ГОД-%ЗНАЧ/2";
+        final String TEMPLATE = "%ЧИС%ГОД-%ЗНАЧ/2";
+        var temp = nomenclatureDto.getTemplate();
+        if (temp == null) {
+            temp = TEMPLATE;
         }
-        final String CURRENT_VALUE = nomenclatureDto.getCurrentValue().toString();
-        final String YEAR = String.format("%02d", Calendar.getInstance().get(Calendar.YEAR) % 100);
-        final String DAY = String.format("%02d", Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+        String currentValue = nomenclatureDto.getCurrentValue().toString();
+        String year = String.format("%02d", Calendar.getInstance().get(Calendar.YEAR) % 100);
+        String day = String.format("%02d", Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
 
-        return template
+        return temp
 //  убирает больше двух знаков "%" подряд, оставляя один
                 .replaceAll("%{2,}", "%")
 //  заменяет число дня
-                .replaceAll("%чис|%ЧИС|%число|%ЧИСЛО", DAY)
+                .replaceAll("%чис|%ЧИС|%число|%ЧИСЛО", day)
 //  заменяет год
-                .replaceAll("%год|%ГОД", YEAR)
+                .replaceAll("%год|%ГОД", year)
 //  заменяет значение
-                .replaceAll("%знач|%ЗНАЧ|%значение|%ЗНАЧЕНИЕ", StringUtils.isEmpty(CURRENT_VALUE) ? "" : CURRENT_VALUE)
+                .replaceAll("%знач|%ЗНАЧ|%значение|%ЗНАЧЕНИЕ", StringUtils.isEmpty(currentValue) ? "" : currentValue)
 //  убирает проценты с флагом
                 .replaceAll("%[\\W][^(а-яА-Я)]", "")
 //  убирает больше двух знаков "-" подряд, оставляя один
