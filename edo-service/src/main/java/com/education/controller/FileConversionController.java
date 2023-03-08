@@ -29,7 +29,7 @@ public class FileConversionController {
     })
     @PostMapping()
     public ResponseEntity<String> convertFile(@RequestPart("file") MultipartFile multipartFile) {
-        log.info("Получен запрос конвертацию файла");
+        log.info("Получен запрос на конвертацию файла");
         fileConversionService.convertFile(multipartFile);
         log.info("Файл успешно сконвертирован");
         return new ResponseEntity<>(multipartFile.getOriginalFilename(), HttpStatus.OK);

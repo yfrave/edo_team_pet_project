@@ -13,9 +13,13 @@ import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Objects;
+import java.util.UUID;
+
 /**
  * Представляет реализацию конвертации файлов в формат pdf
  *
@@ -27,32 +31,44 @@ import java.io.InputStream;
 @RequiredArgsConstructor
 public class FileConversionServiceImpl implements FileConversionService {
 
+    private static String getFileExtension(File file) {
+        String fileName = file.getName();
+        if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+            return fileName.substring(fileName.lastIndexOf(".") + 1);
+        else return "";
+    }
+
     @Override
     public void convertFile(MultipartFile multipartFile) {
-        String filename = multipartFile.getOriginalFilename();
-        String extension = filename.substring(filename.indexOf(".") + 1);
+        Path dir; //создаем директорию для сохранения файлов;
+        String paths; //создаем путь для сохранения сконвертированных файлов
+        File file = new File(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+        String extension = getFileExtension(file); //определяем расширение файла
+        try {
+            dir = Files.createDirectories(Paths.get("convertedFiles"));
+            paths = dir + File.separator + "new.pdf";
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 //        конвертация файлов с расширениями doc, docx
         if (extension.equals("doc") || extension.equals("docx")) {
-
-            try {
-                InputStream inputStream = multipartFile.getInputStream();
-                WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(inputStream);
-                String outputFilePath = "C:/Users/Dasha/Desktop/new.pdf";
-                FileOutputStream os = new FileOutputStream(outputFilePath);
+            try (BufferedInputStream buffIs = new BufferedInputStream(
+                    new ByteArrayInputStream(multipartFile.getBytes()));
+                 FileOutputStream os = new FileOutputStream(paths)) {
+                WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(buffIs);
                 Docx4J.toPDF(wordMLPackage, os);
                 os.flush();
-                os.close();
             } catch (Throwable e) {
                 e.printStackTrace();
             }
 //            конвертация файлов с расширениями jpg, png
         } else if (extension.equals("jpg") || extension.equals("png")) {
-            String dest = "C:/Users/Dasha/Desktop/IMAGE.pdf";
-            try {
-                PdfWriter pdfWriter = new PdfWriter(dest);
+            try (BufferedInputStream buffIs = new BufferedInputStream(
+                    new ByteArrayInputStream(multipartFile.getBytes()))) {
+                PdfWriter pdfWriter = new PdfWriter(paths);
                 PdfDocument pdfDocument = new PdfDocument(pdfWriter);
                 Document document = new Document(pdfDocument);
-                ImageData data = ImageDataFactory.create(multipartFile.getInputStream().readAllBytes());
+                ImageData data = ImageDataFactory.create(buffIs.readAllBytes());
                 Image image = new Image(data);
                 document.add(image);
                 document.close();

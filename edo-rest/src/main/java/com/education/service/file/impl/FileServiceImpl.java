@@ -19,14 +19,12 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public String uploadFile(MultipartFile multipartFile) {
-        String name = multipartFile.getName();
+        String name = multipartFile.getOriginalFilename();
         if (!multipartFile.isEmpty()) {
-            try {
+            try (BufferedOutputStream stream =
+                         new BufferedOutputStream(new FileOutputStream(name + "-uploaded"))){
                 byte[] bytes = multipartFile.getBytes();
-                BufferedOutputStream stream =
-                        new BufferedOutputStream(new FileOutputStream(new File(name + "-uploaded")));
                 stream.write(bytes);
-                stream.close();
                 return "Вы удачно загрузили " + name + " в " + name + "-uploaded !";
             } catch (Exception e) {
                 return "Вам не удалось загрузить " + name + " => " + e.getMessage();
