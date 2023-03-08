@@ -29,6 +29,7 @@ public class NomenclatureServiceImpl implements NomenclatureService {
 
     /**
      * Сохраняет номенклатуру
+     *
      * @param nomenclature NomenclatureDto
      * @return NomenclatureDto
      */
@@ -39,6 +40,7 @@ public class NomenclatureServiceImpl implements NomenclatureService {
 
     /**
      * Переводит номенклатуру в архив
+     *
      * @param id Long
      */
     @Override
@@ -48,6 +50,7 @@ public class NomenclatureServiceImpl implements NomenclatureService {
 
     /**
      * Предоставляет NomenclatureDto номенклатуры по id
+     *
      * @param id Long
      * @return NomenclatureDto
      */
@@ -58,6 +61,7 @@ public class NomenclatureServiceImpl implements NomenclatureService {
 
     /**
      * Предоставляет список NomenclatureDto номенклатур по id
+     *
      * @param list List of id
      * @return List of NomenclatureDto
      */
@@ -68,6 +72,7 @@ public class NomenclatureServiceImpl implements NomenclatureService {
 
     /**
      * Предоставляет не заархивированное NomenclatureDto номенклатуры по id
+     *
      * @param id Long
      * @return NomenclatureDto
      */
@@ -78,6 +83,7 @@ public class NomenclatureServiceImpl implements NomenclatureService {
 
     /**
      * Предоставляет список не заархивированных NomenclatureDto номенклатур из БД по id
+     *
      * @param list List of id
      * @return List of NomenclatureDto
      */
@@ -86,6 +92,12 @@ public class NomenclatureServiceImpl implements NomenclatureService {
         return client.findAllByIdNotArchived(list);
     }
 
+    /**
+     * Преобразует номер обращения из шаблона номенклатуры
+     *
+     * @param nomenclatureDto NomenclatureDto
+     * @return String of NomenclatureDto
+     */
     @Override
     public String getNumberFromTemplate(NomenclatureDto nomenclatureDto) {
         final String TEMPLATE = "%ЧИС%ГОД-%ЗНАЧ/2";
@@ -94,6 +106,8 @@ public class NomenclatureServiceImpl implements NomenclatureService {
             temp = TEMPLATE;
         }
         String currentValue = nomenclatureDto.getCurrentValue().toString();
+        nomenclatureDto.setCurrentValue(Long.parseLong(currentValue) + 1);
+        client.save(nomenclatureDto);
         String year = String.format("%02d", Calendar.getInstance().get(Calendar.YEAR) % 100);
         String day = String.format("%02d", Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
 
