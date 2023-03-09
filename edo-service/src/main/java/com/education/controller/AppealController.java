@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.Level;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ import java.util.List;
 public class AppealController {
 
     final private AppealService appealService;
+    final private AmqpTemplate template;
 
     @ApiOperation(value = "Сохранение сущности в БД")
     @ApiResponses(value = {
@@ -33,6 +35,8 @@ public class AppealController {
     @PostMapping
     public ResponseEntity<AppealDto> saveAppeal(@ApiParam("appealDto") @RequestBody AppealDto appealDto) {
         AppealDto appealAfter = appealService.save(appealDto);
+        appealService.sendEmailAppeal(appealDto);
+        template.convertAndSend("email.about.appeal", appealDto);
         if (appealAfter.getId() != null) {
             log.log(Level.INFO, "Сущность сохранена или обновлена");
             return new ResponseEntity<>(appealAfter, HttpStatus.CREATED);
