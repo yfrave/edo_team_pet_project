@@ -93,6 +93,20 @@ public class NomenclatureServiceImpl implements NomenclatureService {
     }
 
     /**
+     * Предоставляет список номенклатур из БД по индексу
+     *
+     * @return List of NomenclatureDto
+     */
+    @Override
+    public List<NomenclatureDto> findByIndex(String index) {
+        if (index.length() < 2) {
+            return null;
+        } else {
+            return client.findByIndex(index);
+        }
+    }
+
+    /**
      * Преобразует номер обращения из шаблона номенклатуры
      *
      * @param nomenclatureDto NomenclatureDto
