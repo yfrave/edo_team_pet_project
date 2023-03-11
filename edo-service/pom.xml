@@ -25,22 +25,22 @@
         <dependency>
             <groupId>org.docx4j</groupId>
             <artifactId>docx4j-JAXB-Internal</artifactId>
-            <version>8.0.0</version>
+            <version>${docx4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.docx4j</groupId>
             <artifactId>docx4j-JAXB-ReferenceImpl</artifactId>
-            <version>8.0.0</version>
+            <version>${docx4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.docx4j</groupId>
             <artifactId>docx4j-JAXB-MOXy</artifactId>
-            <version>8.0.0</version>
+            <version>${docx4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.docx4j</groupId>
             <artifactId>docx4j-export-fo</artifactId>
-            <version>8.0.0</version>
+            <version>${docx4j.version}</version>
         </dependency>
 
         <dependency>
@@ -52,63 +52,62 @@
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>kernel</artifactId>
-            <version>7.0.2</version>
+            <version>${itextpdf.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>io</artifactId>
-            <version>7.0.2</version>
+            <version>${itextpdf.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>layout</artifactId>
-            <version>7.0.2</version>
+            <version>${itextpdf.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>forms</artifactId>
-            <version>7.0.2</version>
+            <version>${itextpdf.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>pdfa</artifactId>
-            <version>7.0.2</version>
+            <version>${itextpdf.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>sign</artifactId>
-            <version>7.0.2</version>
+            <version>${itextpdf.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>barcodes</artifactId>
-            <version>7.0.2</version>
+            <version>${itextpdf.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>font-asian</artifactId>
-            <version>7.0.2</version>
+            <version>${itextpdf.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>hyph</artifactId>
-            <version>7.0.2</version>
+            <version>${itextpdf.version}</version>
         </dependency>
-
-
-
-
-
-
     </dependencies>
+
+    <properties>
+        <itextpdf.version>7.0.2</itextpdf.version>
+        <docx4j.version>8.0.0</docx4j.version>
+    </properties>
     <parent>
         <groupId>com.education</groupId>
         <artifactId>edo</artifactId>
