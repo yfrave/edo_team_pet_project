@@ -24,6 +24,10 @@ public class RabbitMQConfig {
     }
 
     @Bean
+    public Queue notificationAboutEmail(){
+        return  new Queue(RabbitConstant.notificationAboutEmail,false);
+    }
+    @Bean
     public Queue addressCreateService(){return new Queue(RabbitConstant.addressCreateQueue, false);}
     @Bean
     public DirectExchange exchange(){

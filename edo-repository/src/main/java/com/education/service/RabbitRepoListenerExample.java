@@ -3,10 +3,10 @@ package com.education.service;
 import com.education.entity.Address;
 import com.education.model.dto.AddressDto;
 import com.education.model.constant.RabbitConstant;
-import com.education.model.dto.AppealDto;
+import com.education.model.dto.EmployeeDto;
 import com.education.model.dto.NotificationDto;
 import com.education.repository.AddressRepository;
-import com.education.repository.EmployeeRepository;
+import com.education.service.appeal.AppealService;
 import com.education.service.notification.NotificationService;
 import com.education.util.Mapper.impl.AddressMapper;
 import lombok.AllArgsConstructor;
@@ -16,8 +16,8 @@ import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLOutput;
-import java.util.List;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 /**
  * Пример RabbitMQ Listener
@@ -28,11 +28,8 @@ import java.util.List;
 @AllArgsConstructor
 @Log4j2
 public class RabbitRepoListenerExample {
-    private final EmployeeRepository employeeRepository;
-
     private AddressRepository addressRepository;
     private NotificationService notificationService;
-
     private AddressMapper mapper;
 
     @RabbitListener(queues = RabbitConstant.addressCreateDBQueue)
@@ -45,9 +42,20 @@ public class RabbitRepoListenerExample {
 
     }
 
-    @RabbitListener(queues = RabbitConstant.emailAboutAppeal)
-    public void sendEmailForAppeal(AppealDto appealDto) {
-        notificationService.save(new NotificationDto());
-        log.log(Level.INFO, "Сущность сохранена " + appealDto);
+    /**
+     * Listener сохранения notification
+     *
+     * @param message
+     * @param employeeDto
+     */
+    @RabbitListener(queues = RabbitConstant.notificationAboutEmail)
+    public void sendNotification(String message, EmployeeDto employeeDto) {
+        NotificationDto notification = new NotificationDto();
+        notification.setCreationDate((ZonedDateTime.now(ZoneId.of("Europe/Moscow"))));
+        notification.setEmployeeDto(employeeDto);
+        notification.setMessage(message);
+        notificationService.save(notification);
+        log.log(Level.INFO, "Сохранена нотификация для пользователя c id"
+                + employeeDto.getId());
     }
 }

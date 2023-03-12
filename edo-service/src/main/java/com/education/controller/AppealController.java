@@ -35,10 +35,9 @@ public class AppealController {
     @PostMapping
     public ResponseEntity<AppealDto> saveAppeal(@ApiParam("appealDto") @RequestBody AppealDto appealDto) {
         AppealDto appealAfter = appealService.save(appealDto);
-        appealService.sendEmailAppeal(appealDto);
-        template.convertAndSend("email.about.appeal", appealDto);
         if (appealAfter.getId() != null) {
             log.log(Level.INFO, "Сущность сохранена или обновлена");
+            template.convertAndSend("email.about.appeal", appealDto);
             return new ResponseEntity<>(appealAfter, HttpStatus.CREATED);
         }
         log.log(Level.WARN, "Сущность не сохранена и не обновлена");

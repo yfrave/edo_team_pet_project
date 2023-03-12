@@ -54,6 +54,8 @@ public class EmployeeDto {
 
     @ApiModelProperty("Мобильный номер телефона")
     private String phone;
+    @ApiModelProperty("Email")
+    private String email;
 
     @ApiModelProperty("Рабочий номер телефона")
     private String workPhone;
