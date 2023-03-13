@@ -30,42 +30,38 @@ import java.nio.file.Paths;
 public class FileConversionServiceImpl implements FileConversionService {
 
     @Override
-    public void convertFile(MultipartFile multipartFile) {
-        String paths; //создаем путь для сохранения сконвертированных файлов (папка convertedFiles + имя файла new.pdf
+    public byte[] convertFile(MultipartFile multipartFile) {
         String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename()); //определяем расширение файла
-        try {
-            paths = Files.createDirectories(Paths.get("convertedFiles"))
-                    + File.separator + "new.pdf";
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+
 //        конвертация файлов с расширениями doc, docx
-        if (extension.equals("doc") || extension.equals("docx")) {
+        if ("doc".equals(extension) || "docx".equals(extension)) {
             try (BufferedInputStream buffIs = new BufferedInputStream(
                     new ByteArrayInputStream(multipartFile.getBytes()));
-                 FileOutputStream os = new FileOutputStream(paths)) {
+                 ByteArrayOutputStream os = new ByteArrayOutputStream()) {
                 WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(buffIs);
                 Docx4J.toPDF(wordMLPackage, os);
                 os.flush();
+                return os.toByteArray();
             } catch (Throwable e) {
                 e.printStackTrace();
             }
-//            конвертация файлов с расширениями jpg, png
-        } else if (extension.equals("jpg") || extension.equals("png")) {
+//        конвертация файлов с расширениями jpg, png
+        } else if ("jpg".equals(extension) || "png".equals(extension)) {
             try (BufferedInputStream buffIs = new BufferedInputStream(
-                    new ByteArrayInputStream(multipartFile.getBytes()))) {
-                PdfWriter pdfWriter = new PdfWriter(paths);
+                    new ByteArrayInputStream(multipartFile.getBytes()));
+                 ByteArrayOutputStream os = new ByteArrayOutputStream()) {
+                PdfWriter pdfWriter = new PdfWriter(os);
                 PdfDocument pdfDocument = new PdfDocument(pdfWriter);
                 Document document = new Document(pdfDocument);
                 ImageData data = ImageDataFactory.create(buffIs.readAllBytes());
                 Image image = new Image(data);
                 document.add(image);
                 document.close();
+                return os.toByteArray();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
-
+        return new byte[0];
     }
 }

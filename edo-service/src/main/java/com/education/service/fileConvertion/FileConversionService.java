@@ -7,5 +7,5 @@ import java.io.IOException;
 
 public interface FileConversionService {
 
-    void convertFile(MultipartFile multipartFile);
+    byte[] convertFile(MultipartFile multipartFile);
 }

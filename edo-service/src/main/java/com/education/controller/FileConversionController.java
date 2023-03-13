@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileOutputStream;
+
 
 @RestController
 @RequestMapping("api/service/file")
@@ -28,10 +30,10 @@ public class FileConversionController {
             @ApiResponse(code = 404, message = "Not found - The file was not found")
     })
     @PostMapping()
-    public ResponseEntity<String> convertFile(@RequestPart("file") MultipartFile multipartFile) {
+    public ResponseEntity<byte[]> convertFile(@RequestPart("file") MultipartFile multipartFile) {
         log.info("Получен запрос на конвертацию файла");
-        fileConversionService.convertFile(multipartFile);
+        byte[] array = fileConversionService.convertFile(multipartFile);
         log.info("Файл успешно сконвертирован");
-        return new ResponseEntity<>(multipartFile.getOriginalFilename(), HttpStatus.OK);
+        return new ResponseEntity<>(array, HttpStatus.OK);
     }
 }
