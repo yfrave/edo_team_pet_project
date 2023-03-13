@@ -116,14 +116,6 @@ public class Appeal extends BaseEntity {
     @JoinColumn(name = "resolution_id")
     private Resolution resolution;
 
-
-    /**
-     * Тема обращения
-     */
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "theme_id")
-    private Theme theme;
-
     /**
      * Статус обращения
      */
