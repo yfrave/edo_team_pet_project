@@ -4,8 +4,10 @@ import com.education.client.NomenclatureRestTemplateClient;
 import com.education.model.dto.NomenclatureDto;
 import com.education.service.nomenclature.NomenclatureService;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -102,5 +104,43 @@ public class NomenclatureServiceImpl implements NomenclatureService {
         } else {
             return client.findByIndex(index);
         }
+    }
+
+    /**
+     * Преобразует номер обращения из шаблона номенклатуры
+     *
+     * @param nomenclatureDto NomenclatureDto
+     * @return String of NomenclatureDto
+     */
+    @Override
+    public String getNumberFromTemplate(NomenclatureDto nomenclatureDto) {
+        final String TEMPLATE = "%ЧИС%ГОД-%ЗНАЧ/2";
+        var temp = nomenclatureDto.getTemplate();
+        if (temp == null) {
+            temp = TEMPLATE;
+        }
+        String currentValue = nomenclatureDto.getCurrentValue().toString();
+        nomenclatureDto.setCurrentValue(Long.parseLong(currentValue) + 1);
+        client.save(nomenclatureDto);
+        String year = String.format("%02d", Calendar.getInstance().get(Calendar.YEAR) % 100);
+        String day = String.format("%02d", Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+
+        return temp
+//  убирает больше двух знаков "%" подряд, оставляя один
+                .replaceAll("%{2,}", "%")
+//  заменяет число дня
+                .replaceAll("%чис|%ЧИС|%число|%ЧИСЛО", day)
+//  заменяет год
+                .replaceAll("%год|%ГОД", year)
+//  заменяет значение
+                .replaceAll("%знач|%ЗНАЧ|%значение|%ЗНАЧЕНИЕ", StringUtils.isEmpty(currentValue) ? "" : currentValue)
+//  убирает проценты с флагом
+                .replaceAll("%[\\W][^(а-яА-Я)]", "")
+//  убирает больше двух знаков "-" подряд, оставляя один
+                .replaceAll("-{2,}", "-")
+//  убирает больше двух знаков "/" подряд, оставляя один
+                .replaceAll("/{2,}", "/")
+//  убирает знаки "-" и "/" в начале и в конце
+                .replaceAll("(^[-/]+)|([-/]*$)", "");
     }
 }
