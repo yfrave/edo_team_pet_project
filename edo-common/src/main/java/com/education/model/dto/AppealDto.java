@@ -57,9 +57,6 @@ public class AppealDto {
     @ApiModelProperty("Резолюция по обращению")
     private ResolutionDto resolution;
 
-    @ApiModelProperty("Тема обращения")
-    private ThemeDto theme;
-
     @ApiModelProperty("Статус обращения")
     private EnumAppealStatus appealStatus;
 
