@@ -1,13 +1,17 @@
 package com.education.service.appeal.impl;
 
+import com.education.author_feign.service.AuthorService;
 import com.education.model.dto.AppealAbbreviatedDto;
 import com.education.model.dto.AppealDto;
 import com.education.service.appeal.AppealService;
+import com.education.service.nomenclature.NomenclatureService;
+import com.education.service.question.QuestionService;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 import lombok.RequiredArgsConstructor;
 
 import org.apache.http.HttpHost;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -21,9 +25,15 @@ import static org.apache.commons.lang.StringUtils.EMPTY;
 @RequiredArgsConstructor
 public class AppealServiceImpl implements AppealService {
 
+    private final QuestionService questionService;
+
+    private final AuthorService authorService;
+
     private final RestTemplate TEMPLATE;
 
     private final EurekaClient EUREKA_CLIENT;
+
+    private final NomenclatureService nomenclatureService;
 
     private final String BASE_URL = "/api/repository/appeal";
 
@@ -48,7 +58,19 @@ public class AppealServiceImpl implements AppealService {
     @Override
     public AppealDto save(AppealDto appealDto) {
         InstanceInfo instanceInfo = getInstance();
-        var response = TEMPLATE.postForObject(getURIByInstance(instanceInfo, EMPTY), appealDto, AppealDto.class);
+        var savedAuthors = appealDto.getAuthors()
+                .stream().map(authorService::save)
+                .map(ResponseEntity::getBody).toList();
+        var savedQuestions = appealDto.getQuestion()
+                .stream().map(questionService::save).toList();
+        appealDto.setAuthors(savedAuthors);
+        appealDto.setQuestion(savedQuestions);
+        final String NUMBER = nomenclatureService
+                .getNumberFromTemplate(appealDto.getNomenclature());
+        appealDto.setNumber(NUMBER);
+
+        var response = TEMPLATE.postForObject(getURIByInstance
+                (instanceInfo, EMPTY), appealDto, AppealDto.class);
         return response;
     }
 
